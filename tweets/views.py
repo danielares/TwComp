@@ -43,6 +43,9 @@ class ViewTweetsView(TemplateView):
                     context = super().get_context_data(**kwargs)
                     context['term'] = search
                     context['tweets'] = tweets
+                    context['amoutTweets'] = amoutTweets
+                    context['tweetsAnalyzed'] = len(tweets)
+                    context['tweetsError'] = int(amoutTweets) - len(tweets)
                     
                     return render(request, 'tweets/viewtweets.html', context)
                 
