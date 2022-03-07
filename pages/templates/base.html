@@ -25,11 +25,11 @@
                     <a class="nav-item nav-link" id="about-menu" href="">About</a>
                     <a class="nav-item nav-link" id="contact-menu" href="">Contact</a>
                     {% if user.is_anonymous %}
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Login</a>
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'cadastro' %}">Sign Up</a>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Login</a>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'cadastro' %}">Sign Up</a>
                     {% else %}
-                        <p class="nav-item nav-link">{{ user.username }}</p>
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'logout' %}">Logout</a>
+                    <p class="nav-item nav-link">{{ user.username }}</p>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'logout' %}">Logout</a>
                     {% endif %}
                 </div>
 
@@ -41,13 +41,6 @@
         {% block content %}
         {% endblock %}
     </main>
-
-    <footer>
-        <div id="rodape"></div>
-        <p>Author: Daniel Ares<br>
-            <a href="mailto:daniel.ares@hotmail.com">daniel.ares@hotmail.com</a>
-        </p>
-    </footer>
     {% bootstrap_javascript jquery='full' %}
 </body>
 

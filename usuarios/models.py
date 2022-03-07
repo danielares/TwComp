@@ -41,7 +41,7 @@ class CustomUsuario(AbstractUser):
     consumerSecret = models.CharField('Consumer Secret', max_length=50, default="DEFAULT")
     accessToken = models.CharField('Access Token', max_length=50, default="DEFAULT")
     accessTokenSecret = models.CharField('Access Token Secret', max_length=50, default="DEFAULT")
-    bearerToken = models.CharField('Bearer Token', max_length=50, default="DEFAULT")
+    bearerToken = models.CharField('Bearer Token', max_length=150, default="DEFAULT")
     
     is_staff = models.BooleanField('Membro da equipe', default=True)
 

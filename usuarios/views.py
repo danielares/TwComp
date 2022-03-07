@@ -49,10 +49,7 @@ class IndexView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        usuarios = CustomUsuario.objects.order_by('?').all()
-        #print(usuarios.consumerKey)
-        for user in usuarios:
-            print(user.consumerKey)
+        return context
 
 
 # Create your views here.

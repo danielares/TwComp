@@ -9,6 +9,8 @@ body {
     background: linear-gradient(to right, rgba(0,0,0,1), rgba(44,44,44,1));
 }
 
+
+
 .row {
     margin: 0;
 }
@@ -100,14 +102,6 @@ header, .navbar {
     padding-top: 15px;
     text-align: left;
 }
-
-
-footer {
-    text-align: center;
-    padding: 3px;
-    background-color: rgba(45, 46, 47);
-    color: white;
-  }
 
 .charts-div {
     white-space: nowrap;

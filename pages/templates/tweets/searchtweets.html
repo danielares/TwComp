@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<section class="vh-100">
+    <div class="container h-100">
+
+        <h1 class="row justify-content-center text-white">Search for tweets</h1>
+        <form action="{% url 'viewtweets' %}" method="post" class="form text-white" autocomplete="off">
+            {% csrf_token %}
+            {% bootstrap_messages %}
+            <!-- CAMPO PARA PESQUISAR TWEET -->
+            <div class="form-group">
+                <label for="pesquisaTweet">Pesquisar tweet</label>
+                <input type="text" class="form-control" id="pesquisaTweet" name="searched"
+                    placeholder="Digite o termo para pesquisa">
+                <small id="emailHelp" class="form-text text-muted">Digite aqui o termo que você deseja pesquisar no
+                    twitter</small>
+            </div>
+            <!-- CAMPO PARA PESQUISAR TWEET -->
+
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+            <div class="form-group">
+                <label for="numeroTweets">Numero de tweets</label>
+                <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
+                    placeholder="Numero de tweets" min="10" max="100" value="10">
+            </div>
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+
+            <!-- TIPO DE PESQUISA A SER FEITA -->
+            <div>
+                <h6>Tipo de pesquisa: </h6>
+                <!-- OPÇÃO PESQUISA COMPLETA -->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaCompleta"
+                        value="completa" checked />
+                    <label class="form-check-label" for="pesquisaCompleta">Completa</label>
+                </div>
+                <!-- OPÇÃO PESQUISA COMPLETA -->
+
+
+                <!-- OPÇÃO PESQUISA PARCIAL -->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaParcial"
+                        value="parcial" />
+                    <label class="form-check-label" for="pesquisaParcial">Parcial</label>
+                </div>
+                <!-- OPÇÃO PESQUISA PARCIAL -->
+
+                <!-- OPÇÃO PESQUISA BASICA -->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaBasica"
+                        value="basica" />
+                    <label class="form-check-label" for="pesquisaBasica">Basica</label>
+                </div>
+                <!-- OPÇÃO PESQUISA BASICA -->
+            </div>
+            <!-- TIPO DE PESQUISA A SER FEITA -->
+
+
+            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+            <div class="row justify-content-center">
+                <div class="mt-3 pt-2">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Pesquisar" />
+                </div>
+            </div>
+            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}
