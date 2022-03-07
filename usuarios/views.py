@@ -7,7 +7,7 @@ from .models import CustomUsuario
 
 
 class CadastroView(TemplateView):
-    template_name = 'cadastro.html'
+    template_name = 'registration/cadastro.html'
     #form_class = CustomUsuarioCreateForm
     success_url = reverse_lazy('login')
     

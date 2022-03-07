@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'usuarios',
+    'pages',
     'bootstrap4',
     
     'django.contrib.admin',

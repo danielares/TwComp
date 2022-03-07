@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import IndexView, CadastroView
+from usuarios.views import IndexView, CadastroView
 
 
 urlpatterns = [
