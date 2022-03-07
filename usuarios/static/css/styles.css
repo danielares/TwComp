@@ -1,0 +1,129 @@
+/* Gerais */
+* { 
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: rgb(0,0,0);
+    background: linear-gradient(to right, rgba(0,0,0,1), rgba(44,44,44,1));
+}
+
+.row {
+    margin: 0;
+}
+
+.container {
+    padding: 100px 0;
+}
+
+.index-container {
+    padding: 100px 0;
+}
+
+/* Barra de navegação */
+
+header, .navbar {
+    background-color: rgba(45, 46, 47);
+    font-size: 15px;
+}
+
+#nav-container {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#logo {
+    width: 55px;
+}
+
+.navbar-brand{
+    padding: 0;
+    color: white;
+}
+
+.navbar-brand:hover {
+    color: rgb(100, 97, 97);
+}
+
+#navbar-links a {
+    color: white;
+}
+
+#navbar-links p {
+    color: white;
+}
+
+#navbar-links a:hover {
+    color: rgb(100, 97, 97);
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding: 1rem .8rem;
+}
+
+.search_area {
+    margin-top: 5%;
+    font-size: 25px;
+}
+
+.searchbox{
+    color: black;
+    font-size: 25px;
+    width: 300px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 70px;
+    padding-left: 15px;
+}
+
+#amount-id {
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    width: 70px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.checkbox-analise{
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+#search-term {
+    padding-top: 15px;
+    text-align: left;
+}
+
+
+footer {
+    text-align: center;
+    padding: 3px;
+    background-color: rgba(45, 46, 47);
+    color: white;
+  }
+
+.charts-div {
+    white-space: nowrap;
+    text-align: center;
+    color: white;
+}
+
+#charts {
+    width: 500px;
+    white-space: nowrap;
+}
+
+p {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
