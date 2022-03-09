@@ -1,7 +1,7 @@
-from multiprocessing import get_context
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.contrib import messages
+from django.http import JsonResponse
 
 from .data_processing import searchTweets
 from .chart_generator import count_polarity
@@ -15,7 +15,6 @@ class TakeTweetsView(TemplateView):
         return context
     
 
-    
 class ViewTweetsView(TemplateView):
         template_name = 'tweets/viewtweets.html'
         
