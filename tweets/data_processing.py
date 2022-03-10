@@ -11,6 +11,7 @@ def getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, beare
                            bearer_token=bearerToken)
     return client
 
+
 def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
     client = getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
     tweets = client.search_recent_tweets(query=query, max_results=amount)
@@ -57,6 +58,7 @@ def translator(tweet):
     except:
         return 'erro ao traduzir'
 
+
 def analise_sentimento(tweet):
     tweet_text = TextBlob(tweet)
     sentimento = tweet_text.sentiment
@@ -95,7 +97,8 @@ def create_dict(data):
             
             tweets.append(tweets_dict)
         except:
-            print('deu erro')
+            print('deu erro')   
+    
     return tweets
 
 

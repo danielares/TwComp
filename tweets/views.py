@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 from .data_processing import searchTweets
-from .chart_generator import count_polarity
+from .chart_generator import create_chart
 
 
 class TakeTweetsView(TemplateView):
@@ -37,7 +37,7 @@ class ViewTweetsView(TemplateView):
                     bearerToken = self.request.user.bearerToken
                 
                     tweets = searchTweets(search, amoutTweets, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
-                    count_polarity(tweets, search)
+                    create_chart(tweets, search)
                     
                     context = super().get_context_data(**kwargs)
                     context['term'] = search
