@@ -16,23 +16,24 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
     client = getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
     tweets = client.search_recent_tweets(query=query, max_results=amount)
     tweet_data = tweets.data
-
+    
     results = []
 
     if not tweet_data is None and len(tweet_data) > 0:
         for tweet in tweet_data:
             
-            ''' FILTER TO NOT GET RETWEETS
+            ''' Filter to exclude retweets
             if tweet.text[:2] != "RT":
-                obj = {}
-                obj['id'] = tweet.id
-                obj['text'] = tweet.text
-                results.append(obj),
+                tweet_dict = {}
+                tweet_dict['id'] = tweet.id
+                tweet_dict['text'] = tweet.text
+                results.append(tweet_dict),
             '''
-            obj = {}
-            obj['id'] = tweet.id
-            obj['text'] = tweet.text
-            results.append(obj),
+            tweet_dict = {}
+            tweet_dict['id'] = tweet.id
+            tweet_dict['text'] = tweet.text
+            
+            results.append(tweet_dict)
 
     return create_dict(results)
 

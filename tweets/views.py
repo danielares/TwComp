@@ -28,7 +28,6 @@ class ViewTweetsView(TemplateView):
                 search = request.POST['searched']
                 amoutTweets = request.POST['amoutTweets']
                 
-                
                 if search:      # if para veficiar se o usuario fez alguma pesquisa
                     consumerKey = self.request.user.consumerKey
                     consumerSecret = self.request.user.consumerSecret

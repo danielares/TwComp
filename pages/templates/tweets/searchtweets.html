@@ -8,7 +8,7 @@
 <section class="vh-100">
     <div class="container h-100">
 
-        <h1 class="row justify-content-center text-white">Search for tweets</h1>
+        <h1 class="row justify-content-center text-white pt-5">Search for tweets</h1>
         <form action="{% url 'viewtweets' %}" method="post" class="form text-white" autocomplete="off">
             {% csrf_token %}
             {% bootstrap_messages %}
@@ -16,9 +16,8 @@
             <div class="form-group">
                 <label for="pesquisaTweet">Pesquisar tweet</label>
                 <input type="text" class="form-control" id="pesquisaTweet" name="searched"
-                    placeholder="Digite o termo para pesquisa">
-                <small id="emailHelp" class="form-text text-muted">Digite aqui o termo que você deseja pesquisar no
-                    twitter</small>
+                    placeholder="Digite o termo">
+                <small id="emailHelp" class="form-text text-muted">Digite aqui o termo que você deseja analisar tweets</small>
             </div>
             <!-- CAMPO PARA PESQUISAR TWEET -->
 
@@ -32,7 +31,7 @@
 
             <!-- TIPO DE PESQUISA A SER FEITA -->
             <div>
-                <h6>Tipo de pesquisa: </h6>
+                <h6>Tipo de análise: </h6>
                 <!-- OPÇÃO PESQUISA COMPLETA -->
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaCompleta"
@@ -46,7 +45,7 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaParcial"
                         value="parcial" />
-                    <label class="form-check-label" for="pesquisaParcial">Parcial</label>
+                    <label class="form-check-label" for="pesquisaParcial">Tradução</label>
                 </div>
                 <!-- OPÇÃO PESQUISA PARCIAL -->
 
@@ -54,7 +53,7 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaBasica"
                         value="basica" />
-                    <label class="form-check-label" for="pesquisaBasica">Basica</label>
+                    <label class="form-check-label" for="pesquisaBasica">Treinamento</label>
                 </div>
                 <!-- OPÇÃO PESQUISA BASICA -->
             </div>
@@ -71,6 +70,12 @@
 
         </form>
 
+        <p class="justify-content-left text-white pt-5">
+            Tipos de análise:<br>
+            <em>Completa: Faz dois tipos de análise dos tweets, por tradução e por treinamento e compara os resultados</em><br>
+            <em>Tradução: Faz a análise dos tweets utilizando uma biblioteca pronta. (Pode ser lento pois é preciso traduzir os tweets para ingles)</em><br>
+            <em>Treinamento: Faz a análise dos tweets por meio de treinamento humano</em>
+        </p>
     </div>
 </section>
 

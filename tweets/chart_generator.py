@@ -30,10 +30,10 @@ def create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched):
     plt.clf()
     
     
-def create_bar_chart(positive, neutral, negative, term_searched):
-    plt.bar(1, positive, width=0.25, label = 'Positivo', color = 'g')
-    plt.bar(1.5, neutral, width=0.25, label = 'Neutro', color = 'gray')
-    plt.bar(2, negative, width=0.25, label = 'Negativo', color = 'r')
+def create_bar_chart(positive, neutral, negative, term_searched, colors):
+    plt.bar(1, positive, width=0.25, label = 'Positivo', color = colors[0])
+    plt.bar(1.5, neutral, width=0.25, label = 'Neutro', color = colors[1])
+    plt.bar(2, negative, width=0.25, label = 'Negativo', color = colors[2])
     plt.legend(frameon=True, facecolor='black')
     plt.title('Polaridade dos tweets', fontsize=16, fontweight='bold')
     plt.tight_layout()
@@ -50,6 +50,6 @@ def create_chart(tweets, term_searched):
     explode = (0, 0, 0,) 
     
     create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
-    create_bar_chart(positive, neutral, negative, term_searched)
+    create_bar_chart(positive, neutral, negative, term_searched, colors)
     
     return None
