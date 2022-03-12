@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import JsonResponse
 
-from .data_processing import searchTweets, create_dict
+from .data_processing import create_dict
 from .chart_generator import create_chart
+from .training import create_dict_training
 
 
 class TakeTweetsView(TemplateView):
@@ -28,27 +29,57 @@ class ViewTweetsView(TemplateView):
                 search = request.POST['searched']
                 amoutTweets = request.POST['amoutTweets']
                 
-                if search:      # if para veficiar se o usuario fez alguma pesquisa
+                # if para veficiar se o usuario fez alguma pesquisa
+                if search:      
                     consumerKey = self.request.user.consumerKey
                     consumerSecret = self.request.user.consumerSecret
                     accessToken = self.request.user.accessToken
                     accessTokenSecret = self.request.user.accessTokenSecret
                     bearerToken = self.request.user.bearerToken
-                
-                    #tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
-                    tweets = searchTweets(search, amoutTweets, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
-                    create_chart(tweets, search)
+
+                    option = request.POST['inlineRadioOptions']
+
+                    if option == 'completa':
+                        tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, 
+                                            accessToken, accessTokenSecret, bearerToken)
+                        tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
+                                                                    accessToken, accessTokenSecret, bearerToken)
+                        create_chart(tweets, search)
+                        context = super().get_context_data(**kwargs)
+                        context['term'] = search
+                        context['tweets'] = tweets
+                        context['tweets_human_training'] = tweets_human_training
+                        context['amoutTweets'] = amoutTweets
+                        context['tweetsAnalyzed'] = len(tweets)
+                        context['tweetsError'] = int(amoutTweets) - len(tweets)
+                        return render(request, 'tweets/viewtweets.html', context)
                     
-                    context = super().get_context_data(**kwargs)
-                    context['term'] = search
-                    context['tweets'] = tweets
-                    context['amoutTweets'] = amoutTweets
-                    context['tweetsAnalyzed'] = len(tweets)
-                    context['tweetsError'] = int(amoutTweets) - len(tweets)
+                    elif option == 'traducao':
+                        tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, 
+                                            accessToken, accessTokenSecret, bearerToken)
+                        create_chart(tweets, search)
+                        context = super().get_context_data(**kwargs)
+                        context['term'] = search
+                        context['tweets'] = tweets
+                        context['amoutTweets'] = amoutTweets
+                        context['tweetsAnalyzed'] = len(tweets)
+                        context['tweetsError'] = int(amoutTweets) - len(tweets)
+                        return render(request, 'tweets/viewtweets.html', context)
                     
-                    return render(request, 'tweets/viewtweets.html', context)
+                    else:
+                        tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
+                                                                    accessToken, accessTokenSecret, bearerToken)
+                        #create_chart(tweets, search)
+                        context = super().get_context_data(**kwargs)
+                        context['term'] = search
+                        context['tweets_human_training'] = tweets_human_training
+                        context['amoutTweets'] = amoutTweets
+                        context['tweetsAnalyzed'] = len(tweets_human_training)
+                        context['tweetsError'] = int(amoutTweets) - len(tweets_human_training)
+                        return render(request, 'tweets/viewtweets.html', context)
                 
-                else:       # else para se o usuario não fize alguma pesquisa
+                # else para se o usuario não fez alguma pesquisa
+                else:       
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
         

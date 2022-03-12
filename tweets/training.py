@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import nltk
 
+from .data_processing import searchTweets, clean_tweet
+
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 np.transpose(list_stopwords_portuguese)
 
@@ -431,7 +433,7 @@ training_base = [
 ('eu nao tenho paciencia com gente lerda e burra', 'raiva'),
 ('preconceito me da muita raiva, que povo mais escroto', 'raiva'),
 ('estou nervoso com esta situacao, eu nao mereco passar esta barra sozinho, estou para matar alguem', 'raiva'),
-('eu estou bastante  e mesma assim nao passei no teste, que merda', 'raiva'),
+('eu estou bastante  e mesma assim nao passei no tweet, que merda', 'raiva'),
 ('eu faco dieta e constinuo engordando', 'raiva'),
 ('isso foi a gota d’agua','raiva'),
 ('o que você tem com isso?','raiva'),
@@ -673,6 +675,7 @@ training_base = [
 ('aquele que nunca viu a tristeza nunca reconhecerá a alegria','tristeza'),
 ('cuidado com a tristeza ela e um vicio','tristeza')]
 
+
 def removeStopWords(texto):
     frases = []
     for (palavras, sentimento) in texto:
@@ -699,13 +702,16 @@ def busca_Palavras(frases):
         todas_Palavras.extend(palavras)
     return todas_Palavras
 
+
 def busca_frequencia(palavras):
     palavras = nltk.FreqDist(palavras)
     return palavras
 
+
 def busca_palavras_unicas(frequencia):
     freq = frequencia.keys()
     return freq
+
 
 def extrator_palavras(documento):
     # Utilizado set() para associar a variavel doc com o parâmetro que esta chegando
@@ -734,14 +740,12 @@ def analisar_tweet(tweet):
     palavras_unicas_treinamento = busca_palavras_unicas(frequencia_treinamento)
     base_completa_treinamento = nltk.classify.apply_features(extrator_palavras, frases_com_Stem_treinamento)
     classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
-
-    teste = tweet
-    #print(teste)
+    
     testeStemming = []
 
     stemmer = nltk.stem.RSLPStemmer()
 
-    for (palavras_treinamento) in teste.split():
+    for (palavras_treinamento) in tweet.split():
         comStem = [palavra for palavra in palavras_treinamento.split()]
         testeStemming.append(str(stemmer.stem(comStem[0])))
 
@@ -749,11 +753,41 @@ def analisar_tweet(tweet):
 
     #print(classificador.classify(novo))
     distribuicao = classificador.prob_classify(novo)
+    
+    probable_feeling_bigger = 0
+    
     for classe in distribuicao.samples():
-        print('{}: {}'.format(classe, distribuicao.prob(classe)))
-        #print('%s: %f' % (classe, distribuicao.prob(classe)))
-        
-analisar_tweet('você é muito chato')
+        probable_feeling = distribuicao.prob(classe)
+        if probable_feeling > probable_feeling_bigger:
+            probable_feeling_bigger = probable_feeling
+            classe_feeling = classe
+    felling = (str(classe_feeling) + ':' + str(probable_feeling_bigger))        
+    return felling
 
-def create_dict():
-    searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
+
+def create_dict_training(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
+    tweets = []
+    tweets_dict = {}
+    
+    data = searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
+
+    for tweet in data:
+        try:
+            tweet_id = tweet['id']
+            tweet_text = tweet['text']
+            tweet_clean = clean_tweet(tweet_text)
+            analise = analisar_tweet(tweet_clean)
+            
+            tweets_dict = {
+               'tweet_id' : tweet_id,
+               'tweet_text': tweet_text,
+               'tweet_clean': tweet_clean,
+               'tweet_analise': analise
+            }
+            tweets.append(tweets_dict)
+            
+        except:
+            print('deu erro')
+            pass
+    
+    return tweets

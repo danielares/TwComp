@@ -28,7 +28,6 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
 
     if not tweet_data is None and len(tweet_data) > 0:
         for tweet in tweet_data:
-            
             ''' Filter to exclude retweets
             if tweet.text[:2] != "RT":
                 tweet_dict = {}
@@ -39,11 +38,8 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
             tweet_dict = {}
             tweet_dict['id'] = tweet.id
             tweet_dict['text'] = tweet.text
-            
-            
             results.append(tweet_dict)
-
-    return create_dict(results)
+    return results
 
 
 def clean_tweet(tweet):
@@ -98,9 +94,12 @@ def get_polarity(polarity):
         return 'positive'
         
         
-def create_dict(data):
+def create_dict(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
     tweets = []
     tweets_dict = {}
+    
+    data = searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
+    
     for tweet in data:
         try:
             tweet_id = tweet['id']

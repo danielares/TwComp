@@ -47,13 +47,21 @@
                 <br>
                 <h2 class="text-white row d-flex justify-content-center">Tweets:</h2>
                 {% for tweet in tweets %}
-                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
-                <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
-                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
+                    <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
+                    <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+                    <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
+                    <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
+                    <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
+                    <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
                 {% endfor %}
+
+                {% if tweets_human_training %}
+                    {% for tweet in tweets_human_training %}
+                        <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
+                        <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+                        <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
