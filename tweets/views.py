@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import JsonResponse
 
-from .data_processing import searchTweets
+from .data_processing import searchTweets, create_dict
 from .chart_generator import create_chart
 
 
@@ -35,6 +35,7 @@ class ViewTweetsView(TemplateView):
                     accessTokenSecret = self.request.user.accessTokenSecret
                     bearerToken = self.request.user.bearerToken
                 
+                    #tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
                     tweets = searchTweets(search, amoutTweets, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
                     create_chart(tweets, search)
                     

@@ -3,6 +3,13 @@ import tweepy
 from textblob import TextBlob
 from googletrans import Translator
 
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+STOPWORDS = set(stopwords.words('english'))
+from nltk.tokenize import word_tokenize
+from nltk.tokenize.treebank import TreebankWordDetokenizer
+
 def getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
     client = tweepy.Client(consumer_key=consumerKey,
                            consumer_secret=consumerSecret,
@@ -33,6 +40,7 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
             tweet_dict['id'] = tweet.id
             tweet_dict['text'] = tweet.text
             
+            
             results.append(tweet_dict)
 
     return create_dict(results)
@@ -51,7 +59,7 @@ def clean_tweet(tweet):
         return tweet_clean
 
 
-def translator(tweet):
+def translatorGoogle(tweet):
     try:
         translator = Translator()
         tweet_english = translator.translate(tweet, dest='en')
@@ -59,6 +67,21 @@ def translator(tweet):
     except:
         return 'erro ao traduzir'
 
+def translatorTextBlob(tweet):
+    try:
+        tweet_english = TextBlob(tweet)
+        tweet_english = tweet_english.translate(to='en')
+        return str(tweet_english)
+    except:
+        return 'erro ao traduzir'
+    
+
+def remove_stopwords(tweet):
+    tweet_without_stopwords = TextBlob(tweet)
+    tokens = word_tokenize(str(tweet_without_stopwords))
+    tweet_without_stopwords = [word for word in tokens if not word in STOPWORDS]
+    tweet_without_stopwords = TreebankWordDetokenizer().detokenize(tweet_without_stopwords)
+    return tweet_without_stopwords
 
 def analise_sentimento(tweet):
     tweet_text = TextBlob(tweet)
@@ -83,8 +106,11 @@ def create_dict(data):
             tweet_id = tweet['id']
             tweet_text = tweet['text']
             tweet_clean = clean_tweet(tweet_text)
-            tweet_english = translator(tweet_clean)
-            sentimento = analise_sentimento(tweet_english.text)
+            tweet_english = translatorTextBlob(tweet_clean)
+            #tweet_english = translatorGoogle(tweet_clean) 
+            #sentimento = analise_sentimento(tweet_english.text)
+            tweet_without_stopwords = remove_stopwords(tweet_english)
+            sentimento = analise_sentimento(tweet_without_stopwords)
             polaridade = get_polarity(sentimento)
             
             tweets_dict = {
@@ -92,6 +118,7 @@ def create_dict(data):
                 'tweet_text': tweet_text,
                 'tweet_clean': tweet_clean,
                 'tweet_english': tweet_english,
+                'tweet_without_stopwords': tweet_without_stopwords,
                 'sentimento': sentimento,
                 'polaridade': polaridade,
             }
