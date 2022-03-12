@@ -7,63 +7,42 @@
 <section class="vh-100">
     <div class="container h-100">
         <h2 class="text-white row d-flex justify-content-center">Search: {{ term }}</h2><br>
-        <div class="text-white row d-flex">
 
-            <div class="text-white row d-flex justify-content-center">
+        {% if tweets and not tweets_human_training %}
+            {% include 'tweets/viewtweets-trans.html' %}
 
-                <div class="card-transparent" style="width: 35rem;">
-                    <img class="card-img-top" src="{% static '/images/temp/' %}{{term}}Pizza.png"
-                        alt="Imagem de capa do card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gráfico de pizza</h5>
-                        <p class="card-text">O gráfico de pizza acima representa a polaridade dos tweets</p>
+        {% elif tweets_human_training and not tweets %}
+            {% include 'tweets/viewtweets-training.html' %}
+            
+        {% else %}
+            {% include 'tweets/viewtweets-training.html' %}
+            <br><br>
+            {% include 'tweets/viewtweets-trans.html' %}
+        {% endif %}
 
-                        <ul class="list-group list-group-flush" style="color:black">
-                            <li class="list-group-item">Quantidade de tweets: {{ amoutTweets }}</li>
-                            <li class="list-group-item">Analisados: {{ tweetsAnalyzed }}</li>
-                            <li class="list-group-item">Erros: {{ tweetsError }}</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card-transparent" style="width: 35rem;">
-                    <img class="card-img-top" src="{% static '/images/temp/' %}{{term}}Bar.png"
-                        alt="Imagem de capa do card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gráfico de barras</h5>
-                        <p class="card-text">O gráfico de barras acima representa a polaridade dos tweets</p>
-
-                        <ul class="list-group list-group-flush" style="color:black">
-                            <li class="list-group-item">Quantidade de tweets: {{ amoutTweets }}</li>
-                            <li class="list-group-item">Analisados: {{ tweetsAnalyzed }}</li>
-                            <li class="list-group-item">Erros: {{ tweetsError }}</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <br>
-                <h2 class="text-white row d-flex justify-content-center">Tweets:</h2>
+        <div class="form-group">
+            <br>
+            <h2 class="text-white row d-flex justify-content-center">Tweets:</h2>
+            <div class="text-white">
                 {% for tweet in tweets %}
-                    <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                    <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-                    <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                    <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
-                    <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
-                    <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
+                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
+                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
+                <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
+                <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
+                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
                 {% endfor %}
 
                 {% if tweets_human_training %}
-                    {% for tweet in tweets_human_training %}
-                        <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                        <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-                        <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
-                    {% endfor %}
+                {% for tweet in tweets_human_training %}
+                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
+                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+                <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
+                {% endfor %}
                 {% endif %}
             </div>
         </div>
+
     </div>
 </section>
 

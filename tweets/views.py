@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 from .data_processing import create_dict
-from .chart_generator import create_chart
+from .chart_generator import create_chart, create_chart_training
 from .training import create_dict_training
 
 
@@ -44,7 +44,10 @@ class ViewTweetsView(TemplateView):
                                             accessToken, accessTokenSecret, bearerToken)
                         tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
                                                                     accessToken, accessTokenSecret, bearerToken)
-                        create_chart(tweets, search)
+                        
+                        qtd_tweets_polarity = create_chart(tweets, search)
+                        qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
+                        
                         context = super().get_context_data(**kwargs)
                         context['term'] = search
                         context['tweets'] = tweets
@@ -52,23 +55,27 @@ class ViewTweetsView(TemplateView):
                         context['amoutTweets'] = amoutTweets
                         context['tweetsAnalyzed'] = len(tweets)
                         context['tweetsError'] = int(amoutTweets) - len(tweets)
+                        context['qtd_tweets_polarity'] = qtd_tweets_polarity
+                        context['qtd_tweets_polarity_training'] = qtd_tweets_polarity_training
                         return render(request, 'tweets/viewtweets.html', context)
                     
                     elif option == 'traducao':
                         tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, 
                                             accessToken, accessTokenSecret, bearerToken)
-                        create_chart(tweets, search)
+                        qtd_tweets_polarity = create_chart(tweets, search)
                         context = super().get_context_data(**kwargs)
                         context['term'] = search
                         context['tweets'] = tweets
                         context['amoutTweets'] = amoutTweets
                         context['tweetsAnalyzed'] = len(tweets)
                         context['tweetsError'] = int(amoutTweets) - len(tweets)
+                        context['qtd_tweets_polarity'] = qtd_tweets_polarity
                         return render(request, 'tweets/viewtweets.html', context)
                     
                     else:
                         tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
                                                                     accessToken, accessTokenSecret, bearerToken)
+                        qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
                         #create_chart(tweets, search)
                         context = super().get_context_data(**kwargs)
                         context['term'] = search
@@ -76,6 +83,7 @@ class ViewTweetsView(TemplateView):
                         context['amoutTweets'] = amoutTweets
                         context['tweetsAnalyzed'] = len(tweets_human_training)
                         context['tweetsError'] = int(amoutTweets) - len(tweets_human_training)
+                        context['qtd_tweets_polarity_training'] = qtd_tweets_polarity_training
                         return render(request, 'tweets/viewtweets.html', context)
                 
                 # else para se o usuario não fez alguma pesquisa

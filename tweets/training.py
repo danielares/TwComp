@@ -344,6 +344,9 @@ training_base = [
 
 
     # RAIVA
+('pqp que encheção de saco','raiva'),
+('quero meu dinheiro de volta','raiva'),
+('ta pra nascer algo q me de mais dor de cabeça', 'raiva'),
 ('ele a feriu profundamente','raiva'),
 ('eu vou matar ele', 'raiva'),
 ('que droga, eu nao passei de ano na escola, pqp', 'raiva'),
@@ -457,6 +460,9 @@ training_base = [
 ('você e mais irritante de perto','raiva'),
 ('e bom fechar o bico','raiva'),
 ('Meu deus essa faculdade é uma merda','raiva'),
+('VSF cara você não faz nada direito', 'raiva'),
+('VSF seu imprestável', 'raiva'),
+('VSF mano! sai daqui', 'raiva'),
 
 
     # SURPRESA
@@ -723,26 +729,9 @@ def extrator_palavras(documento):
     return caracteristicas
 
 
-def analisar_tweet(tweet):
-    global palavras_unicas_treinamento
-    
-    training_base_df = pd.DataFrame(training_base)
-    training_base_df.columns = ['Phrase', 'Sentiment']
-
-    list_stopwords_portuguese.append('tipo')
-    list_stopwords_portuguese.append('tão')
-    list_stopwords_portuguese.append('tudo')
-    list_stopwords_portuguese.append('vai')
-
-    frases_com_Stem_treinamento = aplica_Stemmer(training_base)
-    palavras_treinamento = busca_Palavras(frases_com_Stem_treinamento)
-    frequencia_treinamento = busca_frequencia(palavras_treinamento)
-    palavras_unicas_treinamento = busca_palavras_unicas(frequencia_treinamento)
-    base_completa_treinamento = nltk.classify.apply_features(extrator_palavras, frases_com_Stem_treinamento)
-    classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
+def analisar_tweet(tweet, classificador):
     
     testeStemming = []
-
     stemmer = nltk.stem.RSLPStemmer()
 
     for (palavras_treinamento) in tweet.split():
@@ -751,7 +740,6 @@ def analisar_tweet(tweet):
 
     novo = extrator_palavras(testeStemming)
 
-    #print(classificador.classify(novo))
     distribuicao = classificador.prob_classify(novo)
     
     probable_feeling_bigger = 0
@@ -761,13 +749,32 @@ def analisar_tweet(tweet):
         if probable_feeling > probable_feeling_bigger:
             probable_feeling_bigger = probable_feeling
             classe_feeling = classe
-    felling = (str(classe_feeling) + ':' + str(probable_feeling_bigger))        
+    felling = classe_feeling, probable_feeling_bigger  
+         
     return felling
 
+
+def inicialize():
+    global palavras_unicas_treinamento
+    
+    training_base_df = pd.DataFrame(training_base)
+    training_base_df.columns = ['Phrase', 'Sentiment']
+    
+    frases_com_Stem_treinamento = aplica_Stemmer(training_base)
+    palavras_treinamento = busca_Palavras(frases_com_Stem_treinamento)
+    frequencia_treinamento = busca_frequencia(palavras_treinamento)
+    palavras_unicas_treinamento = busca_palavras_unicas(frequencia_treinamento)
+    base_completa_treinamento = nltk.classify.apply_features(extrator_palavras, frases_com_Stem_treinamento)
+    classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
+    
+    return classificador
+    
 
 def create_dict_training(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
     tweets = []
     tweets_dict = {}
+    
+    classificador = inicialize()
     
     data = searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
 
@@ -776,7 +783,7 @@ def create_dict_training(query, amount, consumerKey, consumerSecret, accessToken
             tweet_id = tweet['id']
             tweet_text = tweet['text']
             tweet_clean = clean_tweet(tweet_text)
-            analise = analisar_tweet(tweet_clean)
+            analise = analisar_tweet(tweet_clean, classificador)
             
             tweets_dict = {
                'tweet_id' : tweet_id,
