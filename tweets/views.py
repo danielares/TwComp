@@ -3,9 +3,10 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import JsonResponse
 
-from .data_processing import create_dict
-from .chart_generator import create_chart, create_chart_training
-from .training import create_dict_training
+
+from myLibs.data_processing import create_dict
+from myLibs.chart_generator import create_chart, create_chart_training
+from myLibs.training import create_dict_training
 
 
 class TakeTweetsView(TemplateView):
@@ -73,9 +74,11 @@ class ViewTweetsView(TemplateView):
                         return render(request, 'tweets/viewtweets.html', context)
                     
                     else:
+                        
                         tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
                                                                     accessToken, accessTokenSecret, bearerToken)
                         qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
+                        
                         #create_chart(tweets, search)
                         context = super().get_context_data(**kwargs)
                         context['term'] = search

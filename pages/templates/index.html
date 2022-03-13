@@ -12,12 +12,26 @@
             <h1 class="text-white">INDEX</h1>
 
             {% else %}
-            <p>
-                <a class="text-white" href="{% url 'searchtweets' %}">
+                <a class="text-white mx-5 my-5" href="{% url 'searchtweets' %}">
                     <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
                     Search tweets
                 </a>
-            </p>
+
+                <a class="text-white mx-5 my-5" href="{% url 'compareTweets' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Compare Tweets
+                </a>
+
+                <a class="text-white mx-5 my-5" href="{% url 'searchtweets' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Search User
+                </a>
+
+                <a class="text-white mx-5 my-5" href="{% url 'compareTweets' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Compare Tweets
+                </a>
+
 
             {% endif %}
         </div>

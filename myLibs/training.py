@@ -730,28 +730,30 @@ def extrator_palavras(documento):
 
 
 def analisar_tweet(tweet, classificador):
-    
-    testeStemming = []
-    stemmer = nltk.stem.RSLPStemmer()
+    try:
+        testeStemming = []
+        stemmer = nltk.stem.RSLPStemmer()
 
-    for (palavras_treinamento) in tweet.split():
-        comStem = [palavra for palavra in palavras_treinamento.split()]
-        testeStemming.append(str(stemmer.stem(comStem[0])))
+        for (palavras_treinamento) in tweet.split():
+            comStem = [palavra for palavra in palavras_treinamento.split()]
+            testeStemming.append(str(stemmer.stem(comStem[0])))
 
-    novo = extrator_palavras(testeStemming)
+        novo = extrator_palavras(testeStemming)
 
-    distribuicao = classificador.prob_classify(novo)
-    
-    probable_feeling_bigger = 0
-    
-    for classe in distribuicao.samples():
-        probable_feeling = distribuicao.prob(classe)
-        if probable_feeling > probable_feeling_bigger:
-            probable_feeling_bigger = probable_feeling
-            classe_feeling = classe
-    felling = classe_feeling, probable_feeling_bigger  
-         
-    return felling
+        distribuicao = classificador.prob_classify(novo)
+        
+        probable_feeling_bigger = 0
+        
+        for classe in distribuicao.samples():
+            probable_feeling = distribuicao.prob(classe)
+            if probable_feeling > probable_feeling_bigger:
+                probable_feeling_bigger = probable_feeling
+                classe_feeling = classe
+        felling = classe_feeling, probable_feeling_bigger  
+            
+        return felling
+    except:
+        print('deu erro na analise')
 
 
 def inicialize():
@@ -780,16 +782,21 @@ def create_dict_training(query, amount, consumerKey, consumerSecret, accessToken
 
     for tweet in data:
         try:
-            tweet_id = tweet['id']
             tweet_text = tweet['text']
+            
             tweet_clean = clean_tweet(tweet_text)
             analise = analisar_tweet(tweet_clean, classificador)
             
             tweets_dict = {
-               'tweet_id' : tweet_id,
-               'tweet_text': tweet_text,
+               'tweet_id' : tweet['id'],
+               'tweet_text': tweet['text'],
+                'tweet_created_at': tweet['created_at'],
+                'tweet_lang': tweet['lang'],
+                'tweet_geo': tweet['geo'],
+                'tweet_referenced_tweets': tweet['referenced_tweets'],
+                'tweet_username': tweet['username'],
                'tweet_clean': tweet_clean,
-               'tweet_analise': analise
+               'tweet_analise': analise,
             }
             tweets.append(tweets_dict)
             

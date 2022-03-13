@@ -9,15 +9,15 @@
         <h2 class="text-white row d-flex justify-content-center">Search: {{ term }}</h2><br>
 
         {% if tweets and not tweets_human_training %}
-            {% include 'tweets/viewtweets-trans.html' %}
+        {% include 'tweets/viewtweets-trans.html' %}
 
         {% elif tweets_human_training and not tweets %}
-            {% include 'tweets/viewtweets-training.html' %}
-            
+        {% include 'tweets/viewtweets-training.html' %}
+
         {% else %}
-            {% include 'tweets/viewtweets-training.html' %}
-            <br><br>
-            {% include 'tweets/viewtweets-trans.html' %}
+        {% include 'tweets/viewtweets-training.html' %}
+        <br><br>
+        {% include 'tweets/viewtweets-trans.html' %}
         {% endif %}
 
         <div class="form-group">
@@ -27,16 +27,27 @@
                 {% for tweet in tweets %}
                 <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
                 <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+
+                <p><strong>Usuario:</strong> {{tweet.tweet_username}}</p>
+                <p><strong>Criado em:</strong> {{tweet.tweet_created_at}}</p>
+                <p><strong>Idioma:</strong> {{tweet.tweet_lang}}</p>
+                <p><strong>Geo:</strong> {{tweet.tweet_geo}}</p>
+                <p><strong>Referencia ao tweet:</strong> {{tweet.tweet_referenced_tweets}}</p>
+
                 <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
                 <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
                 <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
                 <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
                 {% endfor %}
 
-                {% if tweets_human_training %}
+                {% if tweets_human_training and not tweets %}
                 {% for tweet in tweets_human_training %}
+                <p><strong>Usuário:</strong> {{tweet.tweet_username}}</p>
                 <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
                 <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
+                <p><strong>Tweet clean:</strong> {{tweet.tweet_created_at}}</p>
+                <p><strong>Referencia ao tweet:</strong> ID: {{tweet.tweet_referenced_tweets}}</p>
                 <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
                 {% endfor %}
                 {% endif %}

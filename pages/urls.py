@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from usuarios.views import IndexView, CadastroView
 from tweets.views import TakeTweetsView, ViewTweetsView
+from compareTweets.views import CompareTweetsView
 
 
 urlpatterns = [
@@ -10,4 +11,5 @@ urlpatterns = [
     path('cadastro/', CadastroView.as_view(), name='cadastro'),
     path('searchtweets/', TakeTweetsView.as_view(), name='searchtweets'),
     path('viewtweets/', ViewTweetsView.as_view(), name='viewtweets'),
+    path('compare-tweets/', CompareTweetsView.as_view(), name='compareTweets'),
 ]

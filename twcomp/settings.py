@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'usuarios',
     'pages',
     'bootstrap4',
+    'tweets',
+    'compareTweets',
     
     'django.contrib.admin',
     'django.contrib.auth',

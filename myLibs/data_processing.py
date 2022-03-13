@@ -2,6 +2,7 @@ import re
 import tweepy
 from textblob import TextBlob
 from googletrans import Translator
+from itertools import zip_longest
 
 import nltk
 nltk.download('stopwords')
@@ -19,26 +20,47 @@ def getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, beare
     return client
 
 
+def retweetTake(id):
+    client = getClient()
+    retweet = client.get_tweet(id)
+    text_retweet = retweet.data['text']
+    return text_retweet
+
+
 def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
     client = getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
-    tweets = client.search_recent_tweets(query=query, max_results=amount)
+    
+    expansions_options = ['author_id','referenced_tweets.id']
+    tweet_fields_options = ['created_at','lang','geo','text', 'referenced_tweets']
+    
+    tweets = client.search_recent_tweets(query=query, max_results=amount, expansions=expansions_options, 
+                                         tweet_fields=tweet_fields_options)
+    
     tweet_data = tweets.data
+    tweets_users = tweets.includes['users']
+    tweets_rt = tweets.includes['tweets']
     
     results = []
 
     if not tweet_data is None and len(tweet_data) > 0:
-        for tweet in tweet_data:
-            ''' Filter to exclude retweets
-            if tweet.text[:2] != "RT":
+        try:
+            for (tweet, tweet_user) in zip_longest(tweet_data, tweets_users):
                 tweet_dict = {}
+                tweet_dict['username'] = tweet_user.username
                 tweet_dict['id'] = tweet.id
-                tweet_dict['text'] = tweet.text
-                results.append(tweet_dict),
-            '''
-            tweet_dict = {}
-            tweet_dict['id'] = tweet.id
-            tweet_dict['text'] = tweet.text
-            results.append(tweet_dict)
+                if tweet.text[:2] != "RT":
+                    tweet_dict['text'] = tweet.text
+                else:
+                    #retweet = retweetTake(tweet.referenced_tweets[0]['id'])
+                    tweet_dict['text'] = tweet.text
+                tweet_dict['created_at'] = tweet.created_at
+                tweet_dict['lang'] = tweet.lang
+                tweet_dict['geo'] = tweet.geo
+                tweet_dict['referenced_tweets'] = tweet.referenced_tweets
+                results.append(tweet_dict)
+        except:
+            print('deu erro na coleta')
+            
     return results
 
 
@@ -104,10 +126,15 @@ def create_dict(query, amount, consumerKey, consumerSecret, accessToken, accessT
         try:
             tweet_id = tweet['id']
             tweet_text = tweet['text']
+            
+            tweet_created_at = tweet['created_at']
+            tweet_lang = tweet['lang']
+            tweet_geo = tweet['geo']
+            tweet_referenced_tweets = tweet['referenced_tweets']
+            tweet_username = tweet['username']
+            
             tweet_clean = clean_tweet(tweet_text)
             tweet_english = translatorTextBlob(tweet_clean)
-            #tweet_english = translatorGoogle(tweet_clean) 
-            #sentimento = analise_sentimento(tweet_english.text)
             tweet_without_stopwords = remove_stopwords(tweet_english)
             sentimento = analise_sentimento(tweet_without_stopwords)
             polaridade = get_polarity(sentimento)
@@ -115,6 +142,13 @@ def create_dict(query, amount, consumerKey, consumerSecret, accessToken, accessT
             tweets_dict = {
                 'tweet_id': tweet_id,
                 'tweet_text': tweet_text,
+                                
+                'tweet_created_at': tweet_created_at,
+                'tweet_lang': tweet_lang,
+                'tweet_geo': tweet_geo,
+                'tweet_referenced_tweets': tweet_referenced_tweets,
+                'tweet_username': tweet_username,
+                                
                 'tweet_clean': tweet_clean,
                 'tweet_english': tweet_english,
                 'tweet_without_stopwords': tweet_without_stopwords,
