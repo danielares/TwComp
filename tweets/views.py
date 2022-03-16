@@ -112,14 +112,12 @@ class ChartData(APIView):
 
     def get(self, request, format=None):
         global qtd_tweets_polarity_training
-        
+        labels = ["alegria", "nojo", "medo", "raiva", "surpresa", "tristeza"]
+        default_items = [qtd_tweets_polarity_training[0], qtd_tweets_polarity_training[1], qtd_tweets_polarity_training[2], 
+                         qtd_tweets_polarity_training[3], qtd_tweets_polarity_training[4], qtd_tweets_polarity_training[5]]
         data = {
-            'alegria': qtd_tweets_polarity_training[0],
-            'nojo': qtd_tweets_polarity_training[1],
-            'medo': qtd_tweets_polarity_training[2],
-            'raiva': qtd_tweets_polarity_training[3],
-            'surpresa': qtd_tweets_polarity_training[4],
-            'tristeza': qtd_tweets_polarity_training[5],
+            "labels": labels,
+            "default": default_items,
         }
         
         return Response(data)
