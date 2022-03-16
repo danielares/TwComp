@@ -9,13 +9,13 @@
     <div class="container h-100">
 
         <h1 class="row justify-content-center text-white pt-5">Compare Tweets</h1>
-        <form action="{% url 'viewtweets' %}" method="post" class="form text-white" autocomplete="off">
+        <form action="{% url 'view-compare-tweets' %}" method="post" class="form text-white" autocomplete="off">
             {% csrf_token %}
             {% bootstrap_messages %}
             <!-- CAMPO PARA PESQUISAR TWEET 1 -->
             <div class="form-group">
                 <label for="pesquisaTweet1">Primeiro termo</label>
-                <input type="text" class="form-control" id="pesquisaTweet1" name="searched"
+                <input type="text" class="form-control" id="pesquisaTweet1" name="searched1"
                     placeholder="Digite o primeiro termo">
             </div>
             <!-- CAMPO PARA PESQUISAR TWEET 1 -->
@@ -23,7 +23,7 @@
             <!-- CAMPO PARA PESQUISAR TWEET 2 -->
             <div class="form-group">
                 <label for="pesquisaTweet2">Segundo Termo</label>
-                <input type="text" class="form-control" id="pesquisaTweet2" name="searched"
+                <input type="text" class="form-control" id="pesquisaTweet2" name="searched2"
                     placeholder="Digite o segundo termo">
             </div>
             <!-- CAMPO PARA PESQUISAR TWEET 2 -->

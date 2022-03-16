@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from myLibs.data_processing import create_dict
 from myLibs.chart_generator import create_chart, create_chart_training
 from myLibs.training import create_dict_training
+from myLibs.word_cloud import wordCloud
 
 
 class TakeTweetsView(TemplateView):
@@ -78,6 +79,7 @@ class ViewTweetsView(TemplateView):
                         tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
                                                                     accessToken, accessTokenSecret, bearerToken)
                         qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
+                        wordCloud(tweets_human_training)
                         
                         #create_chart(tweets, search)
                         context = super().get_context_data(**kwargs)

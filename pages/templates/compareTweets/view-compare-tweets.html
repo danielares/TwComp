@@ -6,20 +6,12 @@
 
 <section class="vh-100">
     <div class="container h-100">
-        <h2 class="text-white row d-flex justify-content-center">Search: {{ term }}</h2><br>
+        <h2 class="text-white row d-flex justify-content-center">Term 1: {{ term1 }}</h2>
+        <h2 class="text-white row d-flex justify-content-center">Term 2: {{ term2 }}</h2><br>
 
-        {% if tweets and not tweets_human_training %}
-        {% include 'tweets/viewtweets-trans.html' %}
-
-        {% elif tweets_human_training and not tweets %}
         {% include 'tweets/viewtweets-training.html' %}
 
-        {% else %}
-        {% include 'tweets/viewtweets-training.html' %}
-        <br><br>
-        {% include 'tweets/viewtweets-trans.html' %}
-        {% endif %}
-
+        <!--
         <div class="form-group">
             <br>
             <h2 class="text-white row d-flex justify-content-center">Tweets:</h2>
@@ -46,7 +38,7 @@
                 <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
                 <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
                 <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                <p><strong>Data de criação:</strong> {{tweet.tweet_created_at}}</p>
+                <p><strong>Tweet clean:</strong> {{tweet.tweet_created_at}}</p>
                 <p><strong>Referencia ao tweet:</strong> ID: {{tweet.tweet_referenced_tweets}}</p>
                 <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
                 {% endfor %}
@@ -56,5 +48,6 @@
 
     </div>
 </section>
+-->
 
 {% endblock %}

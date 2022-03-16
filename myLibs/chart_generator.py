@@ -16,7 +16,7 @@ def create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched):
        
 def create_bar_chart(polaridade, qtd_tweets, term_searched, colors):
     plt.bar(qtd_tweets, polaridade, color=colors, edgecolor='black')
-    plt.legend(frameon=True, facecolor='black')
+    #plt.legend(frameon=True, facecolor='black')
     plt.title('Gráfico de barras', fontsize=16, fontweight='bold')
     plt.xlabel('Sentimentos', fontsize=14, color='black')
     plt.ylabel('Quantidade de tweets', fontsize=14, color='black')
