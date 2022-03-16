@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'tweets',
     'compareTweets',
+    'rest_framework',
     
     'django.contrib.admin',
     'django.contrib.auth',

@@ -5,7 +5,6 @@ from usuarios.views import IndexView, CadastroView
 from tweets.views import TakeTweetsView, ViewTweetsView
 from compareTweets.views import ViewCompareTweetsView, CompareTweetsView
 
-
 urlpatterns = [
     path('contas/', include('django.contrib.auth.urls')),
     path('', IndexView.as_view(), name='index'),
@@ -13,5 +12,6 @@ urlpatterns = [
     path('searchtweets/', TakeTweetsView.as_view(), name='searchtweets'),
     path('viewtweets/', ViewTweetsView.as_view(), name='viewtweets'),
     path('compare-tweets/', ViewCompareTweetsView.as_view(), name='compareTweets'),
-    path('view-compare-tweets/', CompareTweetsView.as_view(), name='view-compare-tweets')
+    path('view-compare-tweets/', CompareTweetsView.as_view(), name='view-compare-tweets'),
+
 ]

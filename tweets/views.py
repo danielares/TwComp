@@ -1,4 +1,9 @@
 from django.views.generic import TemplateView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+#from django.contrib.auth.models import User
+
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import JsonResponse
@@ -26,6 +31,8 @@ class ViewTweetsView(TemplateView):
             return context
                 
         def post(self, request, **kwargs):
+            global qtd_tweets_polarity_training
+            
             if request.method == 'POST':
                 
                 search = request.POST['searched']
@@ -78,7 +85,9 @@ class ViewTweetsView(TemplateView):
                         
                         tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
                                                                     accessToken, accessTokenSecret, bearerToken)
+                        
                         qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
+                        
                         wordCloud(tweets_human_training)
                         
                         #create_chart(tweets, search)
@@ -96,3 +105,21 @@ class ViewTweetsView(TemplateView):
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
         
+class ChartData(APIView):
+
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        global qtd_tweets_polarity_training
+        
+        data = {
+            'alegria': qtd_tweets_polarity_training[0],
+            'nojo': qtd_tweets_polarity_training[1],
+            'medo': qtd_tweets_polarity_training[2],
+            'raiva': qtd_tweets_polarity_training[3],
+            'surpresa': qtd_tweets_polarity_training[4],
+            'tristeza': qtd_tweets_polarity_training[5],
+        }
+        
+        return Response(data)
