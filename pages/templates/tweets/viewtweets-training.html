@@ -1,8 +1,15 @@
 {% load static %}
 
+<h3 class="text-white">Wordcloud: </h3>
+<div class="d-flex justify-content-center my-5">
+    <div class="" style="width: 45rem;">
+        <img class="card-img-top" src="{% static 'images/temp/wc.png' %}" alt="Imagem de capa do card">
+    </div>
+</div>
+
 <h3 class="text-white">Analise com base em treinamento: </h3>
 <div class="text-black row d-flex justify-content-center">
-    
+
     {% include 'charts/charts.html' %}
 
     <div class="card text-black mx-1 my-1" style="width: 55rem;">
