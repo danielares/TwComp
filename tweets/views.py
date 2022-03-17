@@ -1,12 +1,9 @@
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
-#from django.contrib.auth.models import User
 
 from django.shortcuts import render
 from django.contrib import messages
-from django.http import JsonResponse
 
 
 from myLibs.data_processing import create_dict
