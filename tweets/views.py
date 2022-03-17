@@ -29,6 +29,7 @@ class ViewTweetsView(TemplateView):
                 
         def post(self, request, **kwargs):
             global qtd_tweets_polarity_training
+            global qtd_tweets_polarity
             
             if request.method == 'POST':
                 
@@ -102,6 +103,7 @@ class ViewTweetsView(TemplateView):
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
         
+        
 class ChartData(APIView):
 
     authentication_classes = []
@@ -109,12 +111,33 @@ class ChartData(APIView):
 
     def get(self, request, format=None):
         global qtd_tweets_polarity_training
-        labels = ["alegria", "nojo", "medo", "raiva", "surpresa", "tristeza"]
-        default_items = [qtd_tweets_polarity_training[0], qtd_tweets_polarity_training[1], qtd_tweets_polarity_training[2], 
-                         qtd_tweets_polarity_training[3], qtd_tweets_polarity_training[4], qtd_tweets_polarity_training[5]]
-        data = {
-            "labels": labels,
-            "default": default_items,
-        }
+        global qtd_tweets_polarity
         
+        data = {"dict": ""}
+        
+        if qtd_tweets_polarity: 
+            labels_polarity = ['Positivo', 'Neutro', 'Negativo']
+            default_items_polarity = [qtd_tweets_polarity[0], qtd_tweets_polarity[1], qtd_tweets_polarity[2]]
+            
+            data_polarity = {
+            "labels": labels_polarity,
+            "default": default_items_polarity,
+            }
+            data['dict'] = data_polarity
+            
+        if qtd_tweets_polarity_training:
+            labels = ["alegria", "nojo", "medo", "raiva", "surpresa", "tristeza"]
+            default_items = [qtd_tweets_polarity_training[0], qtd_tweets_polarity_training[1], qtd_tweets_polarity_training[2], 
+                         qtd_tweets_polarity_training[3], qtd_tweets_polarity_training[4], qtd_tweets_polarity_training[5]]
+            
+            data_polarity_training = {
+                
+                "labels": labels,
+                "default": default_items,
+
+            }
+            
+            data['dict'] = data_polarity_training
+            
+            
         return Response(data)

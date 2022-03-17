@@ -3,12 +3,12 @@
 <div class="text-black row d-flex justify-content-center">
     <div class="card text-black mx-1 my-1" style="width: 35rem;">
         <div class="col-sm-12" url-endpoint='{% url "viewtweets" %}'>
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <canvas id="myChart3" width="400" height="400"></canvas>
         </div>
     </div>
     <div class="card text-black mx-1 my-1" style="width: 35rem;">
         <div class="col-sm-12" url-endpoint='{% url "viewtweets" %}'>
-            <canvas id="myChart2" width="400" height="400"></canvas>
+            <canvas id="myChart4" width="400" height="400"></canvas>
         </div>
     </div>
 </div>
@@ -20,14 +20,14 @@
 <script>
 
     var endpoint = '/api/chart/data'
-    var defaultData = []
-    var labels = []
+    var defaultData_polarity = []
+    var labels_polarity = []
     $.ajax({
         method: "GET",
         url: endpoint,
         success: function (data) {
-            labels = data.data_polarity_training.labels
-            defaultData = data.data_polarity_training.default
+            labels_polarity = data.data_polarity.labels
+            defaultData_polarity = data.data_polarity.default
             setChart()
 
         },
@@ -38,32 +38,26 @@
     })
 
     function setChart() {
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var ctx2 = document.getElementById("myChart2").getContext('2d');
+        var ctx3 = document.getElementById("myChart3").getContext('2d');
+        var ctx4 = document.getElementById("myChart4").getContext('2d');
 
 
-        var myChart1 = new Chart(ctx, {
+        var myChart3 = new Chart(ctx3, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: labels_polarity,
                 datasets: [{
-                    label: 'Sentimentos',
-                    data: defaultData,
+                    label: 'Polaridades',
+                    data: defaultData_polarity,
                     backgroundColor: [
                         'rgba(249, 227, 26, 0.8)',
                         'rgba(111, 242, 24, 0.9)',
                         'rgba(57, 112, 139, 0.9)',
-                        'rgba(233, 45, 64, 0.9)',
-                        'rgba(101, 51, 240, 0.9)',
-                        'rgba(114, 107, 107, 0.9)'
                     ],
                     borderColor: [
                         'black',
                         'black',
                         'black',
-                        'black',
-                        'black',
-                        'black'
                     ],
                     borderWidth: 1
                 }]
@@ -79,28 +73,22 @@
             }
         })
 
-        var myChart2 = new Chart(ctx2, {
+        var myChart4 = new Chart(ctx4, {
             type: 'pie',
             data: {
-                labels: labels,
+                labels: labels_polarity,
                 datasets: [{
                     label: 'Sentimentos',
-                    data: defaultData,
+                    data: defaultData_polarity,
                     backgroundColor: [
                         'rgba(249, 227, 26, 0.8)',
                         'rgba(111, 242, 24, 0.9)',
                         'rgba(57, 112, 139, 0.9)',
-                        'rgba(233, 45, 64, 0.9)',
-                        'rgba(101, 51, 240, 0.9)',
-                        'rgba(114, 107, 107, 0.9)'
                     ],
                     borderColor: [
                         'black',
                         'black',
                         'black',
-                        'black',
-                        'black',
-                        'black'
                     ],
                     borderWidth: 1
                 }]
