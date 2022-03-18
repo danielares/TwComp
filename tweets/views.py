@@ -1,10 +1,8 @@
 from django.views.generic import TemplateView
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
 from django.shortcuts import render
 from django.contrib import messages
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from myLibs.data_processing import create_dict
 from myLibs.chart_generator import create_chart, create_chart_training
@@ -28,8 +26,7 @@ class ViewTweetsView(TemplateView):
             return context
                 
         def post(self, request, **kwargs):
-            global qtd_tweets_polarity_training
-            global qtd_tweets_polarity
+            global quantity_tweets
             
             if request.method == 'POST':
                 
@@ -45,58 +42,34 @@ class ViewTweetsView(TemplateView):
                     bearerToken = self.request.user.bearerToken
 
                     option = request.POST['inlineRadioOptions']
+                    
+                    print(option)
+                    
+                    #Verifica a opção escolhida e salva as funções que tratam os respectivos tipos de escolha em uma variavel
+                    if option == 'simples':
+                        search_type = create_dict
+                        chart_type = create_chart
+                    
+                    elif option == 'treinamento':
+                        search_type = create_dict_training
+                        chart_type = create_chart_training
+                    
+                    tweets = search_type(search, amoutTweets, consumerKey, consumerSecret, 
+                                            accessToken, accessTokenSecret, bearerToken)
+                    
+                    quantity_tweets = chart_type(tweets, search)
 
-                    if option == 'completa':
-                        tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, 
-                                            accessToken, accessTokenSecret, bearerToken)
-                        tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
-                                                                    accessToken, accessTokenSecret, bearerToken)
-                        
-                        qtd_tweets_polarity = create_chart(tweets, search)
-                        qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
-                        
-                        context = super().get_context_data(**kwargs)
-                        context['term'] = search
-                        context['tweets'] = tweets
-                        context['tweets_human_training'] = tweets_human_training
-                        context['amoutTweets'] = amoutTweets
-                        context['tweetsAnalyzed'] = len(tweets)
-                        context['tweetsError'] = int(amoutTweets) - len(tweets)
-                        context['qtd_tweets_polarity'] = qtd_tweets_polarity
-                        context['qtd_tweets_polarity_training'] = qtd_tweets_polarity_training
-                        return render(request, 'tweets/viewtweets.html', context)
+                    wordCloud(tweets)
                     
-                    elif option == 'traducao':
-                        tweets = create_dict(search, amoutTweets, consumerKey, consumerSecret, 
-                                            accessToken, accessTokenSecret, bearerToken)
-                        qtd_tweets_polarity = create_chart(tweets, search)
-                        context = super().get_context_data(**kwargs)
-                        context['term'] = search
-                        context['tweets'] = tweets
-                        context['amoutTweets'] = amoutTweets
-                        context['tweetsAnalyzed'] = len(tweets)
-                        context['tweetsError'] = int(amoutTweets) - len(tweets)
-                        context['qtd_tweets_polarity'] = qtd_tweets_polarity
-                        return render(request, 'tweets/viewtweets.html', context)
-                    
-                    else:
-                        
-                        tweets_human_training = create_dict_training(search, amoutTweets, consumerKey, consumerSecret, 
-                                                                    accessToken, accessTokenSecret, bearerToken)
-                        
-                        qtd_tweets_polarity_training = create_chart_training(tweets_human_training, search)
-                        
-                        wordCloud(tweets_human_training)
-                        
-                        #create_chart(tweets, search)
-                        context = super().get_context_data(**kwargs)
-                        context['term'] = search
-                        context['tweets_human_training'] = tweets_human_training
-                        context['amoutTweets'] = amoutTweets
-                        context['tweetsAnalyzed'] = len(tweets_human_training)
-                        context['tweetsError'] = int(amoutTweets) - len(tweets_human_training)
-                        context['qtd_tweets_polarity_training'] = qtd_tweets_polarity_training
-                        return render(request, 'tweets/viewtweets.html', context)
+                    context = super().get_context_data(**kwargs)
+                    context['option'] = option
+                    context['term'] = search
+                    context['tweets'] = tweets
+                    context['amoutTweets'] = amoutTweets
+                    context['tweetsAnalyzed'] = len(tweets)
+                    context['tweetsError'] = int(amoutTweets) - len(tweets)
+                    context['qtd_tweets'] = quantity_tweets
+                    return render(request, 'tweets/viewtweets.html', context)
                 
                 # else para se o usuario não fez alguma pesquisa
                 else:       
@@ -110,34 +83,31 @@ class ChartData(APIView):
     permission_classes = []
 
     def get(self, request, format=None):
-        global qtd_tweets_polarity_training
-        global qtd_tweets_polarity
-        
-        data = {"dict": ""}
-        
-        if qtd_tweets_polarity: 
-            labels_polarity = ['Positivo', 'Neutro', 'Negativo']
-            default_items_polarity = [qtd_tweets_polarity[0], qtd_tweets_polarity[1], qtd_tweets_polarity[2]]
+        global quantity_tweets
+    
+        labels = ["alegria", "nojo", "medo", "raiva", "surpresa", "tristeza"]
+        default_items = [quantity_tweets[0], quantity_tweets[1], quantity_tweets[2], 
+                        quantity_tweets[3], quantity_tweets[4], quantity_tweets[5]]
+        data = {
             
-            data_polarity = {
-            "labels": labels_polarity,
-            "default": default_items_polarity,
-            }
-            data['dict'] = data_polarity
-            
-        if qtd_tweets_polarity_training:
-            labels = ["alegria", "nojo", "medo", "raiva", "surpresa", "tristeza"]
-            default_items = [qtd_tweets_polarity_training[0], qtd_tweets_polarity_training[1], qtd_tweets_polarity_training[2], 
-                         qtd_tweets_polarity_training[3], qtd_tweets_polarity_training[4], qtd_tweets_polarity_training[5]]
-            
-            data_polarity_training = {
-                
-                "labels": labels,
-                "default": default_items,
+            "labels": labels,
+            "default": default_items,
+        }
+        return Response(data)
+    
+    
+class ChartDataPolarity(APIView):
 
-            }
-            
-            data['dict'] = data_polarity_training
-            
-            
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        global quantity_tweets
+        
+        labels_polarity = ['Positivo', 'Neutro', 'Negativo']
+        default_items_polarity = [quantity_tweets[0], quantity_tweets[1], quantity_tweets[2]]
+        data = {
+        "labels": labels_polarity,
+        "default": default_items_polarity,
+        } 
         return Response(data)

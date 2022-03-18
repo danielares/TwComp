@@ -2,12 +2,12 @@
 
 <div class="text-black row d-flex justify-content-center">
     <div class="card text-black mx-1 my-1" style="width: 35rem;">
-        <div class="col-sm-12" url-endpoint='{% url "viewtweets" %}'>
+        <div class="col-sm-12" url-endpointPolarity='{% url "viewtweets" %}'>
             <canvas id="myChart3" width="400" height="400"></canvas>
         </div>
     </div>
     <div class="card text-black mx-1 my-1" style="width: 35rem;">
-        <div class="col-sm-12" url-endpoint='{% url "viewtweets" %}'>
+        <div class="col-sm-12" url-endpointPolarity='{% url "viewtweets" %}'>
             <canvas id="myChart4" width="400" height="400"></canvas>
         </div>
     </div>
@@ -19,15 +19,15 @@
 
 <script>
 
-    var endpoint = '/api/chart/data'
+    var endpointPolarity = '/api/chart/data-polarity'
     var defaultData_polarity = []
     var labels_polarity = []
     $.ajax({
         method: "GET",
-        url: endpoint,
+        url: endpointPolarity,
         success: function (data) {
-            labels_polarity = data.data_polarity.labels
-            defaultData_polarity = data.data_polarity.default
+            labels_polarity = data.labels
+            defaultData_polarity = data.default
             setChart()
 
         },
@@ -50,9 +50,9 @@
                     label: 'Polaridades',
                     data: defaultData_polarity,
                     backgroundColor: [
-                        'rgba(249, 227, 26, 0.8)',
                         'rgba(111, 242, 24, 0.9)',
-                        'rgba(57, 112, 139, 0.9)',
+                        'rgba(114, 107, 107, 0.9)',
+                        'rgba(233, 45, 64, 0.9)',
                     ],
                     borderColor: [
                         'black',
@@ -81,9 +81,9 @@
                     label: 'Sentimentos',
                     data: defaultData_polarity,
                     backgroundColor: [
-                        'rgba(249, 227, 26, 0.8)',
                         'rgba(111, 242, 24, 0.9)',
-                        'rgba(57, 112, 139, 0.9)',
+                        'rgba(114, 107, 107, 0.9)',
+                        'rgba(233, 45, 64, 0.9)',
                     ],
                     borderColor: [
                         'black',

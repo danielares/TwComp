@@ -16,16 +16,12 @@
             </div>
         </div>
 
-        {% if tweets and not tweets_human_training %}
+        {% if option == 'simples' %}
         {% include 'tweets/viewtweets-trans.html' %}
-
-        {% elif tweets_human_training and not tweets %}
-        {% include 'tweets/viewtweets-training.html' %}
 
         {% else %}
         {% include 'tweets/viewtweets-training.html' %}
-        <br><br>
-        {% include 'tweets/viewtweets-trans.html' %}
+
         {% endif %}
 
         <div class="form-group">
@@ -47,18 +43,6 @@
                 <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
                 <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
                 {% endfor %}
-
-                {% if tweets_human_training and not tweets %}
-                {% for tweet in tweets_human_training %}
-                <p><strong>Usuário:</strong> {{tweet.tweet_username}}</p>
-                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                <p><strong>Data de criação:</strong> {{tweet.tweet_created_at}}</p>
-                <p><strong>Referencia ao tweet:</strong> ID: {{tweet.tweet_referenced_tweets}}</p>
-                <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
-                {% endfor %}
-                {% endif %}
             </div>
         </div>
 

@@ -26,8 +26,8 @@
         method: "GET",
         url: endpoint,
         success: function (data) {
-            labels = data.data_polarity_training.labels
-            defaultData = data.data_polarity_training.default
+            labels = data.labels
+            defaultData = data.default
             setChart()
 
         },
