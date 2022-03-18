@@ -77,7 +77,7 @@ def create_chart(tweets, term_searched):
     create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
     create_bar_chart(qtd_tweets, polaridade,  term_searched, colors)
     
-    return qtd_tweets
+    return qtd_tweets, polaridade, colors
 
 
 def create_chart_training(tweets, term_searched):
@@ -92,4 +92,4 @@ def create_chart_training(tweets, term_searched):
     create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched+'Training')
     create_bar_chart(qtd_tweets, polaridade, term_searched+'Training', colors)
     
-    return qtd_tweets
+    return qtd_tweets, polaridade, colors

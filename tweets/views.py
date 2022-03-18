@@ -26,7 +26,7 @@ class ViewTweetsView(TemplateView):
             return context
                 
         def post(self, request, **kwargs):
-            global quantity_tweets
+            global chartsInfo
             
             if request.method == 'POST':
                 
@@ -57,7 +57,7 @@ class ViewTweetsView(TemplateView):
                     tweets = search_type(search, amoutTweets, consumerKey, consumerSecret, 
                                             accessToken, accessTokenSecret, bearerToken)
                     
-                    quantity_tweets = chart_type(tweets, search)
+                    chartsInfo = chart_type(tweets, search)
 
                     wordCloud(tweets)
                     
@@ -68,7 +68,7 @@ class ViewTweetsView(TemplateView):
                     context['amoutTweets'] = amoutTweets
                     context['tweetsAnalyzed'] = len(tweets)
                     context['tweetsError'] = int(amoutTweets) - len(tweets)
-                    context['qtd_tweets'] = quantity_tweets
+                    context['qtd_tweets'] = chartsInfo[0]
                     return render(request, 'tweets/viewtweets.html', context)
                 
                 # else para se o usuario não fez alguma pesquisa
@@ -76,38 +76,23 @@ class ViewTweetsView(TemplateView):
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
         
-        
+
 class ChartData(APIView):
 
     authentication_classes = []
     permission_classes = []
 
     def get(self, request, format=None):
-        global quantity_tweets
-    
-        labels = ["alegria", "nojo", "medo", "raiva", "surpresa", "tristeza"]
-        default_items = [quantity_tweets[0], quantity_tweets[1], quantity_tweets[2], 
-                        quantity_tweets[3], quantity_tweets[4], quantity_tweets[5]]
+        global chartsInfo
+        
+        data = chartsInfo[0]
+        labels = chartsInfo[1]
+        colors = chartsInfo[2]
+                        
         data = {
-            
             "labels": labels,
-            "default": default_items,
+            "default": data,
+            "colors": colors,
         }
         return Response(data)
-    
-    
-class ChartDataPolarity(APIView):
-
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        global quantity_tweets
-        
-        labels_polarity = ['Positivo', 'Neutro', 'Negativo']
-        default_items_polarity = [quantity_tweets[0], quantity_tweets[1], quantity_tweets[2]]
-        data = {
-        "labels": labels_polarity,
-        "default": default_items_polarity,
-        } 
-        return Response(data)
+     

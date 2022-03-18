@@ -26,8 +26,11 @@
         method: "GET",
         url: endpoint,
         success: function (data) {
+
             labels = data.labels
             defaultData = data.default
+            colors = data.colors
+
             setChart()
 
         },
@@ -49,22 +52,8 @@
                 datasets: [{
                     label: 'Sentimentos',
                     data: defaultData,
-                    backgroundColor: [
-                        'rgba(249, 227, 26, 0.8)',
-                        'rgba(111, 242, 24, 0.9)',
-                        'rgba(57, 112, 139, 0.9)',
-                        'rgba(233, 45, 64, 0.9)',
-                        'rgba(101, 51, 240, 0.9)',
-                        'rgba(114, 107, 107, 0.9)'
-                    ],
-                    borderColor: [
-                        'black',
-                        'black',
-                        'black',
-                        'black',
-                        'black',
-                        'black'
-                    ],
+                    backgroundColor: colors,
+                    borderColor: 'black',
                     borderWidth: 1
                 }]
             },
@@ -86,22 +75,8 @@
                 datasets: [{
                     label: 'Sentimentos',
                     data: defaultData,
-                    backgroundColor: [
-                        'rgba(249, 227, 26, 0.8)',
-                        'rgba(111, 242, 24, 0.9)',
-                        'rgba(57, 112, 139, 0.9)',
-                        'rgba(233, 45, 64, 0.9)',
-                        'rgba(101, 51, 240, 0.9)',
-                        'rgba(114, 107, 107, 0.9)'
-                    ],
-                    borderColor: [
-                        'black',
-                        'black',
-                        'black',
-                        'black',
-                        'black',
-                        'black'
-                    ],
+                    backgroundColor: colors,
+                    borderColor: 'black',
                     borderWidth: 1
                 }]
             },
