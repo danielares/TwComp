@@ -49,7 +49,7 @@ class ViewTweetsView(TemplateView):
                     if option == 'simples':
                         search_type = create_dict
                         chart_type = create_chart
-                    
+
                     elif option == 'treinamento':
                         search_type = create_dict_training
                         chart_type = create_chart_training
@@ -68,7 +68,7 @@ class ViewTweetsView(TemplateView):
                     context['amoutTweets'] = amoutTweets
                     context['tweetsAnalyzed'] = len(tweets)
                     context['tweetsError'] = int(amoutTweets) - len(tweets)
-                    context['qtd_tweets'] = chartsInfo[0]
+                    context['qtd_tweets'] = chartsInfo['qtd_tweets']
                     return render(request, 'tweets/viewtweets.html', context)
                 
                 # else para se o usuario não fez alguma pesquisa
@@ -85,14 +85,9 @@ class ChartData(APIView):
     def get(self, request, format=None):
         global chartsInfo
         
-        data = chartsInfo[0]
-        labels = chartsInfo[1]
-        colors = chartsInfo[2]
-                        
-        data = {
-            "labels": labels,
-            "default": data,
-            "colors": colors,
-        }
-        return Response(data)
+        #retorna o dicionario de dados para gerar os graficos com o chartjs
+        #os dados da variavel global foram obtidos anteriormente com as funções "create_chart" e "create_chart_training"
+        
+        return Response(chartsInfo)
+    
      

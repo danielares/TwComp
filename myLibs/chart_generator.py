@@ -77,7 +77,7 @@ def create_chart(tweets, term_searched):
     create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
     create_bar_chart(qtd_tweets, polaridade,  term_searched, colors)
     
-    return qtd_tweets, polaridade, colors
+    return {"qtd_tweets": qtd_tweets, "labels": polaridade, "colors":colors}
 
 
 def create_chart_training(tweets, term_searched):
@@ -85,11 +85,10 @@ def create_chart_training(tweets, term_searched):
              
     polaridade = ['alegria', 'nojo', 'medo', 'raiva', 'surpresa', 'tristeza']
     qtd_tweets = [alegria, nojo, medo, raiva, surpresa, tristeza]
-    
-    colors = ['yellow','green', 'Violet', 'red', 'blue', 'gray']
+    colors = ['yellow','green', 'violet', 'red', 'blue', 'gray']
     explode = (0, 0, 0, 0, 0, 0) 
     
     create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched+'Training')
     create_bar_chart(qtd_tweets, polaridade, term_searched+'Training', colors)
     
-    return qtd_tweets, polaridade, colors
+    return {"qtd_tweets": qtd_tweets, "labels": polaridade, "colors":colors}

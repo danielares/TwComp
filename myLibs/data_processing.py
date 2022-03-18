@@ -20,13 +20,6 @@ def getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, beare
     return client
 
 
-def retweetTake(id):
-    client = getClient()
-    retweet = client.get_tweet(id)
-    text_retweet = retweet.data['text']
-    return text_retweet
-
-
 def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
     client = getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
     
@@ -51,7 +44,6 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
                 if tweet.text[:2] != "RT":
                     tweet_dict['text'] = tweet.text
                 else:
-                    #retweet = retweetTake(tweet.referenced_tweets[0]['id'])
                     tweet_dict['text'] = tweet.text
                 tweet_dict['created_at'] = tweet.created_at
                 tweet_dict['lang'] = tweet.lang
@@ -71,8 +63,8 @@ def clean_tweet(tweet):
         tweet_clean = re.sub(r"http\S+", "", tweet_clean)  # remove links
         tweet_clean = re.sub(r"@\S+", "", tweet_clean)  # remove @USERNAME
         tweet_clean = re.sub(r"#\S+", "", tweet_clean)  # remove hashtags
-        tweet_clean = re.sub(r"Ñ", "não", tweet_clean)  # substitui Ñ por não
         tweet_clean = re.sub(r"ñ", "não", tweet_clean)  # substitui ñ por não
+        tweet_clean = re.sub(r"^B\S([rt]+)?", "", tweet_clean)  # remover rt do inicio dos retweets
         tweet_clean = tweet_clean.strip()
         return tweet_clean
 
