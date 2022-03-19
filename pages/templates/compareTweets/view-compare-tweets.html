@@ -9,7 +9,17 @@
         <h2 class="text-white row d-flex justify-content-center">Term 1: {{ term1 }}</h2>
         <h2 class="text-white row d-flex justify-content-center">Term 2: {{ term2 }}</h2><br>
 
-        {% include 'tweets/viewtweets-training.html' %}
+        {% if option == 'simples' %}
+        {% include 'compareTweets/viewtweets-trans.html' %}
+
+        {% else %}
+        {% include 'compareTweets/viewtweets-training.html' %}
+
+        {% endif %}
+
+
+
+        
 
         <!--
         <div class="form-group">

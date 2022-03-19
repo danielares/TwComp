@@ -21,9 +21,9 @@
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbar-links">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" id="home-menu" href="">Home</a>
-                    <a class="nav-item nav-link" id="about-menu" href="">About</a>
-                    <a class="nav-item nav-link" id="contact-menu" href="">Contact</a>
+                    <a class="nav-item nav-link" id="home-menu" href="{% url 'index' %}">Home</a>
+                    <a class="nav-item nav-link" id="about-menu" href="{% url 'about' %}">About</a>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'contact' %}">Contact</a>
                     {% if user.is_anonymous %}
                     <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" id="contact-menu" href="{% url 'cadastro' %}">Sign Up</a>

@@ -87,7 +87,6 @@ class ChartData(APIView):
 
     def get(self, request, format=None):
         api = get_api()
-
         
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "create_chart" e "create_chart_training"

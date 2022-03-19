@@ -3,13 +3,45 @@
 <h3 class="text-white">Analise com base em treinamento: </h3>
 <div class="text-black row d-flex justify-content-center">
     <div class="text-black row d-flex justify-content-center">
+
         <div class="card text-black mx-1 my-1" style="width: 35rem;">
-            <img class="card-img-top" src="{% static '/images/temp/' %} {{ term1 }} TrainingBar.png"
-                alt="Imagem de capa do card"> 
+            <img class="card-img-top" src="{% static '/images/temp/'%}{{term1}}Bar.png">
+            <div class="card-body">
+                <p class="card-text">Os gráficos acima representam a polaridade dos tweets coletados;</p>
+                <p class="card-text">Com base na coleta de {{ amoutTweets }} tweets foi feito com sucesso a analise de
+                    {{tweetsAnalyzed}} tweets e ocorreram {{tweetsError}} erros;</p>
+                <p class="card-text">A quantidade de resultados por categoria está representa abaixo.</p>
+
+                <ul class="list-group list-group-flush" style="color:black">
+                    <li class="list-group-item">Alegria: {{ qtd_tweets1.0 }}</li>
+                    <li class="list-group-item">Nojo: {{ qtd_tweets1.1 }}</li>
+                    <li class="list-group-item">Medo: {{ qtd_tweets1.2 }}</li>
+                    <li class="list-group-item">Raiva: {{ qtd_tweets1.3 }}</li>
+                    <li class="list-group-item">Surpresa: {{ qtd_tweets1.4 }}</li>
+                    <li class="list-group-item">Tristeza: {{ qtd_tweets1.5 }}</li>
+                </ul>
+            </div>
         </div>
+
+
+
         <div class="card text-black mx-1 my-1" style="width: 35rem;">
-            <img class="card-img-top" src="{% static '/images/temp/' %} {{ term2 }} TrainingBar.png"
-                alt="Imagem de capa do card">
+            <img class="card-img-top" src="{% static '/images/temp/'%}{{term2}}Bar.png">
+            <div class="card-body">
+                <p class="card-text">Os gráficos acima representam a polaridade dos tweets coletados;</p>
+                <p class="card-text">Com base na coleta de {{ amoutTweets }} tweets foi feito com sucesso a analise de
+                    {{tweetsAnalyzed}} tweets e ocorreram {{tweetsError}} erros;</p>
+                <p class="card-text">A quantidade de resultados por categoria está representa abaixo.</p>
+
+                <ul class="list-group list-group-flush" style="color:black">
+                    <li class="list-group-item">Alegria: {{ qtd_tweets2.0 }}</li>
+                    <li class="list-group-item">Nojo: {{ qtd_tweets2.1 }}</li>
+                    <li class="list-group-item">Medo: {{ qtd_tweets2.2 }}</li>
+                    <li class="list-group-item">Raiva: {{ qtd_tweets2.3 }}</li>
+                    <li class="list-group-item">Surpresa: {{ qtd_tweets2.4 }}</li>
+                    <li class="list-group-item">Tristeza: {{ qtd_tweets2.5 }}</li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -19,15 +51,6 @@
             <p class="card-text">Com base na coleta de {{ amoutTweets }} tweets foi feito com sucesso a analise de
                 {{tweetsAnalyzed}} tweets e ocorreram {{tweetsError}} erros;</p>
             <p class="card-text">A quantidade de resultados por categoria está representa abaixo.</p>
-
-            <ul class="list-group list-group-flush" style="color:black">
-                <li class="list-group-item">Alegria: {{ qtd_tweets_polarity_training.0 }}</li>
-                <li class="list-group-item">Nojo: {{ qtd_tweets_polarity_training.1 }}</li>
-                <li class="list-group-item">Medo: {{ qtd_tweets_polarity_training.2 }}</li>
-                <li class="list-group-item">Raiva: {{ qtd_tweets_polarity_training.3 }}</li>
-                <li class="list-group-item">Surpresa: {{ qtd_tweets_polarity_training.4 }}</li>
-                <li class="list-group-item">Tristeza: {{ qtd_tweets_polarity_training.5 }}</li>
-            </ul>
         </div>
     </div>
 </div>

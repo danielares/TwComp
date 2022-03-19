@@ -40,20 +40,20 @@
             <!-- TIPO DE PESQUISA A SER FEITA -->
             <div>
                 <h6>Tipo de análise: </h6>
-                <!-- OPÇÃO PESQUISA COMPLETA -->
+                <!-- OPÇÃO PESQUISA COMPLETA
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaCompleta"
                         value="completa" checked />
                     <label class="form-check-label" for="pesquisaCompleta">Completa</label>
                 </div>
-                <!-- OPÇÃO PESQUISA COMPLETA -->
+                OPÇÃO PESQUISA COMPLETA -->
 
 
                 <!-- OPÇÃO PESQUISA TRADUCAO -->
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaTraducao"
-                        value="traducao" />
-                    <label class="form-check-label" for="pesquisaTraducao">Tradução</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pesquisaSimples"
+                        value="traducao" checked />
+                    <label class="form-check-label" for="pesquisaSimples">Simples</label>
                 </div>
                 <!-- OPÇÃO PESQUISA TRADUCAO -->
 
@@ -78,14 +78,26 @@
 
         </form>
 
-        <p class="justify-content-left text-white pt-5">
-            Tipos de análise:<br>
-            <em>Completa: Faz dois tipos de análise dos tweets, por tradução e por treinamento e compara os
-                resultados</em><br>
-            <em>Tradução: Faz a análise dos tweets utilizando uma biblioteca pronta. (Pode ser lento pois é preciso
-                traduzir os tweets para ingles)</em><br>
-            <em>Treinamento: Faz a análise dos tweets por meio de treinamento humano</em>
-        </p>
+        <div class="justify-content-left text-white pt-2">
+            <em>
+                <p>Tipos de análise:</p>
+                <p>Simples: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
+                <ul>
+                    <li>positivo</li>
+                    <li>neutro</li>
+                    <li>negativo</li>
+                </ul>
+                <p>Treinamento: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
+                <ul>
+                    <li>alegria</li>
+                    <li>nojo</li>
+                    <li>medo</li>
+                    <li>raiva</li>
+                    <li>surpresa</li>
+                    <li>tristeza</li>
+                </ul>
+            </em>
+        </div>
     </div>
 </section>
 
