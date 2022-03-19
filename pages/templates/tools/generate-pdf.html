@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="{% static 'css/report.css' %}" rel="stylesheet">
+    <link href="{% static 'css/report/report.css' %}" rel="stylesheet">
     <title>Report</title>
     <meta name="description" content="Report example">
 </head>
@@ -12,25 +12,27 @@
     <article id="cover">
         <h1 id="title-page">Relatório de tweets: {{ term }}</h1>
         <address>
-            WeasyPrint
-            26 rue Emile Decorps
-            69100 Villeurbanne France
+            TwComp
+            Analyze tweets in a simple way
         </address>
         <address>
-            contact@courtbouillon.org
-            https://courtbouillon.org
+            contact@twcomp.or
+            https://twcomp.com.br
         </address>
     </article>
 
     <article id="contents">
-        <h2>Table of contents</h2>
-        <h3>Part one</h3>
+        <h2>Índice</h2>
+        <h3>Parte um</h3>
         <ul>
             <li><a href="#columns-title"></a></li>
+            <li><a href="#columns-title-2"></a></li>
+            <li><a href="#columns-title-2-pie"></a></li>
+            <li><a href="#columns-title-2-bar"></a></li>
             <li><a href="#skills-title"></a></li>
         </ul>
 
-        <h3>Part two</h3>
+        <h3>Parte dois</h3>
         <ul>
             <li><a href="#offers-title"></a></li>
             <li><a href="#chapter-title"></a></li>
@@ -68,10 +70,11 @@
 
 
     <article id="columns">
-        <h2 id="columns-title">Gráficos</h2>
+        <h2 id="columns-title-2">Gráficos</h2>
 
-        <h3>Gráfico de pizza</h3>
-        <img src="{% static 'images/temp/MicrosoftTrainingPizza.png' %}">
+        <h3 id="columns-title-2-pie">Gráfico de pizza</h3>
+
+        <img src="{% static '/images/temp/'%}{{term}}Pie.png">
 
         <section>
             <p>
@@ -79,19 +82,21 @@
                 Cada fatia representa uma categoria de dados e o tamanho é proporcional à quantidade que representa.
             </p>
             <p>
-                Phasellus id nisl nec arcu tempor ultricies non id tortor. Mauris ex nibh, viverra vitae nisi eget,
-                placerat pharetra est.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id maximus diam. Cras molestie nisl vitae
-                iaculis convallis.
-                Vivamus molestie vitae nisl sed interdum. Nunc aliquam massa rhoncus finibus convallis.
-                Vivamus sed vulputate risus. Nunc dignissim magna velit, quis lobortis ex volutpat eget.
-                Proin dictum mauris condimentum consequat faucibus.
+                Com base na analise de {{amoutTweets}} tweets, o algoritmo identificou a seguinte quantidade de tweets
+                por sentimento:
+            <ul>
+                <li>{{chartsInfo.qtd_tweets.0}} - alegria;</li>
+                <li>{{chartsInfo.qtd_tweets.1}} - nojo;</li>
+                <li>{{chartsInfo.qtd_tweets.2}} - medo;</li>
+                <li>{{chartsInfo.qtd_tweets.3}} - raiva;</li>
+                <li>{{chartsInfo.qtd_tweets.4}} - surpresa;</li>
+                <li>{{chartsInfo.qtd_tweets.5}} - tristeza.</li>
+            </ul>
             </p>
         </section>
 
-
-        <h3>Gráfico de barras</h3>
-        <img src="{% static 'images/temp/MicrosoftTrainingBar.png' %}">
+        <h3 id="columns-title-2-bar">Gráfico de barras</h3>
+        <img src="{% static 'images/temp/'%}{{term}}Bar.png">
 
         <section>
             <p>

@@ -44,7 +44,14 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
                 if tweet.text[:2] != "RT":
                     tweet_dict['text'] = tweet.text
                 else:
-                    tweet_dict['text'] = tweet.text
+                    id_retweet_no_tweet_original = tweet['referenced_tweets']
+                    id = id_retweet_no_tweet_original[0].id
+                    
+                    for retweet in tweets.includes['tweets']:
+                        id_retweet = retweet.id
+                        if id == id_retweet:
+                            tweet_dict['text'] = retweet.text
+
                 tweet_dict['created_at'] = tweet.created_at
                 tweet_dict['lang'] = tweet.lang
                 tweet_dict['geo'] = tweet.geo

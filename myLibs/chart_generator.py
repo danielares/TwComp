@@ -7,17 +7,17 @@ def create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched):
     plt.rcParams['text.color'] = 'black'
     plt.pie(qtd_tweets, labels=polaridade, autopct='%1.1f%%', explode=explode, colors=colors)
     #plt.legend(polaridade, loc=3, frameon=True, facecolor='black')
-    plt.title('Gráfico de pizza', fontsize=16, fontweight='bold')
+    plt.title('Tweets sobre: '+term_searched, fontsize=16, fontweight='bold')
     plt.axis('equal')
     plt.tight_layout()
-    plt.savefig('pages/static/images/temp/'+term_searched+'Pizza.png', transparent=True)
+    plt.savefig('pages/static/images/temp/'+term_searched+'Pie.png', transparent=True)
     plt.clf()
     
        
 def create_bar_chart(polaridade, qtd_tweets, term_searched, colors):
     plt.bar(qtd_tweets, polaridade, color=colors, edgecolor='black')
     #plt.legend(frameon=True, facecolor='black')
-    plt.title('Gráfico de barras', fontsize=16, fontweight='bold')
+    plt.title('Tweets sobre: '+term_searched, fontsize=16, fontweight='bold')
     plt.xlabel('Sentimentos', fontsize=14, color='black')
     plt.ylabel('Quantidade de tweets', fontsize=14, color='black')
     plt.tight_layout()
@@ -88,7 +88,7 @@ def create_chart_training(tweets, term_searched):
     colors = ['yellow','green', 'violet', 'red', 'blue', 'gray']
     explode = (0, 0, 0, 0, 0, 0) 
     
-    create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched+'Training')
-    create_bar_chart(qtd_tweets, polaridade, term_searched+'Training', colors)
+    create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
+    create_bar_chart(qtd_tweets, polaridade, term_searched, colors)
     
     return {"qtd_tweets": qtd_tweets, "labels": polaridade, "colors":colors}

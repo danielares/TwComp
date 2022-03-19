@@ -23,9 +23,11 @@ class GeneratePdfView(TemplateView):
         api = get_api()
         term = api['term']
         amoutTweets = api['amoutTweets']
+        chartsInfo = api['chartsInfo']
 
         
-        html_string = render_to_string('tools/generate-pdf.html', {'term': term, 'amoutTweets': amoutTweets})
+        html_string = render_to_string('tools/generate-pdf.html', {'term': term, 'amoutTweets': amoutTweets,
+                                                                   'chartsInfo': chartsInfo})
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
         html.write_pdf(target='tmp/relatorio_tweets.pdf')
