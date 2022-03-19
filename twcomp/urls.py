@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('usuarios.urls')),
     path('', include('tweets.urls')),
     path('', include('compareTweets.urls')),
+    path('', include('tools.urls')),
 ]

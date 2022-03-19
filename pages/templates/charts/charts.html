@@ -27,9 +27,9 @@
         url: endpoint,
         success: function (data) {
 
-            labels = data.labels
-            defaultData = data.qtd_tweets
-            colors = data.colors
+            labels = data.chartsInfo.labels
+            defaultData = data.chartsInfo.qtd_tweets
+            colors = data.chartsInfo.colors
 
             setChart()
 

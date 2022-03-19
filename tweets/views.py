@@ -26,7 +26,7 @@ class ViewTweetsView(TemplateView):
             return context
                 
         def post(self, request, **kwargs):
-            global chartsInfo
+            global api
             
             if request.method == 'POST':
                 
@@ -58,6 +58,9 @@ class ViewTweetsView(TemplateView):
                                             accessToken, accessTokenSecret, bearerToken)
                     
                     chartsInfo = chart_type(tweets, search)
+                    
+                    api = {"term": search, "amoutTweets": amoutTweets, 
+                           "chartsInfo": chartsInfo, "tweets": tweets,}
 
                     wordCloud(tweets)
                     
@@ -83,11 +86,14 @@ class ChartData(APIView):
     permission_classes = []
 
     def get(self, request, format=None):
-        global chartsInfo
+        api = get_api()
+
         
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "create_chart" e "create_chart_training"
         
-        return Response(chartsInfo)
+        return Response(api)  
     
-     
+def get_api():
+    global api
+    return api
