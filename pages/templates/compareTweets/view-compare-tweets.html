@@ -6,8 +6,22 @@
 
 <section class="vh-100">
     <div class="container h-100">
-        <h2 class="text-white row d-flex justify-content-center">Term 1: {{ term1 }}</h2>
-        <h2 class="text-white row d-flex justify-content-center">Term 2: {{ term2 }}</h2><br>
+        <h2 class="text-white row d-flex justify-content-center">Termos pesquisados: {{ term1 }} e {{term2}}</h2>
+
+
+        <h3 class="text-white">Wordcloud: {{term1}} X {{term2}}</h3>
+        <div class="d-flex justify-content-center my-5">
+            <div class="zoom" id="magnifying_area" style="width: 35em;">
+                <img class="img-fluid px-2" id="magnifying_img" src="{% static '/images/temp/wc'%}{{term1}}.png"
+                    alt="Imagem word cloud">
+            </div>
+
+            <div class="zoom" id="magnifying_area" style="width: 35rem;">
+                <img class="img-fluid px-2" id="magnifying_img" src="{% static '/images/temp/wc'%}{{term2}}.png"
+                    alt="Imagem word cloud">
+            </div>
+        </div>
+
 
         {% if option == 'simples' %}
         {% include 'compareTweets/viewtweets-trans.html' %}
@@ -17,47 +31,8 @@
 
         {% endif %}
 
-
-
-        
-
-        <!--
-        <div class="form-group">
-            <br>
-            <h2 class="text-white row d-flex justify-content-center">Tweets:</h2>
-            <div class="text-white">
-                {% for tweet in tweets %}
-                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-
-                <p><strong>Usuario:</strong> {{tweet.tweet_username}}</p>
-                <p><strong>Criado em:</strong> {{tweet.tweet_created_at}}</p>
-                <p><strong>Idioma:</strong> {{tweet.tweet_lang}}</p>
-                <p><strong>Geo:</strong> {{tweet.tweet_geo}}</p>
-                <p><strong>Referencia ao tweet:</strong> {{tweet.tweet_referenced_tweets}}</p>
-
-                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
-                <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
-                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
-                {% endfor %}
-
-                {% if tweets_human_training and not tweets %}
-                {% for tweet in tweets_human_training %}
-                <p><strong>Usuário:</strong> {{tweet.tweet_username}}</p>
-                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                <p><strong>Tweet clean:</strong> {{tweet.tweet_created_at}}</p>
-                <p><strong>Referencia ao tweet:</strong> ID: {{tweet.tweet_referenced_tweets}}</p>
-                <p><strong>Treinamento humano:</strong> {{tweet.tweet_analise}}</p><br>
-                {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-
     </div>
 </section>
--->
+
 
 {% endblock %}
