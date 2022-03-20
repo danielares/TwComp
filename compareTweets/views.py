@@ -91,7 +91,7 @@ class CompareTweetsView(TemplateView):
                 else:       
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
-        
+
 
 class CompareChartData(APIView):
     authentication_classes = []

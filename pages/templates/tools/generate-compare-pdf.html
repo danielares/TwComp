@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="{% static 'css/report/report.css' %}" rel="stylesheet">
+    <link href="{% static 'css/report/report-compare.css' %}" rel="stylesheet">
     <title>Report</title>
     <meta name="description" content="Report example">
 </head>
 
 <body>
     <article id="cover">
-        <h1 id="title-page">Relatório de tweets: {{ term }}</h1>
+        <h1 id="title-page">Relatório de tweets: {{ term1 }} e {{ term2 }}</h1>
         <address>
             TwComp
             Analyze tweets in a simple way
@@ -44,7 +44,10 @@
         <h2 id="columns-title">Word Cloud</h2>
 
         <h3>Word Cloud gerada a partir dos tweets coletados</h3>
-        <img src="{% static '/images/temp/wc'%}{{term}}.png" id="wordcloud">
+        <h4>Word Cloud: {{term1}}</h4>
+        <img src="{% static '/images/temp/wc'%}{{term1}}.png" id="wordcloud">
+        <h4>Word Cloud: {{term2}}</h4>
+        <img src="{% static '/images/temp/wc'%}{{term2}}.png" id="wordcloud">
 
         <section>
             <p>

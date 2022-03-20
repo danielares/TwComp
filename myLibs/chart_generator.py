@@ -66,7 +66,7 @@ def count_sentiments(tweets):
     return alegria, nojo, medo, raiva, surpresa, tristeza
 
 
-def create_chart(tweets, term_searched):
+def create_chart(tweets, term_searched, pie=False, bar=False):
     positive, neutral, negative = count_polarity(tweets)
              
     polaridade = ['Positivo', 'Neutro', 'Negativo']
@@ -74,13 +74,13 @@ def create_chart(tweets, term_searched):
     colors = ['green','gray','red']
     explode = (0, 0, 0,) 
     
-    create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
-    create_bar_chart(qtd_tweets, polaridade,  term_searched, colors)
+    if pie: create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
+    if bar: create_bar_chart(qtd_tweets, polaridade,  term_searched, colors)
     
     return {"qtd_tweets": qtd_tweets, "labels": polaridade, "colors":colors}
 
 
-def create_chart_training(tweets, term_searched):
+def create_chart_training(tweets, term_searched, pie=False, bar=False):
     alegria, nojo, medo, raiva, surpresa, tristeza = count_sentiments(tweets)
              
     polaridade = ['alegria', 'nojo', 'medo', 'raiva', 'surpresa', 'tristeza']
@@ -88,7 +88,7 @@ def create_chart_training(tweets, term_searched):
     colors = ['yellow','green', 'violet', 'red', 'blue', 'gray']
     explode = (0, 0, 0, 0, 0, 0) 
     
-    create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
-    create_bar_chart(qtd_tweets, polaridade, term_searched, colors)
+    if pie: create_pie_chart(qtd_tweets, polaridade, explode, colors, term_searched)
+    if bar: create_bar_chart(qtd_tweets, polaridade, term_searched, colors)
     
     return {"qtd_tweets": qtd_tweets, "labels": polaridade, "colors":colors}

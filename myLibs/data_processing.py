@@ -31,7 +31,6 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
     
     tweet_data = tweets.data
     tweets_users = tweets.includes['users']
-    tweets_rt = tweets.includes['tweets']
     
     results = []
 
@@ -44,6 +43,10 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
                 if tweet.text[:2] != "RT":
                     tweet_dict['text'] = tweet.text
                 else:
+                    # USADO PQ A API DO TWITTER NÃO ENTREGA OS RETWEETS POR COMPLETO NO TWEET.TEXT DO IF ACIMA
+                    # O RETWEET COMPLETO ESTA LOCALIZADO NO TWEETS.INCLUDES
+                    # COM ESSA CONDIÇÃO É POSSIVEL PEGAR O RETWEET COMPLETO E SALVA-LO NO DICIONARIO
+                    
                     id_retweet_no_tweet_original = tweet['referenced_tweets']
                     id = id_retweet_no_tweet_original[0].id
                     

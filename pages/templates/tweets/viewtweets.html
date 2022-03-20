@@ -53,11 +53,12 @@
 
         <div class="form-group">
             <br>
-            <h2 class="text-white row d-flex justify-content-center">Tweets:</h2>
+            <h2 class="text-white row d-flex justify-content-center">Exemplo dos tweets:</h2>
             <div class="text-white">
                 {% for tweet in tweets %}
                 <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
                 <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
+                <!--
                 <p><strong>Usuario:</strong> {{tweet.tweet_username}}</p>
                 <p><strong>Criado em:</strong> {{tweet.tweet_created_at}}</p>
                 <p><strong>Idioma:</strong> {{tweet.tweet_lang}}</p>
@@ -65,7 +66,7 @@
                 <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
                 <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
                 <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
-                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
+                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>-->
                 {% endfor %}
             </div>
         </div>
