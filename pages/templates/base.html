@@ -41,8 +41,11 @@
         {% block content %}
         {% endblock %}
     </main>
-    {% block jquery %}
-    {% endblock %}
+
+    {% bootstrap_javascript jquery='full' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/helpers.esm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
 </body>
 
 </html>

@@ -137,3 +137,16 @@ AUTH_USER_MODEL = 'usuarios.CustomUsuario'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Configurações de e-mail backend comentar a linha abaixo para deploy
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+"""
+Como configurar um servidor de email: 
+EMAIL_HOST = 'localhost
+EMAIL_HOST_USER = 'no-replay@seudominio.com.br'
+EMAIL_PORT = 587
+EMAIL_USER_TSL = True
+EMAIL_HOST_PASSWORD = 'sua-senha'
+"""

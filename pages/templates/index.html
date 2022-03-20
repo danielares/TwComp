@@ -9,7 +9,13 @@
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             {% if user.is_anonymous %}
-            <h1 class="text-white">INDEX</h1>
+
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/2S4qGKmzBJE"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
 
             {% else %}
             <a class="text-white mx-5 my-5" href="{% url 'searchtweets' %}">
