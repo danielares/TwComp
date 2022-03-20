@@ -1,0 +1,1 @@
+web: gunicorn twcomp.wsgi --log-file -
