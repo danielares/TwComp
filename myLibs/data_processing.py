@@ -59,7 +59,6 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
                 tweet_dict['lang'] = tweet.lang
                 tweet_dict['geo'] = tweet.geo
                 tweet_dict['referenced_tweets'] = tweet.referenced_tweets
-                print(tweet_dict['text'])
                 results.append(tweet_dict)
         except:
             print('deu erro na coleta')
@@ -128,19 +127,39 @@ def create_dict(query, amount, consumerKey, consumerSecret, accessToken, accessT
     for tweet in data:
         try:
             tweet_id = tweet['id']
+            print('Passou ID')
             tweet_text = tweet['text']
+            print('Passou text')
             
             tweet_created_at = tweet['created_at']
+            print('Passou created_at')
+            
             tweet_lang = tweet['lang']
+            print('Passou lang')
+            
             tweet_geo = tweet['geo']
+            print('Passou geo')
+            
             tweet_referenced_tweets = tweet['referenced_tweets']
+            print('Passou referenced_tweets')
+            
             tweet_username = tweet['username']
+            print('Passou username')
             
             tweet_clean = clean_tweet(tweet_text)
+            print('Passou clean tweet')
+            
             tweet_english = translatorTextBlob(tweet_clean)
+            print('Passou tradutor')
+
             tweet_without_stopwords = remove_stopwords(tweet_english)
+            print('Passou remove stopwords')            
+            
             sentimento = analise_sentimento(tweet_without_stopwords)
+            print('Passou analise de sentimento') 
+            
             polaridade = get_polarity(sentimento)
+            print('Passou get_polarity') 
             
             tweets_dict = {
                 'tweet_id': tweet_id,
