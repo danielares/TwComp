@@ -9,15 +9,15 @@
         <h2 class="text-white row d-flex justify-content-center">Termos pesquisados: {{ term1 }} e {{term2}}</h2>
 
 
-        <h3 class="text-white">Wordcloud: {{term1}} X {{term2}}</h3>
-        <div class="d-flex justify-content-center my-5">
-            <div class="zoom" id="magnifying_area" style="width: 35em;">
-                <img class="img-fluid px-2" id="magnifying_img" src="{% static '/images/temp/wc'%}{{term1}}.png"
+        <h3 class="text-white my-2">Wordcloud: {{term1}} X {{term2}}</h3>
+        <div class="d-flex justify-content-center my-2">
+            <div class="zoom" id="magnifying_area" style="width: 55em;">
+                <img class="img-fluid px-1" id="magnifying_img" src="{{ wordcloud1 }}"
                     alt="Imagem word cloud">
             </div>
 
-            <div class="zoom" id="magnifying_area" style="width: 35rem;">
-                <img class="img-fluid px-2" id="magnifying_img" src="{% static '/images/temp/wc'%}{{term2}}.png"
+            <div class="zoom" id="magnifying_area" style="width: 55rem;">
+                <img class="img-fluid px-1" id="magnifying_img" src="{{ wordcloud2 }}"
                     alt="Imagem word cloud">
             </div>
         </div>
