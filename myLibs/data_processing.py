@@ -98,9 +98,13 @@ def translatorTextBlob(tweet):
 
 def remove_stopwords(tweet):
     tweet_without_stopwords = TextBlob(tweet)
+    print('passou textbloc')
     tokens = word_tokenize(str(tweet_without_stopwords))
+    print('passou word_tokenize')
     tweet_without_stopwords = [word for word in tokens if not word in STOPWORDS]
+    print('passou for stopwords')
     tweet_without_stopwords = TreebankWordDetokenizer().detokenize(tweet_without_stopwords)
+    print('passou detokenize')
     return tweet_without_stopwords
 
 def analise_sentimento(tweet):

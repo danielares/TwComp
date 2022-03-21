@@ -2,6 +2,4 @@ wordnet
 pros_cons
 reuters
 stopwords
-word_tokenize
-detokenize
 sentiment
