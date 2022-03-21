@@ -760,14 +760,30 @@ def inicialize():
     global palavras_unicas_treinamento
     
     training_base_df = pd.DataFrame(training_base)
+    print("passou 1")
+    
     training_base_df.columns = ['Phrase', 'Sentiment']
+    print("passou 2")
     
     frases_com_Stem_treinamento = aplica_Stemmer(training_base)
+    print("passou 3")
+    
+    
     palavras_treinamento = busca_Palavras(frases_com_Stem_treinamento)
+    print("passou 4")    
+    
     frequencia_treinamento = busca_frequencia(palavras_treinamento)
+    print("passou 5")
+    
     palavras_unicas_treinamento = busca_palavras_unicas(frequencia_treinamento)
+    print("passou 6")
+    
     base_completa_treinamento = nltk.classify.apply_features(extrator_palavras, frases_com_Stem_treinamento)
+    print("passou 7")
+    
     classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
+    print("passou 8")
+    
     
     return classificador
     
