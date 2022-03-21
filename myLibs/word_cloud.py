@@ -1,5 +1,13 @@
+
 from wordcloud import WordCloud
 import nltk
+
+import io
+import urllib, base64
+
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 
@@ -15,6 +23,16 @@ def wordCloud(tweets, term):
         all_tweets = all_tweets + " " + text
 
     wc.generate(all_tweets)
-    wc.to_file('media/images/wc'+ term +'.png')
+    #wc.to_file('pages/static/images/temp/wc'+ term +'.png')
     
-    return None
+    plt.figure(figsize=(32,18))
+    plt.imshow(wc, interpolation="bilinear", aspect='auto'
+               
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+                          
+    return uri
