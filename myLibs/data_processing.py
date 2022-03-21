@@ -59,6 +59,7 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
                 tweet_dict['lang'] = tweet.lang
                 tweet_dict['geo'] = tweet.geo
                 tweet_dict['referenced_tweets'] = tweet.referenced_tweets
+                print(tweet_dict['text'])
                 results.append(tweet_dict)
         except:
             print('deu erro na coleta')
