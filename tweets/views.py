@@ -61,9 +61,9 @@ class ViewTweetsView(TemplateView):
                     
                     api = {"term": search, "amoutTweets": amoutTweets, 
                            "chartsInfo": chartsInfo, "tweets": tweets,}
-
-                    uri = wordCloud(tweets, search)
                     
+                    uri = wordCloud(tweets, search)
+    
                     context = super().get_context_data(**kwargs)
                     context['wordcloud'] = uri
                     context['option'] = option

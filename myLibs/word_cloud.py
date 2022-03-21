@@ -25,14 +25,16 @@ def wordCloud(tweets, term):
     wc.generate(all_tweets)
     #wc.to_file('pages/static/images/temp/wc'+ term +'.png')
     
-    plt.figure(figsize=(32,18))
-    plt.imshow(wc, interpolation="bilinear", aspect='auto'
-               
+    plt.figure(figsize=(12,7))
+    plt.imshow(wc, interpolation="bilinear", aspect='auto')
+    
+
     fig = plt.gcf()
     buf = io.BytesIO()
-    fig.savefig(buf, format='png')
+    fig.savefig(buf, format='png', transparent=True)
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+   
                           
     return uri
