@@ -15,6 +15,6 @@ def wordCloud(tweets, term):
         all_tweets = all_tweets + " " + text
 
     wc.generate(all_tweets)
-    wc.to_file('pages/static/images/temp/wc'+ term +'.png')
+    wc.to_file('media/images/wc'+ term +'.png')
     
     return None
