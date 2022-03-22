@@ -10,62 +10,36 @@
     <title>Index</title>
     {% bootstrap_css %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
 </head>
 
 <body>
     <header class="container" id="nav-container">
-
-        <nav class="navbar navbar-inverse bg-inverse navbar-expand-lg fixed-top">
-
-
+        <!--
+        <nav class="navbar navbar-expand-lg fixed-top">
             <a href="/" class="navbar-brand">
-                <img id="logo" src="{% static "/images/logo.png" %}" alt="TWComp"> TwComp
+                <img id="logo" src="{% static " /images/logo.png" %}" alt="TWComp"> TwComp2
             </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-links"
-                aria-controls="navbar-links" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon">
-                    <img id="logo" src="https://icon-library.com/images/menu-icon-white/menu-icon-white-2.jpg">
-                </span>
-            </button>
-            
-
-
             <div class="collapse navbar-collapse justify-content-end" id="navbar-links">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-item nav-link" id="home-menu" href="{% url 'index' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-item nav-link" id="about-menu" href="{% url 'about' %}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'contact' %}">Contact</a>
-                    </li>
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" id="home-menu" href="{% url 'index' %}">Home</a>
+                    <a class="nav-item nav-link" id="about-menu" href="{% url 'about' %}">About</a>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'contact' %}">Contact</a>
                     {% if user.is_anonymous %}
-                    <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'cadastro' %}">Sign Up</a>
-                    </li>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Login</a>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'cadastro' %}">Sign Up</a>
                     {% else %}
-                    <li class="nav-item">
-                        <p class="nav-item nav-link">{{ user.username }}</p>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'logout' %}">Logout</a>
-                    </li>
+                    <p class="nav-item nav-link">{{ user.username }}</p>
+                    <a class="nav-item nav-link" id="contact-menu" href="{% url 'logout' %}">Logout</a>
                     {% endif %}
-                </ul>
-
+                </div>
             </div>
         </nav>
+        -->
 
 
 
 
-        <!--
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
                 aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +65,7 @@
                 </form>
             </div>
         </nav>
-        -->
+
 
 
 
