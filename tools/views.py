@@ -1,30 +1,23 @@
-from urllib import response
 from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
 from django.template.loader import render_to_string
 from django.http import HttpResponse
-import requests
-import json
 
 from weasyprint import HTML
 
 from tweets.views import get_api 
 from compareTweets.views import get_api as get_api_compare
-
 from myLibs.chart_generator import create_pie_chart, create_bar_chart
 from myLibs.word_cloud import wordCloud
 
 
 class GeneratePdfView(TemplateView):
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-    
     def get(self, request, *args, **kwargs):
-        fs = FileSystemStorage('tmp')
+        
         
         api = get_api()
+        
         print('pegou api')
         term = api['term']
         amoutTweets = api['amoutTweets']
@@ -50,8 +43,11 @@ class GeneratePdfView(TemplateView):
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
         print('html')
         
-        html.write_pdf(target='tmp/relatorio_tweets.pdf')
+        html.write_pdf(target='/tmp/relatorio_tweets.pdf')
+        
+        fs = FileSystemStorage('/tmp')
         print('write pdf')
+        
         
         
         with fs.open('relatorio_tweets.pdf') as pdf:
