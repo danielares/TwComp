@@ -59,11 +59,6 @@ def create_bar_chart(polaridade, qtd_tweets, term_searched, colors):
     return bar_chart
 
 
-
-
-
-
-
 def count_polarity(tweets):
     positive = 0
     neutral = 0

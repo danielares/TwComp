@@ -25,6 +25,7 @@ class GeneratePdfView(TemplateView):
         fs = FileSystemStorage('tmp')
         
         api = get_api()
+        print('pegou api')
         term = api['term']
         amoutTweets = api['amoutTweets']
         chartsInfo = api['chartsInfo']
@@ -34,25 +35,34 @@ class GeneratePdfView(TemplateView):
         tweets = api['tweets']
         
         wordcloud = wordCloud(tweets, term)
+        print('criou wordcloud')
 
         pie = create_pie_chart(qtd_tweets, labels, colors, term)
+        print('criou chart pie')
         bar = create_bar_chart(labels, qtd_tweets, term, colors)
+        print('criou chart bar')
         
         html_string = render_to_string('tools/generate-pdf.html', {'term': term, 'amoutTweets': amoutTweets,
                                                                    'chartsInfo': chartsInfo, 'pieChart': pie,
                                                                    'barChart': bar, 'wordcloud': wordcloud})
+        print('html_string')
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
+        print('html')
+        
         html.write_pdf(target='tmp/relatorio_tweets.pdf')
+        print('write pdf')
         
         
         with fs.open('relatorio_tweets.pdf') as pdf:
+            print('open pdf')
             response = HttpResponse(pdf, content_type='application/pdf')
             #Faz o download do arquivo PDF
             #response['Content-Disposition'] = 'attachment; filename="relatorio_tweets.pdf"'
             
             #Abre o PDF direto no navegador
             response['Content-Disposition'] = 'inline; filename="relatorio_tweets.pdf"'
+            print('response')
         
         return response
 
