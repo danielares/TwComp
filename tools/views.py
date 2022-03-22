@@ -11,6 +11,9 @@ from weasyprint import HTML
 from tweets.views import get_api 
 from compareTweets.views import get_api as get_api_compare
 
+from myLibs.chart_generator import create_pie_chart, create_bar_chart
+from myLibs.word_cloud import wordCloud
+
 
 class GeneratePdfView(TemplateView):
     
@@ -25,10 +28,19 @@ class GeneratePdfView(TemplateView):
         term = api['term']
         amoutTweets = api['amoutTweets']
         chartsInfo = api['chartsInfo']
+        qtd_tweets = api['chartsInfo']['qtd_tweets']
+        colors = api['chartsInfo']['colors']
+        labels = api['chartsInfo']['labels']
+        tweets = api['tweets']
+        
+        wordcloud = wordCloud(tweets, term)
 
+        pie = create_pie_chart(qtd_tweets, labels, colors, term)
+        bar = create_bar_chart(labels, qtd_tweets, term, colors)
         
         html_string = render_to_string('tools/generate-pdf.html', {'term': term, 'amoutTweets': amoutTweets,
-                                                                   'chartsInfo': chartsInfo})
+                                                                   'chartsInfo': chartsInfo, 'pieChart': pie,
+                                                                   'barChart': bar, 'wordcloud': wordcloud})
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
         html.write_pdf(target='tmp/relatorio_tweets.pdf')

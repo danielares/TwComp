@@ -27,13 +27,13 @@ def wordCloud(tweets, term):
     
     plt.figure(figsize=(12,7))
     plt.imshow(wc, interpolation="bilinear", aspect='auto')
-    
-
+    plt.axis('off')
     fig = plt.gcf()
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', transparent=True)
+    fig.savefig(buf, format='png', transparent=True, bbox_inches='tight', pad_inches = 0)
     buf.seek(0)
     string = base64.b64encode(buf.read())
+    buf.close()
     uri = 'data:image/png;base64,' + urllib.parse.quote(string)
    
                           

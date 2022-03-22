@@ -44,7 +44,7 @@
         <h2 id="columns-title">Word Cloud</h2>
 
         <h3>Word Cloud gerada a partir dos tweets coletados</h3>
-        <img src="{% static '/images/temp/wc'%}{{term}}.png" id="wordcloud">
+        <img src="{{ wordcloud }}" id="wordcloud">
 
         <section>
             <p>
@@ -73,8 +73,7 @@
         <h2 id="columns-title-2">Gráficos</h2>
 
         <h3 id="columns-title-2-pie">Gráfico de pizza</h3>
-
-        <img src="{% static '/images/temp/'%}{{term}}Pie.png">
+        <img class="justify-content-left" src="{{ pieChart }}">
 
         <section>
             <p>
@@ -96,7 +95,8 @@
         </section>
 
         <h3 id="columns-title-2-bar">Gráfico de barras</h3>
-        <img src="{% static 'images/temp/'%}{{term}}Bar.png">
+        <img class="justify-content-left" src="{{ barChart }}">
+
 
         <section>
             <p>
@@ -116,6 +116,7 @@
 
     </article>
 
+    <!--
     <article id="skills">
         <h2 id="skills-title">This is another big title, on a page full of work presentation</h2>
 
@@ -292,6 +293,7 @@
             </dl>
         </section>
     </article>
+    -->
 </body>
 
 </html>

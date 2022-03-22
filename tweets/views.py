@@ -57,7 +57,7 @@ class ViewTweetsView(TemplateView):
                     tweets = search_type(search, amoutTweets, consumerKey, consumerSecret, 
                                             accessToken, accessTokenSecret, bearerToken)
                     
-                    chartsInfo = chart_type(tweets, search)
+                    chartsInfo = chart_type(tweets, search, pie=True, bar=True)
                     
                     api = {"term": search, "amoutTweets": amoutTweets, 
                            "chartsInfo": chartsInfo, "tweets": tweets,}
