@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+import csv
 
 from weasyprint import HTML
 
@@ -18,7 +19,6 @@ class GeneratePdfView(TemplateView):
         
         api = get_api()
         
-        print('pegou api')
         term = api['term']
         amoutTweets = api['amoutTweets']
         chartsInfo = api['chartsInfo']
@@ -28,38 +28,33 @@ class GeneratePdfView(TemplateView):
         tweets = api['tweets']
         
         wordcloud = wordCloud(tweets, term)
-        print('criou wordcloud')
+        
 
         pie = create_pie_chart(qtd_tweets, labels, colors, term)
-        print('criou chart pie')
+        
         bar = create_bar_chart(labels, qtd_tweets, term, colors)
-        print('criou chart bar')
+        
         
         html_string = render_to_string('tools/generate-pdf.html', {'term': term, 'amoutTweets': amoutTweets,
                                                                    'chartsInfo': chartsInfo, 'pieChart': pie,
                                                                    'barChart': bar, 'wordcloud': wordcloud})
-        print('html_string')
-        
+             
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
-        print('html')
         
         html.write_pdf(target='/tmp/relatorio_tweets.pdf')
         
         fs = FileSystemStorage('/tmp')
-        print('write pdf')
-        
+           
         
         
         with fs.open('relatorio_tweets.pdf') as pdf:
-            print('open pdf')
             response = HttpResponse(pdf, content_type='application/pdf')
             #Faz o download do arquivo PDF
             #response['Content-Disposition'] = 'attachment; filename="relatorio_tweets.pdf"'
             
             #Abre o PDF direto no navegador
             response['Content-Disposition'] = 'inline; filename="relatorio_tweets.pdf"'
-            print('response')
-        
+              
         return response
 
 
@@ -101,9 +96,60 @@ class GenerateComparePdfView(TemplateView):
         return response
 
 
-class GenerateCsvView(TemplateView):
-    template_name = 'tools/generate-csv.html'
+def generateCsv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=tweets.csv'
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+    # Encode UTF-8
+    response.write(u'\ufeff'.encode('utf8'))
+    
+    # Create a csv writer
+    writer = csv.writer(response)
+    
+    # Designate the Model
+    api = get_api()
+
+    #Add column headings for the csv file
+    writer.writerow(['Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet polaridade'])
+    
+    # Loop through the tweets
+    for tweet in api['tweets']:
+        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], tweet['tweet_analise']])
+        
+    return response
+
+
+def generateCsvCompare(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=tweets.csv'
+    
+    # Encode UTF-8
+    response.write(u'\ufeff'.encode('utf8'))
+    
+    # Create a csv writer
+    writer = csv.writer(response)
+    
+    # Get api
+    api = get_api_compare()
+
+    term1 = api['term1']
+    term2 = api['term2']
+    
+    #Add column headings for the csv file term 1
+    writer.writerow([term1+': Tweet id', term1+': Tweet clean', term1+': Tweet language', term1+': Tweet date', term1+': Tweet polaridade'])
+    
+    # Loop through the tweets of term 1
+    for tweet in api['tweets1']:
+        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], 
+                         tweet['tweet_analise']])
+        
+        
+    #Add column headings for the csv file term 2
+    writer.writerow([term2+': Tweet id', term2+': Tweet clean', term2+': Tweet language', term2+': Tweet date', term2+': Tweet polaridade'])
+    
+    # Loop through the tweets of term 1
+    for tweet in api['tweets2']:
+        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], 
+                         tweet['tweet_analise']])
+        
+    return response

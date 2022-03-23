@@ -65,9 +65,9 @@ def count_polarity(tweets):
     negative = 0
     
     for tweet in tweets:
-        if tweet['polaridade'] == 'positive':
+        if tweet['tweet_analise'] == 'positive':
             positive += 1
-        elif tweet['polaridade'] == 'neutral':
+        elif tweet['tweet_analise'] == 'neutral':
             neutral += 1
         else:
             negative += 1
