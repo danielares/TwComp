@@ -7,8 +7,9 @@ body {
     font-family: 'Roboto', sans-serif;
     background: rgb(0,0,0);
     background: linear-gradient(to right, rgba(0,0,0,1), rgba(44,44,44,1));
+    padding:10px;
+    padding-bottom:40px;
 }
-
 
 
 .row {
@@ -29,6 +30,7 @@ header, .navbar {
     background-color: rgba(45, 46, 47);
     font-size: 15px;
 }
+
 
 #nav-container {
     padding-top: 0;
@@ -139,10 +141,8 @@ p {
     transform: scale(1.1);
 }
 
-.custom-toggler .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-  }
-  
-.custom-toggler.navbar-toggler {
-    border-color: rgb(255,102,203);
-} 
+#footer {
+    height:150px;
+    width:100%;
+    background:#999;
+ }

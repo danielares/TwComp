@@ -8,7 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    <!-- bootstrap django -->
     {% bootstrap_css %}
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- My css -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 
@@ -17,7 +23,6 @@
 
         <nav class="navbar navbar-inverse bg-inverse navbar-expand-lg fixed-top">
 
-
             <a href="/" class="navbar-brand">
                 <img id="logo" src="{% static "/images/logo.png" %}" alt="TWComp"> TwComp
             </a>
@@ -25,11 +30,9 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-links"
                 aria-controls="navbar-links" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">
-                    <img id="logo" src="https://icon-library.com/images/menu-icon-white/menu-icon-white-2.jpg">
+                    <i style="color: white;" class="fas fa-align-justify"></i>
                 </span>
             </button>
-            
-
 
             <div class="collapse navbar-collapse justify-content-end" id="navbar-links">
                 <ul class="navbar-nav">
@@ -65,7 +68,10 @@
     <main>
         {% block content %}
         {% endblock %}
+
     </main>
+
+
 
     {% bootstrap_javascript jquery='full' %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/helpers.esm.min.js"></script>
