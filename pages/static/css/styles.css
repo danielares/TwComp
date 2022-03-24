@@ -7,10 +7,7 @@ body {
     font-family: 'Roboto', sans-serif;
     background: rgb(0,0,0);
     background: linear-gradient(to right, rgba(0,0,0,1), rgba(44,44,44,1));
-    padding:10px;
-    padding-bottom:40px;
 }
-
 
 .row {
     margin: 0;
@@ -20,9 +17,6 @@ body {
     padding: 100px 0;
 }
 
-.index-container {
-    padding: 100px 0;
-}
 
 /* Barra de navegação */
 
@@ -122,7 +116,6 @@ p {
     padding-top: 1px;
     padding-bottom: 1px;
 }
-
 
 .zoom {
     overflow: hidden;

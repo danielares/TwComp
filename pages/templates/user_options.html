@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            
+            <a class="text-white mx-5 my-5" href="{% url 'searchtweets' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Search tweets
+            </a>
+
+            <a class="text-white mx-5 my-5" href="{% url 'compareTweets' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Compare Tweets
+            </a>
+
+            
+        </div>
+    </div>
+</section>
+{% endblock %}
