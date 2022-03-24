@@ -4,9 +4,8 @@ from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from myLibs.data_processing import create_dict
-from myLibs.chart_generator import create_chart, create_chart_training
-from myLibs.training import create_dict_training
+from myLibs.generate_api_data import generate_simple_data, generate_advanced_data
+from myLibs.training_analysis import create_dict_training
 from myLibs.word_cloud import wordCloud
 
 
@@ -46,21 +45,17 @@ class ViewTweetsView(TemplateView):
                     print(option)
                     
                     #Verifica a opção escolhida e salva as funções que tratam os respectivos tipos de escolha em uma variavel
-                    if option == 'simples':
-                        search_type = create_dict
-                        chart_type = create_chart
-
-                    elif option == 'treinamento':
-                        search_type = create_dict_training
-                        chart_type = create_chart_training
                     
-                    tweets = search_type(search, amoutTweets, consumerKey, consumerSecret, 
+                    if option == 'simple': chart_type = generate_simple_data
+                    elif option == 'advanced': chart_type = generate_advanced_data
+                    
+                    tweets = create_dict_training(option, search, amoutTweets, consumerKey, consumerSecret, 
                                             accessToken, accessTokenSecret, bearerToken)
                     
-                    chartsInfo = chart_type(tweets, search, pie=True, bar=True)
+                    chartsInfo = chart_type(tweets)
                     
                     api = {"term": search, "amoutTweets": amoutTweets, 
-                           "chartsInfo": chartsInfo, "tweets": tweets,}
+                           "chartsInfo": chartsInfo}
                     
                     wordCloudImage = wordCloud(tweets, search)
     
@@ -90,7 +85,7 @@ class ChartData(APIView):
         api = get_api()
         
         #retorna o dicionario de dados para gerar os graficos com o chartjs
-        #os dados da variavel global foram obtidos anteriormente com as funções "create_chart" e "create_chart_training"
+        #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
         
         return Response(api)  
     

@@ -4,9 +4,8 @@ from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from myLibs.data_processing import create_dict
-from myLibs.chart_generator import create_chart, create_chart_training
-from myLibs.training import create_dict_training
+from myLibs.generate_api_data import generate_simple_data, generate_advanced_data
+from myLibs.training_analysis import create_dict_training
 from myLibs.word_cloud import wordCloud
 
 
@@ -48,29 +47,31 @@ class CompareTweetsView(TemplateView):
                     print(option)
                     
                     #Verifica a opção escolhida e salva as funções que tratam os respectivos tipos de escolha em uma variavel
+                    if option == 'simple': chart_type = generate_simple_data
+                    elif option == 'advanced': chart_type = generate_advanced_data
+                    '''
                     if option == 'simples':
                         search_type = create_dict
-                        chart_type = create_chart
+                        chart_type = generate_simple_data
 
                     elif option == 'treinamento':
                         search_type = create_dict_training
-                        chart_type = create_chart_training
-                    
+                        chart_type = generate_advanced_data
+                    '''
                     #PESQUISAS RELACIONADAS AO PRIMEIRO TERMO
-                    tweets1 = search_type(search1, amoutTweets, consumerKey, consumerSecret, 
+                    tweets1 = create_dict_training(option, search1, amoutTweets, consumerKey, consumerSecret, 
                                             accessToken, accessTokenSecret, bearerToken)
                     
-                    chartsInfo1 = chart_type(tweets1, search1)
+                    chartsInfo1 = chart_type(tweets1)
                     
                     #PESQUISAS RELACIONADAS AO SEGUNDO TERMO
-                    tweets2 = search_type(search2, amoutTweets, consumerKey, consumerSecret, 
+                    tweets2 = create_dict_training(option, search2, amoutTweets, consumerKey, consumerSecret, 
                         accessToken, accessTokenSecret, bearerToken)
-                    chartsInfo2 = chart_type(tweets2, search2)
+                    chartsInfo2 = chart_type(tweets2)
                     
                     api = {"term1": search1, "term2": search2, 
                             "amoutTweets": amoutTweets, 
-                           "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
-                           "tweets1": tweets1, "tweets2": tweets2}
+                           "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,}
                     
                     wordcloud1 = wordCloud(tweets1, search1)
                     wordcloud2 = wordCloud(tweets2, search2)
@@ -102,7 +103,7 @@ class CompareChartData(APIView):
         api = get_api()
 
         #retorna o dicionario de dados para gerar os graficos com o chartjs
-        #os dados da variavel global foram obtidos anteriormente com as funções "create_chart" e "create_chart_training"
+        #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
         return Response(api)  
     
 def get_api():

@@ -8,7 +8,7 @@ from weasyprint import HTML
 
 from tweets.views import get_api 
 from compareTweets.views import get_api as get_api_compare
-from myLibs.chart_generator import create_pie_chart, create_bar_chart
+from myLibs.create_charts_png import create_pie_chart, create_bar_chart
 from myLibs.word_cloud import wordCloud
 
 
