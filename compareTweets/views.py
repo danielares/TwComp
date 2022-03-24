@@ -78,6 +78,8 @@ class CompareTweetsView(TemplateView):
                     wordcloud2 = wordCloud(tweets2, search2)
 
                     context = super().get_context_data(**kwargs)
+                    context['chartsInfo1'] = chartsInfo1
+                    context['chartsInfo2'] = chartsInfo2
                     context['wordcloud1'] = wordcloud1
                     context['wordcloud2'] = wordcloud2
                     context['option'] = option
