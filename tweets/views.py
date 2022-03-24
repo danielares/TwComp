@@ -55,7 +55,7 @@ class ViewTweetsView(TemplateView):
                     chartsInfo = chart_type(tweets)
                     
                     api = {"term": search, "amoutTweets": amoutTweets, 
-                           "chartsInfo": chartsInfo}
+                           "chartsInfo": chartsInfo, 'tweets': tweets}
                     
                     wordCloudImage = wordCloud(tweets, search)
     
@@ -84,10 +84,12 @@ class ChartData(APIView):
     def get(self, request, format=None):
         api = get_api()
         
+        api_chart = {"term": api['term'], "amoutTweets": api['amoutTweets'], 
+                           "chartsInfo": api['chartsInfo']}
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
         
-        return Response(api)  
+        return Response(api_chart)  
     
 def get_api():
     global api

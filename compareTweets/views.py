@@ -71,7 +71,8 @@ class CompareTweetsView(TemplateView):
                     
                     api = {"term1": search1, "term2": search2, 
                             "amoutTweets": amoutTweets, 
-                           "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,}
+                           "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
+                           "tweets1": tweets1, "tweets2": tweets2}
                     
                     wordcloud1 = wordCloud(tweets1, search1)
                     wordcloud2 = wordCloud(tweets2, search2)
@@ -101,10 +102,14 @@ class CompareChartData(APIView):
     permission_classes = []
     def get(self, request, format=None):
         api = get_api()
-
+        
+        api_chart = {"term1": api['term1'], "term2": api['term2'],
+                     "amoutTweets": api['amoutTweets'], 
+                    "chartsInfo1": api['chartsInfo1'],
+                    "chartsInfo2": api['chartsInfo2'],}
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
-        return Response(api)  
+        return Response(api_chart)  
     
 def get_api():
     global api
