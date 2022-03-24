@@ -1,9 +1,9 @@
 from django.urls import path, include
 
-from usuarios.views import IndexView, CadastroView
+from usuarios.views import IndexView, CreateUserView
 
 urlpatterns = [
     path('contas/', include('django.contrib.auth.urls')),
     path('', IndexView.as_view(), name='index'),
-    path('cadastro/', CadastroView.as_view(), name='cadastro'),
+    path('create-user/', CreateUserView.as_view(), name='create_user'),
 ]

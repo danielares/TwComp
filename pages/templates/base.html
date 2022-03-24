@@ -50,11 +50,11 @@
                         <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'cadastro' %}">Sign Up</a>
+                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'create_user' %}">Sign Up</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <p class="nav-item nav-link">{{ user.username }}</p>
+                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'index' %}">{{ user.first_name }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-item nav-link" id="contact-menu" href="{% url 'logout' %}">Logout</a>

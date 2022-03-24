@@ -6,7 +6,7 @@ from django.contrib.auth.models import auth
 from .models import CustomUsuario
 
 
-class CadastroView(TemplateView):
+class CreateUserView(TemplateView):
     template_name = 'registration/cadastro.html'
     #form_class = CustomUsuarioCreateForm
     success_url = reverse_lazy('login')
@@ -21,7 +21,6 @@ class CadastroView(TemplateView):
             last_name = request.POST['lastname']
             email = request.POST['email']
             password1 = request.POST['password1']
-            password2 = request.POST['password2']
             
             consumerKey = request.POST['consumerKey']
             consumerSecret = request.POST['consumerSecret']
@@ -42,14 +41,11 @@ class CadastroView(TemplateView):
         
         else:
             return render(request, 'index.html')
-    
-    
+          
+ 
 class IndexView(TemplateView):
     template_name = 'index.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-
-# Create your views here.

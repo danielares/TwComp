@@ -2,7 +2,7 @@
 
 <div class="text-black row d-flex justify-content-center">
     <div class="card text-black mx-1 my-1" style="width: 35rem;">
-        <div class="col-sm-12" url-endpoint='{% url "api" %}'>
+        <div class="col-sm-12">
             <canvas id="myChart" width="400" height="400"></canvas>
         </div>
     </div>
@@ -19,7 +19,7 @@
 
 <script>
 
-    var endpoint = '/api/chart/data'
+    var endpoint = '/api/chart/data/'
     var defaultData = []
     var labels = []
     $.ajax({
