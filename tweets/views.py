@@ -60,6 +60,7 @@ class ViewTweetsView(TemplateView):
                     wordCloudImage = wordCloud(tweets, search)
     
                     context = super().get_context_data(**kwargs)
+                    context['chartsInfo'] = chartsInfo
                     context['wordcloud'] = wordCloudImage
                     context['option'] = option
                     context['term'] = search

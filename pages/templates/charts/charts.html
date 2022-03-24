@@ -20,8 +20,15 @@
 <script>
 
     var endpoint = '/api/chart/data/'
+    window.console.log('{{api.chartsInfo}}')
+
+    var api_labels = "{{ chartsInfo.labels|safe }}"
+    var api_data = "{{ chartsInfo.qtd_tweets|safe }}"
+    var api_colors = "{{ chartsInfo.colors|safe }}"
+
     var defaultData = []
     var labels = []
+
     $.ajax({
         method: "GET",
         url: endpoint,
@@ -48,11 +55,11 @@
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: {{ chartsInfo.labels|safe }},
                 datasets: [{
                     label: 'Sentimentos',
-                    data: defaultData,
-                    backgroundColor: colors,
+                    data: {{ chartsInfo.qtd_tweets|safe }},
+                    backgroundColor: {{ chartsInfo.colors|safe }},
                     borderColor: 'black',
                     borderWidth: 1
                 }]
@@ -71,11 +78,11 @@
         var myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: labels,
+                labels: {{ chartsInfo.labels|safe }},
                 datasets: [{
                     label: 'Sentimentos',
-                    data: defaultData,
-                    backgroundColor: colors,
+                    data: {{ chartsInfo.qtd_tweets|safe }},
+                    backgroundColor: {{ chartsInfo.colors|safe }},
                     borderColor: 'black',
                     borderWidth: 1
                 }]
