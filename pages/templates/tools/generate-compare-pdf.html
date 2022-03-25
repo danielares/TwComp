@@ -45,9 +45,9 @@
 
         <h3>Word Cloud gerada a partir dos tweets coletados</h3>
         <h4>Word Cloud: {{term1}}</h4>
-        <img src="{% static '/images/temp/wc'%}{{term1}}.png" id="wordcloud">
+        <img src="{{ wordcloud1 }}" id="wordcloud">
         <h4>Word Cloud: {{term2}}</h4>
-        <img src="{% static '/images/temp/wc'%}{{term2}}.png" id="wordcloud">
+        <img src="{{ wordcloud2 }}" id="wordcloud">
 
         <section>
             <p>
@@ -77,8 +77,9 @@
 
         <h3 id="columns-title-2-pie">Gráfico de pizza</h3>
 
-        <img src="{% static '/images/temp/'%}{{term}}Pie.png">
-
+        <img src="{{ pieChart1 }}">
+        <img src="{{ pieChart2 }}">
+        
         <section>
             <p>
                 Um gráfico de pizza é um gráfico circular que exibe dados em um formato de fatia de pizza fácil de ler.
@@ -99,7 +100,8 @@
         </section>
 
         <h3 id="columns-title-2-bar">Gráfico de barras</h3>
-        <img src="{% static 'images/temp/'%}{{term}}Bar.png">
+        <img src="{{ barChart1 }}">
+        <img src="{{ barChart2 }}">
 
         <section>
             <p>
@@ -119,6 +121,7 @@
 
     </article>
 
+    <!--
     <article id="skills">
         <h2 id="skills-title">This is another big title, on a page full of work presentation</h2>
 
@@ -295,6 +298,7 @@
             </dl>
         </section>
     </article>
+    -->
 </body>
 
 </html>

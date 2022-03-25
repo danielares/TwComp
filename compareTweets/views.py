@@ -49,15 +49,7 @@ class CompareTweetsView(TemplateView):
                     #Verifica a opção escolhida e salva as funções que tratam os respectivos tipos de escolha em uma variavel
                     if option == 'simple': chart_type = generate_simple_data
                     elif option == 'advanced': chart_type = generate_advanced_data
-                    '''
-                    if option == 'simples':
-                        search_type = create_dict
-                        chart_type = generate_simple_data
 
-                    elif option == 'treinamento':
-                        search_type = create_dict_training
-                        chart_type = generate_advanced_data
-                    '''
                     #PESQUISAS RELACIONADAS AO PRIMEIRO TERMO
                     tweets1 = create_dict_training(option, search1, amoutTweets, consumerKey, consumerSecret, 
                                             accessToken, accessTokenSecret, bearerToken)

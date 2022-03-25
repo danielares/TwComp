@@ -1,13 +1,13 @@
 {% load static %}
 
 <div class="text-black row d-flex justify-content-center">
-    <div class="card text-black mx-1 my-1" style="width: 35rem;">
+    <div class="card text-black mx-1 my-1" style="width: 33rem;">
         <div class="col-sm-12">
             <canvas id="myChart" width="400" height="400"></canvas>
         </div>
     </div>
-    <div class="card text-black mx-1 my-1" style="width: 35rem;">
-        <div class="col-sm-12" url-endpoint='{% url "viewtweets" %}'>
+    <div class="card text-black mx-1 my-1" style="width: 33rem;">
+        <div class="col-sm-12">
             <canvas id="myChart2" width="400" height="400"></canvas>
         </div>
     </div>
@@ -19,17 +19,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 <script>
-
     var endpoint = '/api/chart/data/'
-
-    var api_labels = "{{ chartsInfo.labels|safe }}"
-    var api_data = "{{ chartsInfo.qtd_tweets|safe }}"
-    var api_colors = "{{ chartsInfo.colors|safe }}"
+    
+    var api_labels = {{ chartsInfo.labels|safe }}
+    var api_data = {{ chartsInfo.qtd_tweets|safe }}
+    var api_colors = {{ chartsInfo.colors|safe }}
 
     var defaultData = []
     var labels = []
 
     $.ajax({
+        
         method: "GET",
         url: endpoint,
         success: function (data) {
@@ -55,11 +55,11 @@
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: {{ chartsInfo.labels|safe }},
+                labels: api_labels,
                 datasets: [{
                     label: 'Sentimentos',
-                    data: {{ chartsInfo.qtd_tweets|safe }},
-                    backgroundColor: {{ chartsInfo.colors|safe }},
+                    data: api_data,
+                    backgroundColor: api_colors,
                     borderColor: 'black',
                     borderWidth: 1
                 }]
@@ -78,11 +78,11 @@
         var myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: {{ chartsInfo.labels|safe }},
+                labels: api_labels,
                 datasets: [{
                     label: 'Sentimentos',
-                    data: {{ chartsInfo.qtd_tweets|safe }},
-                    backgroundColor: {{ chartsInfo.colors|safe }},
+                    data: api_data,
+                    backgroundColor: api_colors,
                     borderColor: 'black',
                     borderWidth: 1
                 }]

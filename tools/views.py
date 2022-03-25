@@ -73,16 +73,39 @@ class GenerateComparePdfView(TemplateView):
         amoutTweets = api['amoutTweets']
         chartsInfo1 = api['chartsInfo1']
         chartsInfo2 = api['chartsInfo2']
+        tweets1 = api['tweets1']
+        tweets2 = api['tweets2']
+        
+        qtd_tweets1 = api['chartsInfo1']['qtd_tweets']
+        colors1 = api['chartsInfo1']['colors']
+        labels1 = api['chartsInfo1']['labels']
+        
+        qtd_tweets2 = api['chartsInfo2']['qtd_tweets']
+        colors2 = api['chartsInfo2']['colors']
+        labels2 = api['chartsInfo2']['labels']
+        
+        bar1 = create_bar_chart(labels1, qtd_tweets1, term1, colors1)
+        bar2 = create_bar_chart(labels2, qtd_tweets2, term2, colors2)
+        pie1 = create_pie_chart(qtd_tweets1, labels1, colors1, term1)
+        pie2 = create_pie_chart(qtd_tweets2, labels2, colors2, term2)
+        wordcloud1 = wordCloud(tweets1, term1)
+        wordcloud2 = wordCloud(tweets2, term2)
 
         
         html_string = render_to_string('tools/generate-compare-pdf.html', {'term1': term1, 
                                                                    'term2': term2,
                                                                    'amoutTweets': amoutTweets,
                                                                    'chartsInfo1': chartsInfo1,
-                                                                   'chartsInfo2': chartsInfo2})
+                                                                   'chartsInfo2': chartsInfo2,
+                                                                   'barChart1': bar1,
+                                                                   'barChart2': bar2,
+                                                                   'pieChart1': pie1,
+                                                                   'pieChart2': pie2,
+                                                                   'wordcloud1': wordcloud1,
+                                                                   'wordcloud2': wordcloud2})
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
-        html.write_pdf(target='tmp/relatorio_compare_tweets.pdf')
+        html.write_pdf(target='/tmp/relatorio_compare_tweets.pdf')
         
         
         with fs.open('relatorio_compare_tweets.pdf') as pdf:

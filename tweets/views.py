@@ -14,6 +14,7 @@ class TakeTweetsView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        #context = {"term": "pesquisa_termo"} FUNCIONOU
         return context
     
 
@@ -55,7 +56,7 @@ class ViewTweetsView(TemplateView):
                     chartsInfo = chart_type(tweets)
                     
                     api = {"term": search, "amoutTweets": amoutTweets, 
-                           "chartsInfo": chartsInfo, 'tweets': tweets}
+                           "chartsInfo": chartsInfo, "tweets": tweets}
                     
                     wordCloudImage = wordCloud(tweets, search)
     
@@ -91,7 +92,8 @@ class ChartData(APIView):
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
         
         return Response(api_chart)  
-    
+
+
 def get_api():
     global api
     return api
