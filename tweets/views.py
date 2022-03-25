@@ -31,31 +31,20 @@ class ViewTweetsView(TemplateView):
                 
                 search = request.POST['searched']
                 amoutTweets = request.POST['amoutTweets']
+                option = request.POST['inlineRadioOptions']  
                 
                 # if para veficiar se o usuario fez alguma pesquisa
-                if search:      
+                if search:
+                    
                     consumerKey = self.request.user.consumerKey
                     consumerSecret = self.request.user.consumerSecret
                     accessToken = self.request.user.accessToken
                     accessTokenSecret = self.request.user.accessTokenSecret
                     bearerToken = self.request.user.bearerToken
-
-                    option = request.POST['inlineRadioOptions']
                     
-                    print(option)
+                    tweets, chartsInfo = self.get_tweets(search, amoutTweets, option, 
+                                                         consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
                     
-                    #Verifica a opção escolhida e salva as funções que tratam os respectivos tipos de escolha em uma variavel
-                    
-                    if option == 'simple': chart_type = generate_simple_data
-                    elif option == 'advanced': chart_type = generate_advanced_data
-                    
-                    tweets = create_dict_training(option, search, amoutTweets, consumerKey, consumerSecret, 
-                                            accessToken, accessTokenSecret, bearerToken)
-                    
-                    chartsInfo = chart_type(tweets)
-                    
-                    api = {"term": search, "amoutTweets": amoutTweets, 
-                           "chartsInfo": chartsInfo, 'tweets': tweets}
                     
                     wordCloudImage = wordCloud(tweets, search)
     
@@ -74,7 +63,24 @@ class ViewTweetsView(TemplateView):
                 else:       
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
-        
+                
+                
+        def get_tweets(search, amoutTweets, option, 
+                       consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
+            
+            # Verifica a opção de analise de tweets escolhida
+            if option == 'simple': chart_type = generate_simple_data
+            elif option == 'advanced': chart_type = generate_advanced_data
+
+            tweets = create_dict_training(option, search, amoutTweets, consumerKey, consumerSecret, 
+                                          accessToken, accessTokenSecret, bearerToken)
+
+            chartsInfo = chart_type(tweets)
+
+            api = {"term": search, "amoutTweets": amoutTweets, 
+                   "chartsInfo": chartsInfo, 'tweets': tweets}
+
+            return tweets, chartsInfo
 
 class ChartData(APIView):
 
