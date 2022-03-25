@@ -65,9 +65,9 @@ class GenerateComparePdfView(TemplateView):
         return context
     
     def get(self, request, *args, **kwargs):
-        fs = FileSystemStorage('tmp')
         
         api = get_api_compare()
+        
         term1 = api['term1']
         term2 = api['term2']
         amoutTweets = api['amoutTweets']
@@ -106,6 +106,8 @@ class GenerateComparePdfView(TemplateView):
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
         html.write_pdf(target='/tmp/relatorio_compare_tweets.pdf')
+        
+        fs = FileSystemStorage('/tmp')
         
         
         with fs.open('relatorio_compare_tweets.pdf') as pdf:
