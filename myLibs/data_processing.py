@@ -39,12 +39,11 @@ def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, access
                     # O RETWEET COMPLETO ESTA LOCALIZADO NO TWEETS.INCLUDES
                     # COM ESSA CONDIÇÃO É POSSIVEL PEGAR O RETWEET COMPLETO E SALVA-LO NO DICIONARIO
                     
-                    id_retweet_no_tweet_original = tweet['referenced_tweets']
-                    id = id_retweet_no_tweet_original[0].id
+                    id_retweet = tweet['referenced_tweets']
+                    id_retweet = id_retweet[0].id
                     
                     for retweet in tweets.includes['tweets']:
-                        id_retweet = retweet.id
-                        if id == id_retweet:
+                        if id_retweet == retweet.id:
                             tweet_dict['text'] = retweet.text
 
                 tweet_dict['created_at'] = tweet.created_at

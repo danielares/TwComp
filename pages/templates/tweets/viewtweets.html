@@ -11,8 +11,7 @@
         <h3 class="text-white">Wordcloud: </h3>
         <div class="d-flex justify-content-center my-2">
             <div class="zoom" id="magnifying_area" style="width: 65rem;">
-                <img class="img-fluid" id="magnifying_img" src="{{ wordcloud }}"
-                    alt="Imagem word cloud">
+                <img class="img-fluid" id="magnifying_img" src="{{ wordcloud }}" alt="Imagem word cloud">
 
             </div>
         </div>
@@ -66,7 +65,15 @@
                 <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
                 <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
                 <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
-                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>-->
+                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
+            
+                <blockquote class="twitter-tweet" data-theme="dark">
+                <p lang="en" dir="ltr"></a></p>&mdash;
+                <a href="https://twitter.com/USERNAME/status/1507364632754860053"></a>
+                </blockquote>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            
+            -->
                 {% endfor %}
             </div>
         </div>

@@ -6,8 +6,8 @@ import csv
 
 from weasyprint import HTML
 
-from tweets.views import get_api 
-from compareTweets.views import get_api as get_api_compare
+from tweets.views import ViewTweetsView
+from compareTweets.views import CompareTweetsView
 from myLibs.create_charts_png import create_pie_chart, create_bar_chart
 from myLibs.word_cloud import wordCloud
 
@@ -15,9 +15,7 @@ from myLibs.word_cloud import wordCloud
 class GeneratePdfView(TemplateView):
     
     def get(self, request, *args, **kwargs):
-        
-        
-        api = get_api()
+        api = ViewTweetsView.return_api_data()
         
         term = api['term']
         amoutTweets = api['amoutTweets']
@@ -28,10 +26,7 @@ class GeneratePdfView(TemplateView):
         tweets = api['tweets']
         
         wordcloud = wordCloud(tweets, term)
-        
-
         pie = create_pie_chart(qtd_tweets, labels, colors, term)
-        
         bar = create_bar_chart(labels, qtd_tweets, term, colors)
         
         
@@ -40,13 +35,9 @@ class GeneratePdfView(TemplateView):
                                                                    'barChart': bar, 'wordcloud': wordcloud})
              
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
-        
         html.write_pdf(target='/tmp/relatorio_tweets.pdf')
-        
         fs = FileSystemStorage('/tmp')
            
-        
-        
         with fs.open('relatorio_tweets.pdf') as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             #Faz o download do arquivo PDF
@@ -66,7 +57,7 @@ class GenerateComparePdfView(TemplateView):
     
     def get(self, request, *args, **kwargs):
         
-        api = get_api_compare()
+        api = CompareTweetsView.return_api_data()
         
         term1 = api['term1']
         term2 = api['term2']
@@ -132,10 +123,12 @@ def generateCsv(request):
     writer = csv.writer(response)
     
     # Designate the Model
-    api = get_api()
+    api = ViewTweetsView.return_api_data()
+    
+    term = api['term']
 
     #Add column headings for the csv file
-    writer.writerow(['Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet polaridade'])
+    writer.writerow([term+': Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet polaridade'])
     
     # Loop through the tweets
     for tweet in api['tweets']:
@@ -155,13 +148,13 @@ def generateCsvCompare(request):
     writer = csv.writer(response)
     
     # Get api
-    api = get_api_compare()
+    api = CompareTweetsView.return_api_data()
 
     term1 = api['term1']
     term2 = api['term2']
     
     #Add column headings for the csv file term 1
-    writer.writerow([term1+': Tweet id', term1+': Tweet clean', term1+': Tweet language', term1+': Tweet date', term1+': Tweet polaridade'])
+    writer.writerow([term1+': Tweet id', ': Tweet clean', ': Tweet language', ': Tweet date', ': Tweet polaridade'])
     
     # Loop through the tweets of term 1
     for tweet in api['tweets1']:
@@ -170,7 +163,7 @@ def generateCsvCompare(request):
         
         
     #Add column headings for the csv file term 2
-    writer.writerow([term2+': Tweet id', term2+': Tweet clean', term2+': Tweet language', term2+': Tweet date', term2+': Tweet polaridade'])
+    writer.writerow([term2+': Tweet id', ': Tweet clean', ': Tweet language', ': Tweet date', ': Tweet polaridade'])
     
     # Loop through the tweets of term 1
     for tweet in api['tweets2']:

@@ -4,9 +4,8 @@ from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from myLibs.generate_api_data import generate_simple_data, generate_advanced_data
-from myLibs.training_analysis import create_dict_training
 from myLibs.word_cloud import wordCloud
+from myLibs.return_data_view import get_tweets
 
 
 class ViewCompareTweetsView(TemplateView):
@@ -33,6 +32,7 @@ class CompareTweetsView(TemplateView):
                 amoutTweets = request.POST['amoutTweets']
                 option = request.POST['inlineRadioOptions']
                 
+                
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search1 and search2:
                      
@@ -40,31 +40,20 @@ class CompareTweetsView(TemplateView):
                     consumerSecret = self.request.user.consumerSecret
                     accessToken = self.request.user.accessToken
                     accessTokenSecret = self.request.user.accessTokenSecret
-                    bearerToken = self.request.user.bearerToken
-
-                    option = request.POST['inlineRadioOptions']
+                    bearerToken = self.request.user.bearerToken 
                     
-                    print(option)
+                    tweets1, chartsInfo1 = get_tweets(search1, amoutTweets, option, 
+                                                         consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
                     
-                    #Verifica a opção escolhida e salva as funções que tratam os respectivos tipos de escolha em uma variavel
-                    if option == 'simple': chart_type = generate_simple_data
-                    elif option == 'advanced': chart_type = generate_advanced_data
-
-                    #PESQUISAS RELACIONADAS AO PRIMEIRO TERMO
-                    tweets1 = create_dict_training(option, search1, amoutTweets, consumerKey, consumerSecret, 
-                                            accessToken, accessTokenSecret, bearerToken)
                     
-                    chartsInfo1 = chart_type(tweets1)
+                    tweets2, chartsInfo2 = get_tweets(search2, amoutTweets, option, 
+                                                         consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
                     
-                    #PESQUISAS RELACIONADAS AO SEGUNDO TERMO
-                    tweets2 = create_dict_training(option, search2, amoutTweets, consumerKey, consumerSecret, 
-                        accessToken, accessTokenSecret, bearerToken)
-                    chartsInfo2 = chart_type(tweets2)
-                    
+    
                     api = {"term1": search1, "term2": search2, 
                             "amoutTweets": amoutTweets, 
-                           "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
-                           "tweets1": tweets1, "tweets2": tweets2}
+                            "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
+                            "tweets1": tweets1, "tweets2": tweets2}
                     
                     wordcloud1 = wordCloud(tweets1, search1)
                     wordcloud2 = wordCloud(tweets2, search2)
@@ -89,22 +78,24 @@ class CompareTweetsView(TemplateView):
                 else:       
                     messages.success(request, 'Você deve pesquisar algo')
                     return render(request, 'tweets/searchtweets.html')
-
-
+                
+        @staticmethod
+        def return_api_data():
+            global api
+            return api
+        
+        
 class CompareChartData(APIView):
     authentication_classes = []
     permission_classes = []
     def get(self, request, format=None):
-        api = get_api()
+        api = CompareTweetsView.return_api_data()
         
         api_chart = {"term1": api['term1'], "term2": api['term2'],
                      "amoutTweets": api['amoutTweets'], 
-                    "chartsInfo1": api['chartsInfo1'],
-                    "chartsInfo2": api['chartsInfo2'],}
+                     "chartsInfo1": api['chartsInfo1'],
+                     "chartsInfo2": api['chartsInfo2'],}
+        
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
-        return Response(api_chart)  
-    
-def get_api():
-    global api
-    return api
+        return Response(api_chart)

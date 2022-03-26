@@ -6,11 +6,11 @@ import io
 import urllib, base64
 
 
-def create_pie_chart(qtd_tweets, polaridade, colors, term_searched):
+def create_pie_chart(number_of_tweets, polarity, colors, term_searched):
     buf = io.BytesIO()
     plt.figure(figsize=(6,5))
     plt.rcParams['text.color'] = 'black'
-    plt.pie(qtd_tweets, labels=polaridade, autopct='%1.1f%%', colors=colors)
+    plt.pie(number_of_tweets, labels=polarity, autopct='%1.1f%%', colors=colors)
     plt.title('Tweets sobre: '+term_searched, fontsize=16, fontweight='bold')
     plt.tight_layout()
     plt.savefig(buf, format='png')
@@ -24,10 +24,10 @@ def create_pie_chart(qtd_tweets, polaridade, colors, term_searched):
     return pie_chart
 
 
-def create_bar_chart(polaridade, qtd_tweets, term_searched, colors):
+def create_bar_chart(polarity, number_of_tweets, term_searched, colors):
     buf = io.BytesIO()
     plt.figure(figsize=(7,4))
-    plt.bar(polaridade, qtd_tweets,  color=colors, edgecolor='black')
+    plt.bar(polarity, number_of_tweets,  color=colors, edgecolor='black')
     plt.title('Tweets sobre: '+term_searched, fontsize=16, fontweight='bold')
     plt.xlabel('Sentimentos', fontsize=14, color='black')
     plt.ylabel('Quantidade de tweets', fontsize=14, color='black')
