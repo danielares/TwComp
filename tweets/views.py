@@ -44,19 +44,12 @@ class ViewTweetsView(TemplateView):
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search:
                     
-                    consumerKey = self.request.user.consumerKey
-                    consumerSecret = self.request.user.consumerSecret
-                    accessToken = self.request.user.accessToken
-                    accessTokenSecret = self.request.user.accessTokenSecret
                     bearerToken = self.request.user.bearerToken
                     
-                    tweets, chartsInfo = get_tweets(search, amoutTweets, option, 
-                                                    consumerKey, consumerSecret, accessToken, 
-                                                    accessTokenSecret, bearerToken) 
-                    
+                    tweets, chartsInfo = get_tweets(search, amoutTweets, option, bearerToken) 
                     wordCloudImage = wordCloud(tweets, search)
                     
-                    
+
                     api = {"term": search, "amoutTweets": amoutTweets, 
                    "chartsInfo": chartsInfo, 'tweets': tweets}
     

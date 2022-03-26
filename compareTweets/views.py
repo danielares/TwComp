@@ -36,27 +36,18 @@ class CompareTweetsView(TemplateView):
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search1 and search2:
                      
-                    consumerKey = self.request.user.consumerKey
-                    consumerSecret = self.request.user.consumerSecret
-                    accessToken = self.request.user.accessToken
-                    accessTokenSecret = self.request.user.accessTokenSecret
                     bearerToken = self.request.user.bearerToken 
                     
-                    tweets1, chartsInfo1 = get_tweets(search1, amoutTweets, option, 
-                                                         consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
+                    tweets1, chartsInfo1 = get_tweets(search1, amoutTweets, option, bearerToken)
+                    tweets2, chartsInfo2 = get_tweets(search2, amoutTweets, option, bearerToken)
                     
+                    wordcloud1 = wordCloud(tweets1, search1)
+                    wordcloud2 = wordCloud(tweets2, search2)
                     
-                    tweets2, chartsInfo2 = get_tweets(search2, amoutTweets, option, 
-                                                         consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
-                    
-    
                     api = {"term1": search1, "term2": search2, 
                             "amoutTweets": amoutTweets, 
                             "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
                             "tweets1": tweets1, "tweets2": tweets2}
-                    
-                    wordcloud1 = wordCloud(tweets1, search1)
-                    wordcloud2 = wordCloud(tweets2, search2)
 
                     context = super().get_context_data(**kwargs)
                     context['chartsInfo1'] = chartsInfo1

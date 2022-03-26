@@ -3,17 +3,13 @@ import tweepy
 from itertools import zip_longest
 
 
-def getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
-    client = tweepy.Client(consumer_key=consumerKey,
-                           consumer_secret=consumerSecret,
-                           access_token=accessToken,
-                           access_token_secret=accessTokenSecret,
-                           bearer_token=bearerToken)
+def getClient(bearerToken):
+    client = tweepy.Client(bearer_token=bearerToken)
     return client
 
 
-def searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
-    client = getClient(consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
+def searchTweets(query, amount, bearerToken):
+    client = getClient(bearerToken)
     
     expansions_options = ['author_id','referenced_tweets.id']
     tweet_fields_options = ['created_at','lang','geo','text', 'referenced_tweets']

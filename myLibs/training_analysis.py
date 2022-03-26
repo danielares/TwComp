@@ -1117,13 +1117,13 @@ def inicialize(option):
     classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
     return classificador
 
-def create_dict_training(option, query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken):
+def create_dict_training(option, query, amount, bearerToken):
     tweets = []
     tweets_dict = {}
     
     classificador = inicialize(option)
     
-    data = searchTweets(query, amount, consumerKey, consumerSecret, accessToken, accessTokenSecret, bearerToken)
+    data = searchTweets(query, amount, bearerToken)
 
     for tweet in data:
         try:
