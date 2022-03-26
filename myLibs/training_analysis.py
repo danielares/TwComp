@@ -686,6 +686,8 @@ training_base_advanced = [
 
 
     # RAIVA
+('eu to com ódio dessa praga', 'raiva'),
+('você tá me tirando do sério logo cedo', 'raiva'),
 ('pqp que encheção de saco','raiva'),
 ('quero meu dinheiro de volta','raiva'),
 ('ta pra nascer algo q me de mais dor de cabeça', 'raiva'),

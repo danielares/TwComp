@@ -46,36 +46,14 @@
             </form>
             <!-- FIM - FORM PARA GERAR CSV -->
 
-        </div>
-        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-
-
-        <div class="form-group">
-            <br>
-            <h2 class="text-white row d-flex justify-content-center">Exemplo dos tweets:</h2>
-            <div class="text-white">
-                {% for tweet in tweets %}
-                <p><strong>Tweet ID:</strong> {{tweet.tweet_id}}</p>
-                <p><strong>Tweet:</strong> {{tweet.tweet_text}}</p>
-                <!--
-                <p><strong>Usuario:</strong> {{tweet.tweet_username}}</p>
-                <p><strong>Criado em:</strong> {{tweet.tweet_created_at}}</p>
-                <p><strong>Idioma:</strong> {{tweet.tweet_lang}}</p>
-                <p><strong>Referencia ao tweet:</strong> {{tweet.tweet_referenced_tweets}}</p>
-                <p><strong>Tweet clean:</strong> {{tweet.tweet_clean}}</p>
-                <p><strong>Tweet english:</strong> {{tweet.tweet_english}}</p>
-                <p><strong>Polaridade:</strong> {{tweet.polaridade}}</p>
-                <p><strong>Sentimento:</strong> {{tweet.sentimento}}</p><br>
-            
-                <blockquote class="twitter-tweet" data-theme="dark">
-                <p lang="en" dir="ltr"></a></p>&mdash;
-                <a href="https://twitter.com/USERNAME/status/1507364632754860053"></a>
-                </blockquote>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            
-            -->
-                {% endfor %}
-            </div>
+            <!-- VER OS TWEETS -->
+            <form action="{% url 'view-all-tweets' user.pk %}" method="get" class="form text-white" autocomplete="off"
+                target="_blank">
+                <div class="mt-3 pt-2 mx-3">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Ver todos os tweets" />
+                </div>
+            </form>
+            <!-- FIM VER OS TWEETS -->
         </div>
 
     </div>

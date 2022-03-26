@@ -76,16 +76,28 @@ class ViewTweetsView(TemplateView):
             return api
         
 
+class ViewAllTweetsView(TemplateView):
+    template_name = 'tweets/view-all-tweets.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        api = ViewTweetsView.return_api_data()
+        context = {"chartsInfo": api['chartsInfo'],
+                   "tweets": api['tweets']}
+                   
+        return context
+
+
 class ChartData(APIView):
 
     authentication_classes = []
     permission_classes = []
 
     def get(self, request, format=None):
-        api2 = ViewTweetsView.return_api_data()
+        api = ViewTweetsView.return_api_data()
     
-        api_chart = {"term": api2['term'], "amoutTweets": api2['amoutTweets'], 
-                           "chartsInfo": api2['chartsInfo']}
+        api_chart = {"term": api['term'], "amoutTweets": api['amoutTweets'], 
+                           "chartsInfo": api['chartsInfo']}
     
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="form-group">
+            <h2 class="text-white row d-flex justify-content-center">Tweets coletados</h2>
+
+            <div class="filterDiv positivos">
+                <div class="text-white">
+                    <h3 id="testeTweets">Positivos:</h3>
+                    {% for tweet in tweets %}
+                    {% if tweet.tweet_analise.0 == 'positivo' %}
+                    <bold>Probabilidade:</bold> {{tweet.tweet_analise.1}}
+                    <div class="filterDiv positivos" id="tweets">
+                        <blockquote class="twitter-tweet" data-theme="dark">
+                            <p lang="pt-br" dir="ltr"></a></p>&mdash;
+                            <a class="filterDiv positivos" id="urltweet"
+                                href="https://twitter.com/USERNAME/status/{{tweet.tweet_id}}"></a>
+                        </blockquote>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="filterDiv neutros text-white">
+                <h3 id="testeTweets">Neutros:</h3>
+                {% for tweet in tweets %}
+                {% if tweet.tweet_analise.0 == 'neutro' %}
+                <bold>Probabilidade:</bold> {{tweet.tweet_analise.1}}
+                <div class="filterDiv neutros" id="tweets">
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="pt-br" dir="ltr"></a></p>&mdash;
+                        <a class="filterDiv neutros" id="urltweet"
+                            href="https://twitter.com/USERNAME/status/{{tweet.tweet_id}}"></a>
+                    </blockquote>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <br>
+
+            <div class="filterDiv negativos text-white">
+                <h3 id="testeTweets">Negativos:</h3>
+                {% for tweet in tweets %}
+                {% if tweet.tweet_analise.0 == 'negativo' %}
+                <bold>Probabilidade:</bold> {{tweet.tweet_analise.1}}
+                <div class="filterDiv negativos" id="tweets">
+                    <blockquote class="twitter-tweet" data-theme="dark">
+                        <p lang="pt-br" dir="ltr"></a></p>&mdash;
+                        <a class="filterDiv negativos" id="urltweet"
+                            href="https://twitter.com/USERNAME/status/{{tweet.tweet_id}}"></a>
+                    </blockquote>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
