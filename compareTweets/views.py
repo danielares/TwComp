@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from  django.views.decorators.cache import never_cache
 
 from myLibs.word_cloud import wordCloud
 from myLibs.return_data_view import get_tweets
@@ -18,7 +17,7 @@ class ViewCompareTweetsView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
   
-@method_decorator(never_cache, name='dispatch')     
+  
 class CompareTweetsView(TemplateView):
         template_name = 'compareTweets/compare-tweets.html'
         
