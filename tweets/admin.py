@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import TrainingBase
+
+#@admin.register(TrainingBase)
+class TrainingBaseAdmin(admin.ModelAdmin):
+    list_display = ('Texto', 'Sentimento')
+    
+
+admin.site.register(TrainingBase)
