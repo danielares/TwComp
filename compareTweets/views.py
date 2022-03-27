@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from rest_framework.views import APIView
@@ -9,7 +9,7 @@ from myLibs.return_data_view import get_tweets
 
 
 class ViewCompareTweetsView(TemplateView):
-    template_name = 'compareTweets/compare-tweets.html'
+    template_name = 'compareTweets/search-tweets-compare.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,7 +17,7 @@ class ViewCompareTweetsView(TemplateView):
              
              
 class CompareTweetsView(TemplateView):
-        template_name = 'compareTweets/viewtweetscompare.html'
+        template_name = 'compareTweets/compare-tweets.html'
         
         def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
@@ -63,12 +63,12 @@ class CompareTweetsView(TemplateView):
                     context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
                     context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
                 
-                    return render(request, 'compareTweets/view-compare-tweets.html', context)
+                    return render(request, 'compareTweets/view-tweets-compare.html', context)
                 
                 # else para se o usuario não fez alguma pesquisa
                 else:       
                     messages.success(request, 'Você deve pesquisar algo')
-                    return render(request, 'tweets/searchtweets.html')
+                    return redirect('search-tweets-compare')
                 
         @staticmethod
         def return_api_data():
@@ -79,7 +79,7 @@ class CompareTweetsView(TemplateView):
 class CompareChartData(APIView):
     authentication_classes = []
     permission_classes = []
-    def get(self, request, format=None):
+    def get(self, request, format=None, userid=None, term1=None, term2=None):
         api = CompareTweetsView.return_api_data()
         
         api_chart = {"term1": api['term1'], "term2": api['term2'],

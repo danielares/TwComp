@@ -20,7 +20,7 @@
 
 <script>
 
-    var endpoint = '/api/chart/compare-chart-data'
+    var endpoint = '/api/chart/compare-chart-data/{{user.pk}}/{{term1}}-{{term2}}'
 
     var api_labels1 = "{{ chartsInfo1.labels|safe }}"
     var api_data1 = "{{ chartsInfo1.qtd_tweets|safe }}"

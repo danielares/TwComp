@@ -1,8 +1,9 @@
 from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.urls import reverse_lazy
 
 from myLibs.word_cloud import wordCloud
 from myLibs.return_data_view import get_tweets
@@ -18,7 +19,7 @@ class TakeTweetsView(TemplateView):
 
 
 class TakeTweetsView(TemplateView):
-    template_name = 'tweets/searchtweets.html'
+    template_name = 'tweets/search-tweets.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,13 +27,13 @@ class TakeTweetsView(TemplateView):
     
 
 class ViewTweetsView(TemplateView):
-        template_name = 'tweets/viewtweets.html'
+        template_name = 'tweets/view-tweets.html'
         
         def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
             return context
                 
-        def post(self, request, **kwargs):
+        def post(self, request, term=None, **kwargs):
             global api
             
             if request.method == 'POST':
@@ -63,12 +64,12 @@ class ViewTweetsView(TemplateView):
                     context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                     context['tweetsError'] = int(amoutTweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                     context['qtd_tweets'] = chartsInfo['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    return render(request, 'tweets/viewtweets.html', context)
+                    return render(request, 'tweets/view-tweets.html', context)
                 
                 # else para se o usuario não fez alguma pesquisa
                 else:       
                     messages.success(request, 'Você deve pesquisar algo')
-                    return render(request, 'tweets/searchtweets.html')
+                    return redirect('search-tweets')
                 
         @staticmethod
         def return_api_data():
@@ -93,7 +94,7 @@ class ChartData(APIView):
     authentication_classes = []
     permission_classes = []
 
-    def get(self, request, format=None):
+    def get(self, request, format=None, userid=None, term=None):
         api = ViewTweetsView.return_api_data()
     
         api_chart = {"term": api['term'], "amoutTweets": api['amoutTweets'], 

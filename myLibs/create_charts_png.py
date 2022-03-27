@@ -42,17 +42,13 @@ def create_bar_chart(polarity, number_of_tweets, term_searched, colors):
 
 def create_bar_chart_compare(labels1, number_of_tweets1, term1, 
                              number_of_tweets2, term2):
-    
     buf = io.BytesIO()
     plt.figure(figsize=(7,4))
-    
     x_axis = np.arange(len(labels1))
-    
     plt.bar(x_axis -0.2, number_of_tweets1, 0.4, color="red", edgecolor='black', label=term1)
     plt.bar(x_axis +0.2, number_of_tweets2, 0.4, color="blue", edgecolor='black', label=term2)
     plt.xticks(x_axis, labels1)
     plt.legend()
-    
     plt.title(term1+" X "+term2 , fontsize=16, fontweight='bold')
     plt.xlabel('Sentimentos', fontsize=14, color='black')
     plt.ylabel('Quantidade de tweets', fontsize=14, color='black')
