@@ -3,19 +3,22 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from  django.views.decorators.cache import never_cache
 
 from myLibs.word_cloud import wordCloud
 from myLibs.return_data_view import get_tweets
 
-
+@method_decorator(login_required, name='dispatch')
 class ViewCompareTweetsView(TemplateView):
     template_name = 'compareTweets/search-tweets-compare.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-             
-             
+  
+@method_decorator(never_cache, name='dispatch')     
 class CompareTweetsView(TemplateView):
         template_name = 'compareTweets/compare-tweets.html'
         
@@ -63,7 +66,7 @@ class CompareTweetsView(TemplateView):
                     context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
                     context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
                 
-                    return render(request, 'compareTweets/view-tweets-compare.html', context)
+                    return render(request, self.template_name, context)
                 
                 # else para se o usuario não fez alguma pesquisa
                 else:       

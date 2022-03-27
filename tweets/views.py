@@ -3,21 +3,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from  django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 from myLibs.word_cloud import wordCloud
 from myLibs.return_data_view import get_tweets
 
 
-class TakeTweetsView(TemplateView):
-    template_name = 'tweets/searchtweets.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #context = {"term": "pesquisa_termo"} FUNCIONOU
-        return context
-
-
+@method_decorator(login_required, name='dispatch')
 class TakeTweetsView(TemplateView):
     template_name = 'tweets/search-tweets.html'
     
@@ -25,15 +19,11 @@ class TakeTweetsView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
     
-
+@method_decorator(never_cache, name='dispatch')
 class ViewTweetsView(TemplateView):
         template_name = 'tweets/view-tweets.html'
-        
-        def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            return context
                 
-        def post(self, request, term=None, **kwargs):
+        def post(self, request, **kwargs):
             global api
             
             if request.method == 'POST':
@@ -46,13 +36,10 @@ class ViewTweetsView(TemplateView):
                 if search:
                     
                     bearerToken = self.request.user.bearerToken
-                    
                     tweets, chartsInfo = get_tweets(search, amoutTweets, option, bearerToken) 
                     wordCloudImage = wordCloud(tweets, search)
-                    
-
                     api = {"term": search, "amoutTweets": amoutTweets, 
-                   "chartsInfo": chartsInfo, 'tweets': tweets}
+                           "chartsInfo": chartsInfo, 'tweets': tweets}
     
                     context = super().get_context_data(**kwargs)
                     context['chartsInfo'] = chartsInfo
@@ -64,8 +51,7 @@ class ViewTweetsView(TemplateView):
                     context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                     context['tweetsError'] = int(amoutTweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                     context['qtd_tweets'] = chartsInfo['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    return render(request, 'tweets/view-tweets.html', context)
-                
+                    return render(request, self.template_name, context)
                 # else para se o usuario não fez alguma pesquisa
                 else:       
                     messages.success(request, 'Você deve pesquisar algo')
@@ -76,7 +62,7 @@ class ViewTweetsView(TemplateView):
             global api
             return api
         
-
+@method_decorator(never_cache, name='dispatch')
 class ViewAllTweetsView(TemplateView):
     template_name = 'tweets/view-all-tweets.html'
     
