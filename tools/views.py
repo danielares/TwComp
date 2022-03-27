@@ -8,7 +8,7 @@ from weasyprint import HTML
 
 from tweets.views import ViewTweetsView
 from compareTweets.views import CompareTweetsView
-from myLibs.create_charts_png import create_pie_chart, create_bar_chart
+from myLibs.create_charts_png import create_pie_chart, create_bar_chart, create_bar_chart_compare
 from myLibs.word_cloud import wordCloud
 
 
@@ -75,8 +75,9 @@ class GenerateComparePdfView(TemplateView):
         colors2 = api['chartsInfo2']['colors']
         labels2 = api['chartsInfo2']['labels']
         
-        bar1 = create_bar_chart(labels1, qtd_tweets1, term1, colors1)
-        bar2 = create_bar_chart(labels2, qtd_tweets2, term2, colors2)
+        bar = create_bar_chart_compare(labels1, qtd_tweets1, term1,
+                                       qtd_tweets2, term2)
+        
         pie1 = create_pie_chart(qtd_tweets1, labels1, colors1, term1)
         pie2 = create_pie_chart(qtd_tweets2, labels2, colors2, term2)
         wordcloud1 = wordCloud(tweets1, term1)
@@ -88,8 +89,7 @@ class GenerateComparePdfView(TemplateView):
                                                                    'amoutTweets': amoutTweets,
                                                                    'chartsInfo1': chartsInfo1,
                                                                    'chartsInfo2': chartsInfo2,
-                                                                   'barChart1': bar1,
-                                                                   'barChart2': bar2,
+                                                                   'barChart': bar,
                                                                    'pieChart1': pie1,
                                                                    'pieChart2': pie2,
                                                                    'wordcloud1': wordcloud1,
@@ -97,6 +97,7 @@ class GenerateComparePdfView(TemplateView):
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
         html.write_pdf(target='/tmp/relatorio_compare_tweets.pdf')
+        
         
         fs = FileSystemStorage('/tmp')
         

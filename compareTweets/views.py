@@ -32,7 +32,6 @@ class CompareTweetsView(TemplateView):
                 amoutTweets = request.POST['amoutTweets']
                 option = request.POST['inlineRadioOptions']
                 
-                
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search1 and search2:
                      
@@ -44,8 +43,9 @@ class CompareTweetsView(TemplateView):
                     wordcloud1 = wordCloud(tweets1, search1)
                     wordcloud2 = wordCloud(tweets2, search2)
                     
-                    api = {"term1": search1, "term2": search2, 
-                            "amoutTweets": amoutTweets, 
+                    
+                    api = {"term1": search1, "term2": search2,
+                            "amoutTweets": amoutTweets,
                             "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
                             "tweets1": tweets1, "tweets2": tweets2}
 
@@ -61,7 +61,7 @@ class CompareTweetsView(TemplateView):
                     context['tweets1'] = tweets1
                     context['tweets2'] = tweets2
                     context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
-                    context['qtd_tweets2'] = chartsInfo2['qtd_tweets']
+                    context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
                 
                     return render(request, 'compareTweets/view-compare-tweets.html', context)
                 

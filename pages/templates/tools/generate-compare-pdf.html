@@ -48,7 +48,6 @@
         <img src="{{ wordcloud1 }}" id="wordcloud">
         <h4>Word Cloud: {{term2}}</h4>
         <img src="{{ wordcloud2 }}" id="wordcloud">
-
         <section>
             <p>
                 O que é uma Word Cloud?<br><br>
@@ -74,48 +73,22 @@
 
     <article id="columns">
         <h2 id="columns-title-2">Gráficos</h2>
+        <h3 id="columns-title-2-bar">Gráfico de barras</h3>
+        <img src="{{ barChart }}">
 
-        <h3 id="columns-title-2-pie">Gráfico de pizza</h3>
-
-        <img src="{{ pieChart1 }}">
-        <img src="{{ pieChart2 }}">
-        
         <section>
             <p>
                 Um gráfico de pizza é um gráfico circular que exibe dados em um formato de fatia de pizza fácil de ler.
                 Cada fatia representa uma categoria de dados e o tamanho é proporcional à quantidade que representa.
             </p>
             <p>
-                Com base na analise de {{amoutTweets}} tweets, o algoritmo identificou a seguinte quantidade de tweets
+                Com base na analise dos tweets, o algoritmo identificou a seguinte quantidade de tweets
                 por sentimento:
             <ul>
-                <li>{{chartsInfo.qtd_tweets.0}} - alegria;</li>
-                <li>{{chartsInfo.qtd_tweets.1}} - nojo;</li>
-                <li>{{chartsInfo.qtd_tweets.2}} - medo;</li>
-                <li>{{chartsInfo.qtd_tweets.3}} - raiva;</li>
-                <li>{{chartsInfo.qtd_tweets.4}} - surpresa;</li>
-                <li>{{chartsInfo.qtd_tweets.5}} - tristeza.</li>
+                {% for label in chartsInfo1.labels %}
+                <li>{{label}}</li>
+                {% endfor %}
             </ul>
-            </p>
-        </section>
-
-        <h3 id="columns-title-2-bar">Gráfico de barras</h3>
-        <img src="{{ barChart1 }}">
-        <img src="{{ barChart2 }}">
-
-        <section>
-            <p>
-                Um gráfico de pizza é um gráfico circular que exibe dados em um formato de fatia de pizza fácil de ler.
-                Cada fatia representa uma categoria de dados e o tamanho é proporcional à quantidade que representa.
-            </p>
-            <p>
-                Phasellus id nisl nec arcu tempor ultricies non id tortor. Mauris ex nibh, viverra vitae nisi eget,
-                placerat pharetra est.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id maximus diam. Cras molestie nisl vitae
-                iaculis convallis.
-                Vivamus molestie vitae nisl sed interdum. Nunc aliquam massa rhoncus finibus convallis.
-                Vivamus sed vulputate risus. Nunc dignissim magna velit, quis lobortis ex volutpat eget.
-                Proin dictum mauris condimentum consequat faucibus.
             </p>
         </section>
 
