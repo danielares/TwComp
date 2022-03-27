@@ -54,7 +54,8 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'user_options' user.pk %}">{{ user.username }}</a>
+                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'user_options' user.pk %}">
+                            {{user.username }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-item nav-link" id="contact-menu" href="{% url 'logout' %}">Logout</a>
@@ -70,10 +71,7 @@
         {% endblock %}
     </main>
 
-
-
     {% bootstrap_javascript jquery='full' %}
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
 </body>

@@ -133,9 +133,3 @@ p {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
-
-#footer {
-    height:150px;
-    width:100%;
-    background:#999;
- }

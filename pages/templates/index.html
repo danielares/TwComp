@@ -36,7 +36,6 @@
                 </a>
             </div>
 
-
             <!-- PARA COLOCAR UM VIDEO
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/2S4qGKmzBJE"
@@ -44,6 +43,19 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
             </div>-->
+
+            {% if not user.is_anonymous %}
+            <a class="text-white mx-5 my-5" href="{% url 'search-tweets' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Search tweets
+            </a>
+
+            <a class="text-white mx-5 my-5" href="{% url 'search-tweets-compare' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Compare Tweets
+            </a>
+            {% endif %}
+            
         </div>
     </div>
 </section>
