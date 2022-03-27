@@ -4,7 +4,6 @@ from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
-from  django.views.decorators.cache import never_cache
 
 from django.utils.decorators import method_decorator
 
@@ -21,7 +20,6 @@ class TakeTweetsView(TemplateView):
         return context
   
   
-@method_decorator(never_cache, name='dispatch')
 class ViewTweetsView(TemplateView):
         template_name = 'tweets/view-tweets.html'
                 
