@@ -33,19 +33,21 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'usuarios',
-    'pages',
-    'bootstrap4',
-    'tweets',
-    'compareTweets',
-    'rest_framework',
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'rest_framework',
+    
+    'usuarios',
+    'pages',
+    'bootstrap4',
+    'tweets',
+    'compareTweets',
+    'trainingBase',
 ]
 
 MIDDLEWARE = [
