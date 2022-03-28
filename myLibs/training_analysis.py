@@ -3,6 +3,7 @@ import numpy as np
 import nltk
 
 from .data_processing import searchTweets, clean_tweet
+from tweets.models import TrainingBase, TrainingBaseAdvanced
 
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 np.transpose(list_stopwords_portuguese)
@@ -1025,6 +1026,16 @@ training_base_advanced = [
 ('aquele que nunca viu a tristeza nunca reconhecerá a alegria','tristeza'),
 ('cuidado com a tristeza ela e um vicio','tristeza')]
 
+'''
+objetos = TrainingBaseAdvanced.objects.all()
+for objeto in objetos:
+    print(objeto.texto)
+    print(objeto.sentimento)
+
+objetos = TrainingBase.objects.all()
+for objeto in objetos:
+    print(objeto.texto)
+'''
 
 def removeStopWords(texto):
     frases = []
@@ -1104,6 +1115,28 @@ def inicialize(option):
     global palavras_unicas_treinamento
     
     if option == 'simple':
+        queryset = TrainingBase.objects.all()
+        querysetvalues = queryset.values('texto', 'sentimento')
+        training_base_list = list(querysetvalues)
+        training_base_list2 = []
+        for dict in training_base_list:
+            value = dict.values()
+            print(value)
+            training_base_list2.append(value)
+        frases_com_Stem_treinamento = aplica_Stemmer(training_base_list2)
+    else:
+        queryset = TrainingBaseAdvanced.objects.all()
+        querysetvalues = queryset.values('texto', 'sentimento')
+        training_base_list = list(querysetvalues)
+        training_base_list2 = []
+        for dict in training_base_list:
+            value = dict.values()
+            print(value)
+            training_base_list2.append(value)
+        frases_com_Stem_treinamento = aplica_Stemmer(training_base_list2)
+        
+    '''
+    if option == 'simple':
         training_base_df = pd.DataFrame(training_base_simple)
         training_base_df.columns = ['Phrase', 'Sentiment']
         frases_com_Stem_treinamento = aplica_Stemmer(training_base_simple)
@@ -1111,7 +1144,7 @@ def inicialize(option):
         training_base_df = pd.DataFrame(training_base_advanced)
         training_base_df.columns = ['Phrase', 'Sentiment']
         frases_com_Stem_treinamento = aplica_Stemmer(training_base_advanced)
-
+    '''
     palavras_treinamento = busca_Palavras(frases_com_Stem_treinamento)    
     frequencia_treinamento = busca_frequencia(palavras_treinamento)
     palavras_unicas_treinamento = busca_palavras_unicas(frequencia_treinamento)

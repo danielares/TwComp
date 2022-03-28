@@ -13,20 +13,23 @@ def get_tweets(search, amoutTweets, option, bearerToken):
 
 def generate_data(tweets, option):
     
-    if option == 'simple': colors = ['green','gray','red']
-    elif option == 'advanced': colors = ['yellow','green', 'violet', 'red', 'blue', 'gray']
+    if option == 'simple': colors = ['red','gray','green']
+    elif option == 'advanced': colors = ['gray', 'violet', 'green',  'red', 'blue', 'yellow']
     
     # Convert a List of dictionaries using from_records() method.
     df = pd.DataFrame(tweets)
     
-    sentimentos = []
-    for sentiment in df['tweet_analise']: sentimentos.append(sentiment[0])
-    df['sentiment'] = sentimentos
+    sentiments = []
+    for sentiment in df['tweet_analise']: sentiments.append(sentiment[0])
+    df['sentiment'] = sentiments
     
-    count_sentiments = df['sentiment'].value_counts()
-    count_sentiments_dict = count_sentiments.to_dict()
-    labels = [label for label in count_sentiments_dict.keys()]
-    count_sentiments_list = count_sentiments.to_list()
+    count_sentiments = df['sentiment'].value_counts().to_dict()
+    
+    # List with dictionary keys
+    labels = [label for label in count_sentiments.keys()]
+    
+    # List with dictionary values
+    count_sentiments_list = list(count_sentiments.values())
     
     return {"qtd_tweets": count_sentiments_list,
             "labels": labels, 

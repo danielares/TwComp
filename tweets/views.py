@@ -9,6 +9,8 @@ from django.utils.decorators import method_decorator
 from myLibs.word_cloud import wordCloud
 from myLibs.return_data_view import get_tweets
 
+from .models import TrainingBaseAdvanced
+
 
 @method_decorator(login_required, name='dispatch')
 class TakeTweetsView(TemplateView):

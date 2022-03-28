@@ -1,10 +1,9 @@
 
-from wordcloud import WordCloud
-import nltk
-
 import io
 import urllib, base64
 
+from wordcloud import WordCloud
+import nltk
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt

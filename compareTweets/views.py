@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from myLibs.word_cloud import wordCloud
 from myLibs.return_data_view import get_tweets
 
+
 @method_decorator(login_required, name='dispatch')
 class ViewCompareTweetsView(TemplateView):
     template_name = 'compareTweets/search-tweets-compare.html'
@@ -26,7 +27,7 @@ class CompareTweetsView(TemplateView):
             return context
                 
         def post(self, request, **kwargs):
-            global api
+            global api         
             
             if request.method == 'POST':
                 search1 = request.POST['searched1']

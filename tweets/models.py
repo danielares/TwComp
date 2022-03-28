@@ -10,8 +10,16 @@ class Base(models.Model):
         
         
 class TrainingBase(Base):
-    nome = models.TextField('Texto', max_length=300)
+    texto = models.TextField('Texto', max_length=300)
     sentimento = models.CharField('Sentimento', max_length=100)
     
     def __str__(self):
-        return self.Sentimento
+        return self.sentimento
+
+
+class TrainingBaseAdvanced(Base):
+    texto = models.TextField('Texto', max_length=300)
+    sentimento = models.CharField('Sentimento', max_length=100)
+    
+    def __str__(self):
+        return self.sentimento
