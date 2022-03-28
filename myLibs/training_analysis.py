@@ -1026,17 +1026,6 @@ training_base_advanced = [
 ('aquele que nunca viu a tristeza nunca reconhecerá a alegria','tristeza'),
 ('cuidado com a tristeza ela e um vicio','tristeza')]
 
-'''
-objetos = TrainingBaseAdvanced.objects.all()
-for objeto in objetos:
-    print(objeto.texto)
-    print(objeto.sentimento)
-
-objetos = TrainingBase.objects.all()
-for objeto in objetos:
-    print(objeto.texto)
-'''
-
 def removeStopWords(texto):
     frases = []
     for (palavras, sentimento) in texto:
@@ -1120,9 +1109,7 @@ def inicialize(option):
         training_base_list = list(querysetvalues)
         training_base_list2 = []
         for dict in training_base_list:
-            value = dict.values()
-            print(value)
-            training_base_list2.append(value)
+            training_base_list2.append(dict.values())
         frases_com_Stem_treinamento = aplica_Stemmer(training_base_list2)
     else:
         queryset = TrainingBaseAdvanced.objects.all()
@@ -1130,9 +1117,7 @@ def inicialize(option):
         training_base_list = list(querysetvalues)
         training_base_list2 = []
         for dict in training_base_list:
-            value = dict.values()
-            print(value)
-            training_base_list2.append(value)
+            training_base_list2.append(dict.values())
         frases_com_Stem_treinamento = aplica_Stemmer(training_base_list2)
         
     '''
