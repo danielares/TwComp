@@ -10,6 +10,8 @@ from matplotlib import pyplot as plt
 
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 
+
+# Função para criar a imagem word cloud
 def wordCloud(tweets, term):
     
     wc = WordCloud(stopwords=list_stopwords_portuguese, mode = "RGBA", 

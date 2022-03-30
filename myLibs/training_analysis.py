@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import nltk
 
-from .data_processing import searchTweets, clean_tweet
+from .data_processing import search_tweets, clean_tweet
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
 #from myLibs.training_base import training_base_advanced, training_base_simple
 
@@ -10,7 +10,7 @@ list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 np.transpose(list_stopwords_portuguese)
 
 
-def removeStopWords(texto):
+def remove_stop_words(texto):
     frases = []
     for (palavras, sentimento) in texto:
         # Criamos uma list compreheension para extrair apenas as palavras que não estão na lista_Stop
@@ -20,7 +20,7 @@ def removeStopWords(texto):
     return frases
 
 
-def aplica_Stemmer(texto):
+def apply_stmmer(texto):
     stemmer = nltk.stem.RSLPStemmer()
     # Escolhido o RSLPS pois é especifico da lingua portuguesa
     frases_sem_Stemming = []
@@ -30,24 +30,24 @@ def aplica_Stemmer(texto):
     return frases_sem_Stemming
 
 
-def busca_Palavras(frases):
+def search_words(frases):
     todas_Palavras = []
     for (palavras, sentimento) in frases:
         todas_Palavras.extend(palavras)
     return todas_Palavras
 
 
-def busca_frequencia(palavras):
+def frequency_words(palavras):
     palavras = nltk.FreqDist(palavras)
     return palavras
 
 
-def busca_palavras_unicas(frequencia):
+def unique_words(frequencia):
     freq = frequencia.keys()
     return freq
 
 
-def extrator_palavras(documento):
+def word_extractor(documento):
     # Utilizado set() para associar a variavel doc com o parâmetro que esta chegando
     global palavras_unicas_treinamento
     doc = set(documento)
@@ -57,7 +57,7 @@ def extrator_palavras(documento):
     return caracteristicas
 
 
-def analisar_tweet(tweet, classificador):
+def analyze_tweet(tweet, classificador):
     try:
         testeStemming = []
         stemmer = nltk.stem.RSLPStemmer()
@@ -66,7 +66,7 @@ def analisar_tweet(tweet, classificador):
             comStem = [palavra for palavra in palavras_treinamento.split()]
             testeStemming.append(str(stemmer.stem(comStem[0])))
 
-        novo = extrator_palavras(testeStemming)
+        novo = word_extractor(testeStemming)
 
         distribuicao = classificador.prob_classify(novo)
         
@@ -96,23 +96,23 @@ def inicialize(option):
     training_base_list2 = []
     for dict in training_base_list:
         training_base_list2.append(dict.values())
-    frases_com_Stem_treinamento = aplica_Stemmer(training_base_list2)
+    frases_com_Stem_treinamento = apply_stmmer(training_base_list2)
      
     ''' Usado para utilizar dados do training_base.py no lugar do banco de dados
     if option == 'simple':
         training_base_df = pd.DataFrame(training_base_simple)
         training_base_df.columns = ['Phrase', 'Sentiment']
-        frases_com_Stem_treinamento = aplica_Stemmer(training_base_simple)
+        frases_com_Stem_treinamento = apply_stmmer(training_base_simple)
     else: 
         training_base_df = pd.DataFrame(training_base_advanced)
         training_base_df.columns = ['Phrase', 'Sentiment']
-        frases_com_Stem_treinamento = aplica_Stemmer(training_base_advanced)
+        frases_com_Stem_treinamento = apply_stmmer(training_base_advanced)
     '''  
     
-    palavras_treinamento = busca_Palavras(frases_com_Stem_treinamento)    
-    frequencia_treinamento = busca_frequencia(palavras_treinamento)
-    palavras_unicas_treinamento = busca_palavras_unicas(frequencia_treinamento)
-    base_completa_treinamento = nltk.classify.apply_features(extrator_palavras, frases_com_Stem_treinamento)
+    palavras_treinamento = search_words(frases_com_Stem_treinamento)    
+    frequencia_treinamento = frequency_words(palavras_treinamento)
+    palavras_unicas_treinamento = unique_words(frequencia_treinamento)
+    base_completa_treinamento = nltk.classify.apply_features(word_extractor, frases_com_Stem_treinamento)
     classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
     return classificador
 
@@ -121,17 +121,19 @@ def create_dict_training(option, query, amount, bearerToken):
     tweets_dict = {}
     
     # retorna o classificador que foi criado com base na base de treinamento 
-    # e sera utilizado como parametro para a função analisar_tweet
+    # e sera utilizado como parametro para a função analyze_tweet
     classificador = inicialize(option) 
     
     # retorna todos os tweets em uma lista de dicionarios
-    all_tweets = searchTweets(query, amount, bearerToken)
+    all_tweets = search_tweets(query, amount, bearerToken)
 
     for tweet in all_tweets:
         try:  
             tweet_clean = clean_tweet(tweet['text']) # limpa o tweet para ser analisado
-            analise = analisar_tweet(tweet_clean, classificador) # analisa o tweet e retorna seu provavel sentimento
+            analise = analyze_tweet(tweet_clean, classificador) # analisa o tweet e retorna seu provavel sentimento
             
+            # Cria um novo dicionario com o tweet já limpo e a analise já feita
+            # E também com todas outras informçaões que já tinham no outro dicionario
             tweets_dict = {
                'tweet_id' : tweet['id'],
                'tweet_text': tweet['text'],
