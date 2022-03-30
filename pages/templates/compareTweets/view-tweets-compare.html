@@ -9,16 +9,18 @@
         <h2 class="text-white row d-flex justify-content-center">Termos pesquisados: {{ term1 }} e {{term2}}</h2>
 
 
-        <h3 class="text-white my-2">Wordcloud: {{term1}} X {{term2}}</h3>
+        <!-- <h3 class="text-white my-2">Word Cloud</h3> -->
         <div class="d-flex justify-content-center my-2">
             <div class="zoom" id="magnifying_area" style="width: 55em;">
-                <img class="img-fluid px-1" id="magnifying_img" src="{{ wordcloud1 }}"
-                    alt="Imagem word cloud">
+                <img class="img-fluid px-1" id="magnifying_img" src="{{ wordcloud1 }}" alt="Imagem word cloud">
+                <figcaption class="d-flex justify-content-center figure-caption py-3 text-white">Word Cloud: {{term1}}
+                </figcaption>
             </div>
 
             <div class="zoom" id="magnifying_area" style="width: 55rem;">
-                <img class="img-fluid px-1" id="magnifying_img" src="{{ wordcloud2 }}"
-                    alt="Imagem word cloud">
+                <img class="img-fluid px-1" id="magnifying_img" src="{{ wordcloud2 }}" alt="Imagem word cloud">
+                <figcaption class="d-flex justify-content-center figure-caption py-3 text-white">Word Cloud: {{term2}}
+                </figcaption>
             </div>
         </div>
 

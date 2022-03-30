@@ -1,3 +1,10 @@
+'''
+Base de treinamento inicial.
+Para utilizar deve ser adicionada ao banco de dados 
+ou descomentar a partir da linha 101 até a 110 do arquivo training_analysis.py
+Também deve ser comentado as linha 91 até 99 do mesmo arquivo
+Também descomentar a linha 7 do mesmo arquivo que as bases são importadas
+'''
 training_base_simple = [
     
     # POSITIVO

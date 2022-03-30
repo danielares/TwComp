@@ -7,6 +7,11 @@ matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
 
+'''
+Essa parte do código é responsavel por gerar as imagens png que são mostradas no relatório gerado em PDF
+As imagens são salvas em um buffer e enviadas para o front como contexto.
+'''
+
 def create_pie_chart(number_of_tweets, polarity, colors, term_searched):
     buf = io.BytesIO()
     plt.figure(figsize=(6,5))

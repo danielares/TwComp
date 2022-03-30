@@ -2,14 +2,13 @@ from django.contrib import admin
 
 from .models import TrainingBase, TrainingBaseAdvanced
 
-#@admin.register(TrainingBase)
+@admin.register(TrainingBase)
 class TrainingBaseAdmin(admin.ModelAdmin):
-    list_display = ('Texto', 'Sentimento')
+    model = TrainingBase
+    list_display = ('id', 'texto', 'sentimento')
     
     
+@admin.register(TrainingBaseAdvanced) 
 class TrainingBaseAdvancedAdmin(admin.ModelAdmin):
-    list_display = ('Texto', 'Sentimento')
-
-
-admin.site.register(TrainingBase)
-admin.site.register(TrainingBaseAdvanced)
+    model = TrainingBaseAdvanced
+    list_display = ('id', 'texto', 'sentimento')

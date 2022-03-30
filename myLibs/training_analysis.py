@@ -3,8 +3,8 @@ import numpy as np
 import nltk
 
 from .data_processing import searchTweets, clean_tweet
-#from myLibs.training_base import training_base_advanced, training_base_simple
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
+#from myLibs.training_base import training_base_advanced, training_base_simple
 
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 np.transpose(list_stopwords_portuguese)
@@ -87,10 +87,9 @@ def analisar_tweet(tweet, classificador):
 def inicialize(option):
     global palavras_unicas_treinamento
     
+    # if/else utilizado para utilizar o banco de dados da base de treinamento a avançada ou simples
     if option == 'simple': queryset = TrainingBase.objects.all()
     else: queryset = TrainingBaseAdvanced.objects.all()
-    
-    print(queryset)
     
     querysetvalues = queryset.values('texto', 'sentimento')
     training_base_list = list(querysetvalues)
@@ -99,7 +98,7 @@ def inicialize(option):
         training_base_list2.append(dict.values())
     frases_com_Stem_treinamento = aplica_Stemmer(training_base_list2)
      
-    '''
+    ''' Usado para utilizar dados do training_base.py no lugar do banco de dados
     if option == 'simple':
         training_base_df = pd.DataFrame(training_base_simple)
         training_base_df.columns = ['Phrase', 'Sentiment']
@@ -121,16 +120,17 @@ def create_dict_training(option, query, amount, bearerToken):
     tweets = []
     tweets_dict = {}
     
-    classificador = inicialize(option)
+    # retorna o classificador que foi criado com base na base de treinamento 
+    # e sera utilizado como parametro para a função analisar_tweet
+    classificador = inicialize(option) 
     
-    data = searchTweets(query, amount, bearerToken)
+    # retorna todos os tweets em uma lista de dicionarios
+    all_tweets = searchTweets(query, amount, bearerToken)
 
-    for tweet in data:
-        try:
-            tweet_text = tweet['text']
-            
-            tweet_clean = clean_tweet(tweet_text)
-            analise = analisar_tweet(tweet_clean, classificador)
+    for tweet in all_tweets:
+        try:  
+            tweet_clean = clean_tweet(tweet['text']) # limpa o tweet para ser analisado
+            analise = analisar_tweet(tweet_clean, classificador) # analisa o tweet e retorna seu provavel sentimento
             
             tweets_dict = {
                'tweet_id' : tweet['id'],

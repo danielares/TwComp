@@ -54,7 +54,7 @@ def searchTweets(query, amount, bearerToken):
 
 
 def clean_tweet(tweet):
-        tweet_clean = re.sub(r"\n", " ", tweet)
+        tweet_clean = re.sub(r"\n", " ", tweet) # troca quebra de linha por um espaço em branco
         tweet_clean = re.sub(
         "[^0-9A-Za-z ñÑÀàÁáÉéÍíÓóÚúÂâÊêÎîÔôÛûÃãÕõÇç@#']", "", tweet_clean).lower()  # deixa somente os caracteres aceitos
         tweet_clean = re.sub(r"http\S+", "", tweet_clean)  # remove links
