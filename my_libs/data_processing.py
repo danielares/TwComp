@@ -10,7 +10,7 @@ def get_client(bearer_token):
 
 
 # Procura os tweets com base no termo pesquisado
-def search_tweets(search_term, number_of_tweets, bearer_token):
+def search_tweets(search_term, number_of_tweets, filter_retweets, bearer_token):
     
     # chama a função que cria o cliente com o qual fazemos as requisições a API do twitter
     client = get_client(bearer_token)
@@ -20,6 +20,9 @@ def search_tweets(search_term, number_of_tweets, bearer_token):
     tweet_fields_options = ['created_at','lang','geo','text', 'referenced_tweets']
     
     # Busca os tweets mais recentes
+    # Filtro para não pegar retweets: query=search_term + ' -is:retweet
+    if filter_retweets: search_term = search_term + ' -is:retweet'     
+    print(search_term)
     tweets = client.search_recent_tweets(query=search_term, max_results=number_of_tweets, expansions=expansions_options, 
                                          tweet_fields=tweet_fields_options)
     

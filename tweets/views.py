@@ -5,9 +5,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.utils.datastructures import MultiValueDictKeyError
 
-from myLibs.word_cloud import wordCloud
-from myLibs.return_data_view import get_tweets
+from my_libs.word_cloud import wordCloud
+from my_libs.return_data_view import get_tweets
 
 
 @method_decorator(login_required, name='dispatch')
@@ -29,13 +30,21 @@ class ViewTweetsView(TemplateView):
                 
                 search = request.POST['searched']
                 amoutTweets = request.POST['amoutTweets']
-                option = request.POST['inlineRadioOptions']  
+                option = request.POST['inlineRadioOptions']
+            
+                try:
+                    filter_retweets = bool(request.POST['filterRetweets'])
+                except MultiValueDictKeyError:
+                    filter_retweets = False
+                
+                
+                print(filter_retweets)
                 
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search:
                     
                     bearerToken = self.request.user.bearerToken
-                    tweets, chartsInfo = get_tweets(search, amoutTweets, option, bearerToken) 
+                    tweets, chartsInfo = get_tweets(search, amoutTweets, option, filter_retweets, bearerToken) 
                     wordCloudImage = wordCloud(tweets, search)
                     api = {"term": search, "amoutTweets": amoutTweets, 
                            "chartsInfo": chartsInfo, 'tweets': tweets}

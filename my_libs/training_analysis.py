@@ -116,7 +116,7 @@ def inicialize(option):
     classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
     return classificador
 
-def create_dict_training(option, query, amount, bearerToken):
+def create_dict_training(option, query, amount, filter_retweets, bearerToken):
     tweets = []
     tweets_dict = {}
     
@@ -125,7 +125,7 @@ def create_dict_training(option, query, amount, bearerToken):
     classificador = inicialize(option) 
     
     # retorna todos os tweets em uma lista de dicionarios
-    all_tweets = search_tweets(query, amount, bearerToken)
+    all_tweets = search_tweets(query, amount, filter_retweets, bearerToken)
 
     for tweet in all_tweets:
         try:  

@@ -5,9 +5,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.utils.datastructures import MultiValueDictKeyError
 
-from myLibs.word_cloud import wordCloud
-from myLibs.return_data_view import get_tweets
+from my_libs.word_cloud import wordCloud
+from my_libs.return_data_view import get_tweets
 
 
 @method_decorator(login_required, name='dispatch')
@@ -35,13 +36,18 @@ class CompareTweetsView(TemplateView):
                 amoutTweets = request.POST['amoutTweets']
                 option = request.POST['inlineRadioOptions']
                 
+                try:
+                    filter_retweets = bool(request.POST['filterRetweets'])
+                except MultiValueDictKeyError:
+                    filter_retweets = False
+                
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search1 and search2:
                      
                     bearerToken = self.request.user.bearerToken 
                     
-                    tweets1, chartsInfo1 = get_tweets(search1, amoutTweets, option, bearerToken)
-                    tweets2, chartsInfo2 = get_tweets(search2, amoutTweets, option, bearerToken)
+                    tweets1, chartsInfo1 = get_tweets(search1, amoutTweets, option, filter_retweets, bearerToken)
+                    tweets2, chartsInfo2 = get_tweets(search2, amoutTweets, option, filter_retweets, bearerToken)
                     
                     wordcloud1 = wordCloud(tweets1, search1)
                     wordcloud2 = wordCloud(tweets2, search2)
