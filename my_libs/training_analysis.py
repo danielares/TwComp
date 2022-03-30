@@ -152,3 +152,13 @@ def create_dict_training(option, query, amount, filter_retweets, bearerToken):
             pass
     
     return tweets
+
+
+def analyze_test_phrase(phrase, option):
+    
+    classificador = inicialize(option)
+    sentiment = analyze_tweet(phrase, classificador)
+    
+    return sentiment
+
+

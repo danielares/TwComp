@@ -37,9 +37,6 @@ class ViewTweetsView(TemplateView):
                 except MultiValueDictKeyError:
                     filter_retweets = False
                 
-                
-                print(filter_retweets)
-                
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search:
                     
@@ -90,10 +87,11 @@ class ChartData(APIView):
     def get(self, request, format=None, userid=None, term=None):
         api = ViewTweetsView.return_api_data()
     
+        '''   
         api_chart = {"term": api['term'], "amoutTweets": api['amoutTweets'], 
                            "chartsInfo": api['chartsInfo']}
-    
+        '''
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
         
-        return Response(api_chart)
+        return Response(api)
