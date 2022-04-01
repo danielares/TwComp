@@ -29,7 +29,7 @@ class ViewTweetsView(TemplateView):
             if request.method == 'POST':
                 
                 search = request.POST['searched']
-                amoutTweets = request.POST['amoutTweets']
+                number_of_tweets = request.POST['amoutTweets']
                 option = request.POST['inlineRadioOptions']
             
                 try:
@@ -40,22 +40,22 @@ class ViewTweetsView(TemplateView):
                 # if para veficiar se o usuario fez alguma pesquisa
                 if search:
                     
-                    bearerToken = self.request.user.bearerToken
-                    tweets, chartsInfo = get_tweets(search, amoutTweets, option, filter_retweets, bearerToken) 
-                    wordCloudImage = wordCloud(tweets, search)
-                    api = {"term": search, "amoutTweets": amoutTweets, 
-                           "chartsInfo": chartsInfo, 'tweets': tweets}
+                    tokens = self.request.user.bearerToken
+                    tweets, charts_info = get_tweets(search, number_of_tweets, option, filter_retweets, tokens) 
+                    word_cloud_image = wordCloud(tweets, search)
+                    api = {"term": search, "amoutTweets": number_of_tweets, 
+                           "chartsInfo": charts_info, 'tweets': tweets}
     
                     context = super().get_context_data(**kwargs)
-                    context['chartsInfo'] = chartsInfo
-                    context['wordcloud'] = wordCloudImage
+                    context['chartsInfo'] = charts_info
+                    context['wordcloud'] = word_cloud_image
                     context['option'] = option
                     context['term'] = search
                     context['tweets'] = tweets
-                    context['amoutTweets'] = amoutTweets
+                    context['amoutTweets'] = number_of_tweets
                     context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    context['tweetsError'] = int(amoutTweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    context['qtd_tweets'] = chartsInfo['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
+                    context['tweetsError'] = int(number_of_tweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
+                    context['qtd_tweets'] = charts_info['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                     return render(request, self.template_name, context)
                 # else para se o usuario não fez alguma pesquisa
                 else:       

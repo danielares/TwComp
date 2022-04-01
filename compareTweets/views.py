@@ -31,9 +31,9 @@ class CompareTweetsView(TemplateView):
             global api         
             
             if request.method == 'POST':
-                search1 = request.POST['searched1']
-                search2 = request.POST['searched2']
-                amoutTweets = request.POST['amoutTweets']
+                search_1 = request.POST['searched1']
+                search_2 = request.POST['searched2']
+                number_of_tweets = request.POST['amoutTweets']
                 option = request.POST['inlineRadioOptions']
                 
                 try:
@@ -42,31 +42,31 @@ class CompareTweetsView(TemplateView):
                     filter_retweets = False
                 
                 # if para veficiar se o usuario fez alguma pesquisa
-                if search1 and search2:
+                if search_1 and search_2:
                      
-                    bearerToken = self.request.user.bearerToken 
+                    tokens = self.request.user.bearerToken 
                     
-                    tweets1, chartsInfo1 = get_tweets(search1, amoutTweets, option, filter_retweets, bearerToken)
-                    tweets2, chartsInfo2 = get_tweets(search2, amoutTweets, option, filter_retweets, bearerToken)
+                    tweets1, chartsInfo1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, tokens)
+                    tweets2, chartsInfo2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, tokens)
                     
-                    wordcloud1 = wordCloud(tweets1, search1)
-                    wordcloud2 = wordCloud(tweets2, search2)
+                    wordcloud_image_1 = wordCloud(tweets1, search_1)
+                    wordcloud_image_2 = wordCloud(tweets2, search_2)
                     
                     
-                    api = {"term1": search1, "term2": search2,
-                            "amoutTweets": amoutTweets,
+                    api = {"term1": search_1, "term2": search_2,
+                            "amoutTweets": number_of_tweets,
                             "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
                             "tweets1": tweets1, "tweets2": tweets2}
 
                     context = super().get_context_data(**kwargs)
                     context['chartsInfo1'] = chartsInfo1
                     context['chartsInfo2'] = chartsInfo2
-                    context['wordcloud1'] = wordcloud1
-                    context['wordcloud2'] = wordcloud2
+                    context['wordcloud1'] = wordcloud_image_1
+                    context['wordcloud2'] = wordcloud_image_2
                     context['option'] = option
-                    context['amoutTweets'] = amoutTweets
-                    context['term1'] = search1
-                    context['term2'] = search2
+                    context['amoutTweets'] = number_of_tweets
+                    context['term1'] = search_1
+                    context['term2'] = search_2
                     context['tweets1'] = tweets1
                     context['tweets2'] = tweets2
                     context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
