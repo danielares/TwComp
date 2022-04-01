@@ -26,41 +26,39 @@ class ViewTweetsView(TemplateView):
         def post(self, request, **kwargs):
             global api    
             
-            if request.method == 'POST':
-                
-                search = request.POST['searched']
-                number_of_tweets = request.POST['amoutTweets']
-                option = request.POST['inlineRadioOptions']
+            search = request.POST['searched']
+            number_of_tweets = request.POST['amoutTweets']
+            option = request.POST['inlineRadioOptions']
+        
+            try:
+                filter_retweets = bool(request.POST['filterRetweets'])
+            except MultiValueDictKeyError:
+                filter_retweets = False
             
-                try:
-                    filter_retweets = bool(request.POST['filterRetweets'])
-                except MultiValueDictKeyError:
-                    filter_retweets = False
+            # if para veficiar se o usuario fez alguma pesquisa
+            if search:
                 
-                # if para veficiar se o usuario fez alguma pesquisa
-                if search:
-                    
-                    tokens = self.request.user.bearerToken
-                    tweets, charts_info = get_tweets(search, number_of_tweets, option, filter_retweets, tokens) 
-                    word_cloud_image = wordCloud(tweets, search)
-                    api = {"term": search, "amoutTweets": number_of_tweets, 
-                           "chartsInfo": charts_info, 'tweets': tweets}
-    
-                    context = super().get_context_data(**kwargs)
-                    context['chartsInfo'] = charts_info
-                    context['wordcloud'] = word_cloud_image
-                    context['option'] = option
-                    context['term'] = search
-                    context['tweets'] = tweets
-                    context['amoutTweets'] = number_of_tweets
-                    context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    context['tweetsError'] = int(number_of_tweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    context['qtd_tweets'] = charts_info['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                    return render(request, self.template_name, context)
-                # else para se o usuario não fez alguma pesquisa
-                else:       
-                    messages.success(request, 'Você deve pesquisar algo')
-                    return redirect('search-tweets')
+                tokens = self.request.user.bearerToken
+                tweets, charts_info = get_tweets(search, number_of_tweets, option, filter_retweets, tokens) 
+                word_cloud_image = wordCloud(tweets, search)
+                api = {"term": search, "amoutTweets": number_of_tweets, 
+                        "chartsInfo": charts_info, 'tweets': tweets}
+
+                context = super().get_context_data(**kwargs)
+                context['chartsInfo'] = charts_info
+                context['wordcloud'] = word_cloud_image
+                context['option'] = option
+                context['term'] = search
+                context['tweets'] = tweets
+                context['amoutTweets'] = number_of_tweets
+                context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
+                context['tweetsError'] = int(number_of_tweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
+                context['qtd_tweets'] = charts_info['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
+                return render(request, self.template_name, context)
+            # else para se o usuario não fez alguma pesquisa
+            else:       
+                messages.success(request, 'Você deve pesquisar algo')
+                return redirect('search-tweets')
                 
         @staticmethod
         def return_api_data():

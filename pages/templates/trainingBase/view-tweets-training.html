@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<section class="vh-100">
+    <div class="container h-100">
+
+        <h1 class="row justify-content-center text-white pt-5">Tweets para adicionar a base de treinamento</h1>
+        {% for tweet in tweets %}
+        <div class="form-group text-white">
+            <h6>Tweet: {{tweet.tweet_id}}</h6>
+            <h6>Sentimento detectado: {{tweet.tweet_analise.0}} // Probabilidade {{tweet.tweet_analise.1}}</h6>
+            <h6>Tweet Original: {{tweet.tweet_text}}</h6>
+            <h6 for="pesquisaTweet">Tweet na forma a ser adicionado: </h6>
+            <input type="text" class="form-control" value="{{ tweet.tweet_clean }}" id="pesquisaTweet" name="tweet">
+            <small id="emailHelp" class="form-text text-muted"></small>
+
+            {% if option == 'advanced' %}
+            <h6>Categorize o tweet: </h6>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelAlegria" value="simple"/>
+                <label class="form-check-label" for="labelAlegria">Alegria</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelNojo"
+                    value="advanced" />
+                <label class="form-check-label" for="labelNojo">Nojo</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelMedo"
+                    value="advanced" />
+                <label class="form-check-label" for="labelMedo">Medo</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelRaiva"
+                    value="advanced" />
+                <label class="form-check-label" for="labelRaiva">Raiva</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelSurpresa"
+                    value="advanced" />
+                <label class="form-check-label" for="labelSurpresa">Surpresa</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{ {tweet.tweet_id }}" id="labelTristeza"
+                    value="advanced" />
+                <label class="form-check-label" for="labelTristeza">Tristeza</label>
+            </div>
+            {% endif %}
+
+
+            {% if option == 'simple' %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelPositivo"
+                    value="advanced" />
+                <label class="form-check-label" for="labelPositivo">Positivo</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelNeutro"
+                    value="advanced" />
+                <label class="form-check-label" for="labelNeutro">Neutro</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="label_{{ tweet.tweet_id }}" id="labelNegativo"
+                    value="advanced" />
+                <label class="form-check-label" for="labelNegativo">Negativo</label>
+            </div>
+            {% endif %}
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="True" name="addTweetDB" id="addTweetDB">
+                <label class="form-check-label" for="addTweetDB">
+                    Adicionar este tweet a base de dados?
+                </label>
+            </div>
+
+        </div>
+        <br><br>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
