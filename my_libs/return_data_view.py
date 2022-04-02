@@ -25,8 +25,12 @@ ou (alegria, nojo, raiva, surpresa, tristeza, medo)
 def generate_data(tweets, option):
     
     # if/else somente para escolher as cores que serão utilizadas, baseado na opçõa de analise
-    if option == 'simple': colors = ['red','gray','green']
-    elif option == 'advanced': colors = ['yellow', 'violet', 'green',  'red', 'blue', 'gray']
+    if option == 'simple': 
+        colors = ['red','gray','green']
+        all_labels = ['positivo, negativo, neutro']
+    elif option == 'advanced': 
+        colors = ['yellow', 'violet', 'green',  'red', 'blue', 'gray']
+        all_labels = ['alegria', 'medo', 'nojo', 'raiva', 'surpresa', 'tristeza']
     
     # Cria um data frame com a lista de dicionarios (cada dicionario representa um tweet)
     df = pd.DataFrame(tweets)
@@ -40,6 +44,11 @@ def generate_data(tweets, option):
     # Cria um dicionario com o numero de valores por sentimento
     count_sentiments = df['sentiment'].value_counts().to_dict()
 
+    # Adiciona o valor 0 para os tweets que não estão no dicionario (para que no Compare Tweets os 2 termos tenham os mesmos labels)
+    for single_label in all_labels:
+        if single_label not in count_sentiments.keys():
+            count_sentiments[single_label] = 0
+    
     # Deixa o dicionario em ordem alfabetica(Baseado nas chaves do dicionario) isso evita que elementos fique na posição errada
     # no Compare Tweets
     count_sentiments = {key: value for key, value in sorted(count_sentiments.items())}
