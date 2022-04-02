@@ -1,0 +1,25 @@
+{% load static %}
+
+<h3 class="text-white my-5">Analises feitas: {{term1}}</h3>
+<div class="justify-content-left text-white">
+    {% for tweet in tweets1 %}
+        <p>Tweet ID: {{tweet.tweet_id}}</p>
+        <p>Tweet Original: {{tweet.tweet_text}}</p>
+        <p>Tweet Limpo: {{tweet.tweet_clean}}</p>
+        <p>Analise feita: {{tweet.tweet_analise.0|capfirst}}</p>
+        <p>Probabilidade de acerto: {{tweet.tweet_analise.1}}</p>
+        <br>
+    {% endfor %}
+</div>
+
+<h3 class="text-white my-5">Analises feitas: {{term2}}</h3>
+<div class="justify-content-left text-white">
+    {% for tweet in tweets2 %}
+        <p>Tweet ID: {{tweet.tweet_id}}</p>
+        <p>Tweet Original: {{tweet.tweet_text}}</p>
+        <p>Tweet Limpo: {{tweet.tweet_clean}}</p>
+        <p>Analise feita: {{tweet.tweet_analise.0|capfirst}}</p>
+        <p>Probabilidade de acerto: {{tweet.tweet_analise.1}}</p>
+        <br>
+    {% endfor %}
+</div>

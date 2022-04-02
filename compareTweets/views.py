@@ -30,54 +30,53 @@ class CompareTweetsView(TemplateView):
         def post(self, request, **kwargs):
             global api         
             
-            if request.method == 'POST':
-                search_1 = request.POST['searched1']
-                search_2 = request.POST['searched2']
-                number_of_tweets = request.POST['amoutTweets']
-                option = request.POST['inlineRadioOptions']
+            search_1 = request.POST['searched1']
+            search_2 = request.POST['searched2']
+            number_of_tweets = request.POST['amoutTweets']
+            option = request.POST['inlineRadioOptions']
+            
+            try:
+                filter_retweets = bool(request.POST['filterRetweets'])
+            except MultiValueDictKeyError:
+                filter_retweets = False
+            
+            # if para veficiar se o usuario fez alguma pesquisa
+            if search_1 and search_2:
+                    
+                tokens = self.request.user.bearerToken 
                 
-                try:
-                    filter_retweets = bool(request.POST['filterRetweets'])
-                except MultiValueDictKeyError:
-                    filter_retweets = False
+                tweets1, chartsInfo1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, tokens)
+                tweets2, chartsInfo2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, tokens)
                 
-                # if para veficiar se o usuario fez alguma pesquisa
-                if search_1 and search_2:
-                     
-                    tokens = self.request.user.bearerToken 
-                    
-                    tweets1, chartsInfo1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, tokens)
-                    tweets2, chartsInfo2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, tokens)
-                    
-                    wordcloud_image_1 = wordCloud(tweets1, search_1)
-                    wordcloud_image_2 = wordCloud(tweets2, search_2)
-                    
-                    
-                    api = {"term1": search_1, "term2": search_2,
-                            "amoutTweets": number_of_tweets,
-                            "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
-                            "tweets1": tweets1, "tweets2": tweets2}
+                wordcloud_image_1 = wordCloud(tweets1, search_1)
+                wordcloud_image_2 = wordCloud(tweets2, search_2)
+                
+                
+                api = {"term1": search_1, "term2": search_2,
+                        "amoutTweets": number_of_tweets,
+                        "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
+                        "tweets1": tweets1, "tweets2": tweets2}
 
-                    context = super().get_context_data(**kwargs)
-                    context['chartsInfo1'] = chartsInfo1
-                    context['chartsInfo2'] = chartsInfo2
-                    context['wordcloud1'] = wordcloud_image_1
-                    context['wordcloud2'] = wordcloud_image_2
-                    context['option'] = option
-                    context['amoutTweets'] = number_of_tweets
-                    context['term1'] = search_1
-                    context['term2'] = search_2
-                    context['tweets1'] = tweets1
-                    context['tweets2'] = tweets2
-                    context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
-                    context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
-                
-                    return render(request, self.template_name, context)
-                
-                # else para se o usuario não fez alguma pesquisa
-                else:       
-                    messages.success(request, 'Você deve pesquisar algo')
-                    return redirect('search-tweets-compare')
+                context = super().get_context_data(**kwargs)
+                context['chartsInfo1'] = chartsInfo1
+                context['chartsInfo2'] = chartsInfo2
+                context['wordcloud1'] = wordcloud_image_1
+                context['wordcloud2'] = wordcloud_image_2
+                context['option'] = option
+                context['amoutTweets'] = number_of_tweets
+                context['term1'] = search_1
+                context['term2'] = search_2
+                context['tweets1'] = tweets1
+                context['tweets2'] = tweets2
+                context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
+                context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
+            
+                return render(request, self.template_name, context)
+            
+            # else para se o usuario não fez alguma pesquisa
+            else:       
+                messages.success(request, 'Você deve pesquisar algo')
+                return redirect('search-tweets-compare')
                 
         @staticmethod
         def return_api_data():

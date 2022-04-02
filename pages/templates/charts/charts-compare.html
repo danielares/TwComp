@@ -1,17 +1,13 @@
 {% load static %}
-
 <div class="text-black row d-flex justify-content-center">
-    <div class="card text-black mx-1 my-1" style="width: 45rem;">
-        <div class="col-sm-12">
-            <canvas id="myChart" width="600" height="400"></canvas>
+    <div class="card text-black mx-1 my-1" style="width: 60rem;">
+        <canvas id="myChart" width="600" height="400"></canvas>
+        <p class="mx-2">Tipo de gráfico:</p>
+        <div class="text-black row d-flex justify-content-left">
+            <button class="btn btn-dark mx-2 my-2" id="bar">Barras</button>
+            <button class="btn btn-dark mx-2 my-2" id="radar">Linha</button>
         </div>
     </div>
-</div>
-
-<div class="card-body">
-    <h6>Tipo de gráfico:</h6>
-    <button class="btn btn-dark" id="bar">Barras</button>
-    <button class="btn btn-dark" id="radar">Linha</button>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -69,47 +65,47 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: {{ chartsInfo1.labels|safe }},
-                datasets: [{
-                    label: api_term1,
-                    data: {{ chartsInfo1.qtd_tweets|safe }},
-                    backgroundColor: 'rgba(255, 50 , 50, 0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1
+                labels: {{ chartsInfo1.labels | safe }},
+    datasets: [{
+        label: api_term1,
+        data: {{ chartsInfo1.qtd_tweets | safe }},
+        backgroundColor: 'rgba(255, 50 , 50, 0.8)',
+        borderColor: 'black',
+        borderWidth: 1
                 },
-                {
-                    label: api_term2,
-                    data: {{ chartsInfo2.qtd_tweets|safe }},
-                    backgroundColor: 'rgba(50, 50 , 255, 0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1
+    {
+        label: api_term2,
+        data: {{ chartsInfo2.qtd_tweets | safe }},
+        backgroundColor: 'rgba(50, 50 , 255, 0.8)',
+        borderColor: 'black',
+        borderWidth: 1
                 }]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                responsive: true,
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        responsive: true,
             }
         })
 
-        function changeBar() {
-            const updatetype = 'bar'
-            myChart.config.type = updatetype
-            myChart.update()
-            console.log(myChart.config.type)
-        }
+    function changeBar() {
+        const updatetype = 'bar'
+        myChart.config.type = updatetype
+        myChart.update()
+        console.log(myChart.config.type)
+    }
 
-        function changeRadar() {
-            const updatetype = 'line'
-            myChart.config.type = updatetype
-            myChart.update()
-            console.log(myChart.config.type)
-        }
+    function changeRadar() {
+        const updatetype = 'line'
+        myChart.config.type = updatetype
+        myChart.update()
+        console.log(myChart.config.type)
+    }
     }
 
 </script>

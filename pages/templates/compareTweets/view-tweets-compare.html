@@ -24,16 +24,9 @@
             </div>
         </div>
 
-        {% if option == 'simples' %}
-        {% include 'compareTweets/simple.html' %}
-
-        {% else %}
-        {% include 'compareTweets/advanced.html' %}
-
-        {% endif %}
+        {% include 'charts/charts-compare.html' %}
 
 
-        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
         <div class="row justify-content-center">
             <!-- FORM PARA GERAR PDF -->
             <form action="{% url 'generate-compare-pdf' %}" method="get" class="form text-white" autocomplete="off"
@@ -56,7 +49,8 @@
             <!-- FIM - FORM PARA GERAR CSV -->
 
         </div>
-        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+
+        {% include 'compareTweets/tweets-analysis.html' %}
 
     </div>
 </section>

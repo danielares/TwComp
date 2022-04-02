@@ -16,14 +16,8 @@
             </div>
         </div>
 
-        {% if option == 'simples' %}
-        {% include 'tweets/simple.html' %}
-
-        {% else %}
-        {% include 'tweets/advanced.html' %}
-
-        {% endif %}
-
+        {% include 'charts/charts.html' %}
+        
         <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
         <div class="row justify-content-center">
             <!-- FORM PARA GERAR PDF -->
@@ -55,6 +49,8 @@
             </form>
             <!-- FIM VER OS TWEETS -->
         </div>
+
+        {% include 'tweets/tweets-analysis.html' %}
 
     </div>
 </section>
