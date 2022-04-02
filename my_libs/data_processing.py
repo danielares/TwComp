@@ -15,25 +15,26 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, tokens):
     # chama a função que cria o cliente com o qual fazemos as requisições a API do twitter
     client = get_client(tokens)
     
-    # Campos de extensão opcionais que buscados durante uma requisição na API do twitter
+    # Campos de extensão opcionais buscados durante uma requisição na API do twitter
     expansions_options = ['author_id','referenced_tweets.id']
     tweet_fields_options = ['created_at','lang','geo','text', 'referenced_tweets']
     
     # Busca os tweets mais recentes
-    # Filtro para não pegar retweets: query=search_term + ' -is:retweet
+    # -is:retweet -> filtro para não pegar retweets
+    # lang:pt -> para pegar somente tweets em portugues
     if filter_retweets: search_term = search_term + ' -is:retweet'     
     tweets = client.search_recent_tweets(query=search_term+' lang:pt', max_results=number_of_tweets, expansions=expansions_options, 
                                          tweet_fields=tweet_fields_options)
     
+    # loop para salvar os tweets coletados em um dicionario python
     results = []
-
     try:
         for (tweet, tweet_user) in zip_longest(tweets.data, tweets.includes['users']):
             tweet_dict = {}
-            tweet_dict['username'] = tweet_user.username
-            tweet_dict['id'] = tweet.id
+            tweet_dict['tweet_username'] = tweet_user.username
+            tweet_dict['tweet_id'] = tweet.id
             if tweet.text[:2] != "RT":
-                tweet_dict['text'] = tweet.text
+                tweet_dict['tweet_text'] = tweet.text
             else:
                 '''
                 usado pq a api do twitter não entrega os retweets por completo no tweet.text do if acima
@@ -45,12 +46,12 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, tokens):
                 
                 for retweet in tweets.includes['tweets']:
                     if id_retweet == retweet.id:
-                        tweet_dict['text'] = retweet.text
+                        tweet_dict['tweet_text'] = retweet.text
 
-            tweet_dict['created_at'] = tweet.created_at
-            tweet_dict['lang'] = tweet.lang
-            tweet_dict['geo'] = tweet.geo
-            tweet_dict['referenced_tweets'] = tweet.referenced_tweets
+            tweet_dict['tweet_created_at'] = tweet.created_at
+            tweet_dict['tweet_lang'] = tweet.lang
+            tweet_dict['tweet_geo'] = tweet.geo
+            tweet_dict['tweet_referenced_tweets'] = tweet.referenced_tweets
             results.append(tweet_dict)
     except:
         print('deu erro na coleta')

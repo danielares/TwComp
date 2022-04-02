@@ -10,6 +10,7 @@ list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 np.transpose(list_stopwords_portuguese)
 
 
+# Função para remover stop words (palavras não significativas para a análise)
 def remove_stop_words(texto):
     frases = []
     for (palavras, sentimento) in texto:
@@ -20,9 +21,11 @@ def remove_stop_words(texto):
     return frases
 
 
+# Diminui a palavra somente para o seu radical (EX: Livro, Livros, Livrinho, Livrão -> Livr)
+#também já remover as stop words... A função especifica de remover stop words, no momento não esta sendo usada.
 def apply_stmmer(texto):
     stemmer = nltk.stem.RSLPStemmer()
-    # Escolhido o RSLPS pois é especifico da lingua portuguesa
+    # Escolhido o RSLPS pois é especifico da lingua portuguesa.
     frases_sem_Stemming = []
     for (palavras, sentimento) in texto:
         com_Stemming = [str(stemmer.stem(p)) for p in palavras.split() if p not in list_stopwords_portuguese]
@@ -30,6 +33,7 @@ def apply_stmmer(texto):
     return frases_sem_Stemming
 
 
+# Retorna lista com todas as plavras.
 def search_words(frases):
     todas_Palavras = []
     for (palavras, sentimento) in frases:
@@ -37,11 +41,13 @@ def search_words(frases):
     return todas_Palavras
 
 
+# Busca a frequencia em que as palavras ocorrem.
 def frequency_words(palavras):
     palavras = nltk.FreqDist(palavras)
     return palavras
 
 
+# Remove a repetição das palavras, deixando somente uma palavra aparecer uma vez
 def unique_words(frequencia):
     freq = frequencia.keys()
     return freq
@@ -57,6 +63,7 @@ def word_extractor(documento):
     return caracteristicas
 
 
+# Função para analisar o tweet e retornar o provavel sentimento e suar porcentagem de precisão.
 def analyze_tweet(tweet, classificador):
     try:
         testeStemming = []
@@ -77,13 +84,15 @@ def analyze_tweet(tweet, classificador):
             if probable_feeling > probable_feeling_bigger:
                 probable_feeling_bigger = probable_feeling
                 classe_feeling = classe
+                
         felling = classe_feeling, probable_feeling_bigger  
-            
         return felling
     except:
         print('deu erro na analise')
 
 
+# Função que retorna o classificador que sera utilizado para fazer as analises.
+# O Classificador é montado com a base de treinamento.
 def inicialize(option):
     global palavras_unicas_treinamento
     
@@ -96,9 +105,12 @@ def inicialize(option):
     training_base_list2 = []
     for dict in training_base_list:
         training_base_list2.append(dict.values())
+        
     frases_com_Stem_treinamento = apply_stmmer(training_base_list2)
      
-    ''' Usado para utilizar dados do training_base.py no lugar do banco de dados
+    # Usado para utilizar dados do training_base.py no lugar do banco de dados
+    # Este bloco comentado substitui o acima, caso usar comentar o de cima e descomentar este.
+    ''' 
     if option == 'simple':
         training_base_df = pd.DataFrame(training_base_simple)
         training_base_df.columns = ['Phrase', 'Sentiment']
@@ -116,44 +128,30 @@ def inicialize(option):
     classificador = nltk.NaiveBayesClassifier.train(base_completa_treinamento)
     return classificador
 
+
+# Cria um novo dicionario com base no que já existia.
 def create_dict_training(option, query, amount, filter_retweets, bearerToken):
-    tweets = []
-    tweets_dict = {}
-    
+
     # retorna o classificador que foi criado com base na base de treinamento 
     # e sera utilizado como parametro para a função analyze_tweet
     classificador = inicialize(option) 
     
-    # retorna todos os tweets em uma lista de dicionarios
+    # Coleta os tweets e os adiciona em uma lista de dicionarios
     all_tweets = search_tweets(query, amount, filter_retweets, bearerToken)
-
-    for tweet in all_tweets:
-        try:  
-            tweet_clean = clean_tweet(tweet['text']) # limpa o tweet para ser analisado
-            analise = analyze_tweet(tweet_clean, classificador) # analisa o tweet e retorna seu provavel sentimento
-            
-            # Cria um novo dicionario com o tweet já limpo e a analise já feita
-            # E também com todas outras informçaões que já tinham no outro dicionario
-            tweets_dict = {
-               'tweet_id' : tweet['id'],
-               'tweet_text': tweet['text'],
-                'tweet_created_at': tweet['created_at'],
-                'tweet_lang': tweet['lang'],
-                'tweet_geo': tweet['geo'],
-                'tweet_referenced_tweets': tweet['referenced_tweets'],
-                'tweet_username': tweet['username'],
-               'tweet_clean': tweet_clean,
-               'tweet_analise': analise,
-            }
-            tweets.append(tweets_dict)
-            
-        except:
-            print('deu erro')
-            pass
     
-    return tweets
+    # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
+    for tweet in all_tweets:
+        try:
+            tweet_clean = clean_tweet(tweet['tweet_text']) # limpa o tweet para ser analisado
+            analise = analyze_tweet(tweet_clean, classificador) # analisa o tweet e retorna seu provavel sentimento
+            tweet['tweet_clean'] = tweet_clean # Cria a nova chave tweet_clean nos dicionarios de tweets
+            tweet['tweet_analise'] = analise # Cria a nova chave tweet_analise nos dicionarios de tweets
+        except:
+            print('Error dict')
+    return all_tweets
 
 
+# Função para digitar uma frase e analisar seu sentimento (Não coleta do twitter).
 def analyze_test_phrase(phrase, option):
     
     classificador = inicialize(option)

@@ -27,7 +27,7 @@ def generate_data(tweets, option):
     # if/else somente para escolher as cores que serão utilizadas, baseado na opçõa de analise
     if option == 'simple': 
         colors = ['red','gray','green']
-        all_labels = ['positivo, negativo, neutro']
+        all_labels = ['negativo', 'neutro', 'positivo']
     elif option == 'advanced': 
         colors = ['yellow', 'violet', 'green',  'red', 'blue', 'gray']
         all_labels = ['alegria', 'medo', 'nojo', 'raiva', 'surpresa', 'tristeza']
