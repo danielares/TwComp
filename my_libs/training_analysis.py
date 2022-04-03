@@ -130,14 +130,14 @@ def inicialize(option):
 
 
 # Cria um novo dicionario com base no que já existia.
-def create_dict_training(option, query, amount, filter_retweets, bearerToken):
+def create_dict_training(option, query, amount, filter_retweets, filter_reply, bearerToken):
 
     # retorna o classificador que foi criado com base na base de treinamento 
     # e sera utilizado como parametro para a função analyze_tweet
     classificador = inicialize(option) 
     
     # Coleta os tweets e os adiciona em uma lista de dicionarios
-    all_tweets = search_tweets(query, amount, filter_retweets, bearerToken)
+    all_tweets = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
     
     # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
     for tweet in all_tweets:

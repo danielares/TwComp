@@ -35,11 +35,16 @@ class ViewTweetsView(TemplateView):
             except MultiValueDictKeyError:
                 filter_retweets = False
             
+            try:
+                filter_reply = bool(request.POST['filterReply'])
+            except MultiValueDictKeyError:
+                filter_reply = False
+            
             # if para veficiar se o usuario fez alguma pesquisa
             if search:
                 
                 tokens = self.request.user.bearerToken
-                tweets, charts_info = get_tweets(search, number_of_tweets, option, filter_retweets, tokens) 
+                tweets, charts_info = get_tweets(search, number_of_tweets, option, filter_retweets, filter_reply, tokens) 
                 word_cloud_image = wordCloud(tweets, search)
                 api = {"term": search, "amoutTweets": number_of_tweets, 
                         "chartsInfo": charts_info, 'tweets': tweets}

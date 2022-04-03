@@ -40,13 +40,18 @@ class CompareTweetsView(TemplateView):
             except MultiValueDictKeyError:
                 filter_retweets = False
             
+            try:
+                filter_reply = bool(request.POST['filterReply'])
+            except MultiValueDictKeyError:
+                filter_reply = False
+            
             # if para veficiar se o usuario fez alguma pesquisa
             if search_1 and search_2:
                     
                 tokens = self.request.user.bearerToken 
                 
-                tweets1, chartsInfo1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, tokens)
-                tweets2, chartsInfo2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, tokens)
+                tweets1, chartsInfo1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, tokens)
+                tweets2, chartsInfo2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, tokens)
                 
                 wordcloud_image_1 = wordCloud(tweets1, search_1)
                 wordcloud_image_2 = wordCloud(tweets2, search_2)
@@ -89,12 +94,12 @@ class CompareChartData(APIView):
     permission_classes = []
     def get(self, request, format=None, userid=None, term1=None, term2=None):
         api = CompareTweetsView.return_api_data()
-        
+        '''
         api_chart = {"term1": api['term1'], "term2": api['term2'],
                      "amoutTweets": api['amoutTweets'], 
                      "chartsInfo1": api['chartsInfo1'],
                      "chartsInfo2": api['chartsInfo2'],}
-        
+        '''
         #retorna o dicionario de dados para gerar os graficos com o chartjs
         #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
-        return Response(api_chart)
+        return Response(api)
