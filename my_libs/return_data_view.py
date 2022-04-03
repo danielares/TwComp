@@ -1,3 +1,4 @@
+from numpy import average
 import pandas as pd
 
 from my_libs.training_analysis import create_dict_training
@@ -14,8 +15,8 @@ def get_tweets(search_term, number_of_tweets, option, filter_retweets, filter_re
     
     tweets = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, bearer_token)
     charts_info = generate_data(tweets, option)
-    
-    return tweets, charts_info
+    probability = probability_average(tweets)
+    return tweets, charts_info, probability
 
 
 '''
@@ -68,3 +69,14 @@ def generate_data(tweets, option):
     return {"qtd_tweets": count_sentiments_list,
             "labels": labels, 
             "colors":colors}
+
+
+def probability_average(tweets):
+    
+    average =0
+    quantity = 0
+    for tweet in tweets:
+        average += tweet['tweet_analise'][1]
+        quantity += 1
+
+    return round((average/quantity) * 100, 2)

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import nltk
 
-from .data_processing import search_tweets, clean_tweet
+from .data_processing import search_tweets, clean_tweet, search_more_than_100_tweet
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
 #from myLibs.training_base import training_base_advanced, training_base_simple
 
@@ -137,8 +137,11 @@ def create_dict_training(option, query, amount, filter_retweets, filter_reply, b
     classificador = inicialize(option) 
     
     # Coleta os tweets e os adiciona em uma lista de dicionarios
-    all_tweets = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
-    
+    if int(amount) < 100:
+        all_tweets = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
+    else:
+        all_tweets = search_more_than_100_tweet(query, amount, filter_retweets, filter_reply, bearerToken)
+        
     # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
     for tweet in all_tweets:
         try:

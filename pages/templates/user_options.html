@@ -9,6 +9,11 @@
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
 
+            <a class="text-white mx-5 my-5" href="{% url 'test-phrase' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Teste uma frase
+            </a>
+
             <a class="text-white mx-5 my-5" href="{% url 'search-tweets' %}">
                 <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
                 Procurar tweets

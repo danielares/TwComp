@@ -15,7 +15,7 @@ list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 def wordCloud(tweets, term):
     
     wc = WordCloud(stopwords=list_stopwords_portuguese, mode = "RGBA", 
-                   background_color=None, width = 1200, height=700, margin=1, max_words=100)
+                   background_color=None, width = 1200, height=700, margin=1, max_words=200)
     
     # Adiciona todos os tweets em uma unica string que é usada para gerar a wordcloud
     all_tweets = ""
@@ -23,8 +23,9 @@ def wordCloud(tweets, term):
         text = str(tweet['tweet_clean'])
         all_tweets = all_tweets + " " + text
 
-    # Adicionar o termo pesquisado a lista de stopwords, que não são mostradas na wordcloud
-    list_stopwords_portuguese.append(term)
+    # Adicionar o termo pesquisado a lista de stopwords e outras palavras, que não são mostradas na wordcloud
+    my_list_stopwords = [term, 'pra']
+    list_stopwords_portuguese.extend(my_list_stopwords)
     
     '''
     Essa parte do código gera a imagem utilizando matplotlib e salva ela em um buffer

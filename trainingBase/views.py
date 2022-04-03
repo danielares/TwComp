@@ -55,9 +55,10 @@ class ViewTweetsTrainingView(TemplateView):
         option = request.POST['inlineRadioOptions']
         tokens = self.request.user.bearerToken
         filter_retweets = True
+        filter_reply = True
         
         if search_term:
-            tweets = create_dict_training(option, search_term, number_of_tweets, filter_retweets, tokens)
+            tweets = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, tokens)
             
             '''
             for tweet in tweets:

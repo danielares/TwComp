@@ -44,7 +44,7 @@ class ViewTweetsView(TemplateView):
             if search:
                 
                 tokens = self.request.user.bearerToken
-                tweets, charts_info = get_tweets(search, number_of_tweets, option, filter_retweets, filter_reply, tokens) 
+                tweets, charts_info, probability = get_tweets(search, number_of_tweets, option, filter_retweets, filter_reply, tokens) 
                 word_cloud_image = wordCloud(tweets, search)
                 api = {"term": search, "amoutTweets": number_of_tweets, 
                         "chartsInfo": charts_info, 'tweets': tweets}
@@ -55,6 +55,7 @@ class ViewTweetsView(TemplateView):
                 context['option'] = option
                 context['term'] = search
                 context['tweets'] = tweets
+                context['probability'] = probability
                 context['amoutTweets'] = number_of_tweets
                 context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                 context['tweetsError'] = int(number_of_tweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO

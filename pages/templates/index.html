@@ -60,6 +60,13 @@
                 Comprar tweets
             </a>
             {% endif %}
+
+            {% if user.is_staff %}
+            <a class="text-white mx-5 my-5" href="{% url 'search-tweets-training' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Treinar com tweets
+            </a>
+            {% endif %}
             
         </div>
     </div>

@@ -50,8 +50,9 @@ class CompareTweetsView(TemplateView):
                     
                 tokens = self.request.user.bearerToken 
                 
-                tweets1, chartsInfo1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, tokens)
-                tweets2, chartsInfo2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, tokens)
+                tweets1, chartsInfo1, probability1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, tokens)
+                tweets2, chartsInfo2, probability2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, tokens)
+                probability = (probability1 + probability2)/2
                 
                 wordcloud_image_1 = wordCloud(tweets1, search_1)
                 wordcloud_image_2 = wordCloud(tweets2, search_2)
@@ -73,6 +74,7 @@ class CompareTweetsView(TemplateView):
                 context['term2'] = search_2
                 context['tweets1'] = tweets1
                 context['tweets2'] = tweets2
+                context['probability'] = probability
                 context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
                 context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
             
