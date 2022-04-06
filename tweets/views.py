@@ -78,8 +78,7 @@ class ViewAllTweetsView(TemplateView):
         context = super().get_context_data(**kwargs)
         api = ViewTweetsView.return_api_data()
         context = {"chartsInfo": api['chartsInfo'],
-                   "tweets": api['tweets']}
-                   
+                   "tweets": api['tweets']}   
         return context
 
 

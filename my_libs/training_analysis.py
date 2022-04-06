@@ -13,11 +13,11 @@ np.transpose(list_stopwords_portuguese)
 # Função para remover stop words (palavras não significativas para a análise)
 def remove_stop_words(texto):
     frases = []
-    for (palavras, sentimento) in texto:
+    for palavras in texto:
         # Criamos uma list compreheension para extrair apenas as palavras que não estão na lista_Stop
         semStop = [ p for p in palavras.split() if p not in list_stopwords_portuguese]
         # Inserindo as frases com os Labels (sentimento) já tratadas pela Lista_Stop
-        frases.append((semStop, sentimento))
+        frases.append(semStop)
     return frases
 
 
