@@ -8,6 +8,8 @@
     <div class="container h-100">
         <h2 class="text-white row d-flex justify-content-center">Search: {{ term }}</h2><br>
 
+        {% include 'tweets/toolbar.html' %}
+
         <h3 class="text-white">Wordcloud: </h3>
         <div class="d-flex justify-content-center my-2">
             <div class="zoom" id="magnifying_area" style="width: 65rem;">
@@ -16,7 +18,6 @@
             </div>
         </div>
         
-        <h3 class="text-white pt-3">Precisão da análise: {{probability}}%</h3>
         {% include 'charts/charts.html' %}
         
         <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->

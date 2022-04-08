@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
-import re
+import pandas as pd
+import csv
+from itertools import zip_longest
 
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
 from my_libs.training_analysis import create_dict_training
@@ -109,3 +112,34 @@ class TrainingBaseSuccessView(TemplateView):
 
             
         return render(request, self.template_name, context)
+    
+
+def generateCsvTrainingBase(request):
+    option = request.POST['gerar_csv']
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=tweets.csv'
+    
+    # Encode UTF-8
+    response.write(u'\ufeff'.encode('utf8'))
+    
+    # Create a csv writer
+    writer = csv.writer(response, delimiter=';')
+    
+    # Designate the Model
+    if option == "CSV Simple":
+        objects = TrainingBase.objects.all()
+    else:
+        objects = TrainingBaseAdvanced.objects.all()
+        
+    objects = objects.values()
+
+    df = pd.DataFrame(objects)
+
+    writer.writerow(['texto', 'sentimento'])
+    #writer.writerows([df['texto'], df['sentimento']])
+
+    for (texto, sentimento) in zip_longest(df['texto'], df['sentimento']):
+        writer.writerow([texto, sentimento])
+        
+    return response
