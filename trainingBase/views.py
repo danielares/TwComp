@@ -38,7 +38,7 @@ class UploadBaseView(TemplateView):
             file = request.FILES['file']
             option = request.POST['Options']
             
-            
+            #USADO PARA DEPLOY - COMENTAR PARA USAR LOCALMENTE
             content = file.read()
             file_content = ContentFile(content)
             file_name = fs.save(
@@ -48,8 +48,7 @@ class UploadBaseView(TemplateView):
             
             csv_file = open(tmp_file, errors="ignore")
             csv.reader(csv_file)
-            
-            
+            #USADO PARA DEPLOY - FIM
             
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'Você deve enviar um arquivo csv')
