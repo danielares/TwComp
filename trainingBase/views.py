@@ -1,4 +1,5 @@
-from io import StringIO
+from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -11,6 +12,8 @@ from itertools import zip_longest
 
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
 from my_libs.training_analysis import create_dict_training
+
+fs = FileSystemStorage(location='tmp/')
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -32,8 +35,21 @@ class UploadBaseView(TemplateView):
 
     def post(self, request, **kwargs):
         try:
-            csv_file = request.FILES['file']
+            file = request.FILES['file']
             option = request.POST['Options']
+            
+            
+            content = file.read()
+            file_content = ContentFile(content)
+            file_name = fs.save(
+                "_temp.csv", file_content
+            )
+            tmp_file = fs.path(file_name)
+            
+            csv_file = open(tmp_file, errors="ignore")
+            csv.reader(csv_file)
+            
+            
             
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'Você deve enviar um arquivo csv')
