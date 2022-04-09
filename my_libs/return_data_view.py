@@ -1,5 +1,6 @@
 from numpy import average
 import pandas as pd
+from geopy.geocoders import Nominatim
 
 from my_libs.training_analysis import create_dict_training
 
@@ -13,9 +14,11 @@ Como: buscar tweets, limpar tweets, analisar tweets....
 '''
 def get_tweets(search_term, number_of_tweets, option, filter_retweets, filter_reply, bearer_token):
     
-    tweets = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, bearer_token)
+    tweets, locations = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, bearer_token)
     charts_info = generate_data(tweets, option)
     probability = probability_average(tweets)
+    #geo_location = get_geo_location(locations)
+    
     return tweets, charts_info, probability
 
 
@@ -80,3 +83,17 @@ def probability_average(tweets):
         quantity += 1
 
     return round((average/quantity) * 100, 2)
+
+def get_geo_location(locations):
+    
+    for location in locations:
+        try:
+            address = location['location']
+            geolocator = Nominatim(user_agent="TwComp")
+            location = geolocator.geocode(address)
+            print(location.address)
+            print((location.latitude, location.longitude))
+        except:
+            print('Endereço não encontrado')
+    
+    return locations

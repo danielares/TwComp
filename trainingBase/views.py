@@ -123,7 +123,7 @@ class ViewTweetsTrainingView(TemplateView):
         else:
             messages.success(request, 'Você deve pesquisar algo')
             return redirect('search-tweets-training')
-        
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class TrainingBaseSuccessView(TemplateView):

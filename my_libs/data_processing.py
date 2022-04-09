@@ -93,8 +93,16 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, filter_reply, 
             results.append(tweet_dict)
         except:
             print('deu erro na coleta')
+    
+    locations = []
+    for user in tweets.includes['users']:
+        if user.location != None:
+            location_dict = {}
+            location_dict['user'] = user.username
+            location_dict['location'] = user.location
+            locations.append(location_dict)
             
-    return results
+    return results, locations
 
 
 '''

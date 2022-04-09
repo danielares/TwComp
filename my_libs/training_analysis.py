@@ -138,7 +138,7 @@ def create_dict_training(option, query, amount, filter_retweets, filter_reply, b
     
     # Coleta os tweets e os adiciona em uma lista de dicionarios
     if int(amount) < 100:
-        all_tweets = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
+        all_tweets, locations = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
     else:
         all_tweets = search_more_than_100_tweet(query, amount, filter_retweets, filter_reply, bearerToken)
         
@@ -151,7 +151,8 @@ def create_dict_training(option, query, amount, filter_retweets, filter_reply, b
             tweet['tweet_analise'] = analise # Cria a nova chave tweet_analise nos dicionarios de tweets
         except:
             print('Error dict')
-    return all_tweets
+            
+    return all_tweets, locations
 
 
 # Função para digitar uma frase e analisar seu sentimento (Não coleta do twitter).
