@@ -86,20 +86,20 @@ WSGI_APPLICATION = 'twcomp.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 #PARA DESENVOLVIMENTO BANCO DE DADOS LOCAL
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 '''
+
 #PARA DEPLOY BANCO DE DADOS DO SITE A FAZER DEPLOY (HEROKU)
 DATABASES = {
     'default': dj_database_url.config()
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

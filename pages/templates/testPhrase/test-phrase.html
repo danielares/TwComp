@@ -9,7 +9,7 @@
     <div class="container h-100">
 
         <h1 class="row justify-content-center text-white pt-5">Faça um teste com uma frase</h1>
-        <form action="{% url 'test-result' user.pk %}" method="post" class="form text-white" autocomplete="off">
+        <form action="{% url 'test-result' %}" method="post" class="form text-white" autocomplete="off">
             {% csrf_token %}
             {% bootstrap_messages %}
 

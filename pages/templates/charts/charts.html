@@ -15,7 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 <script>
-    var endpoint = '/api/chart/data/{{user.pk}}/{{term}}/'
+    var endpoint = '/search-tweets/api/'
 
     var api_labels = {{ chartsInfo.labels| safe }}
     var api_data = {{ chartsInfo.qtd_tweets| safe }}

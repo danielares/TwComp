@@ -9,7 +9,7 @@
     <div class="container h-100">
 
         <h1 class="row justify-content-center text-white pt-5">Tweets para adicionar a base de treinamento</h1>
-        <form action="{% url 'training-success' user.pk %}" method="post" class="form text-white" autocomplete="off">
+        <form action="{% url 'training-success' %}" method="post" class="form text-white" autocomplete="off">
             {% csrf_token %}
             {% for tweet in tweets %}
             <div class="form-group text-white">

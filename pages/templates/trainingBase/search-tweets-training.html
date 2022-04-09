@@ -9,7 +9,7 @@
     <div class="container h-100">
 
         <h1 class="row justify-content-center text-white pt-5">Procurar tweets para treinamento</h1>
-        <form action="{% url 'view-tweets-training' user.pk %}" method="post" class="form text-white" autocomplete="off">
+        <form action="{% url 'view-tweets-training' %}" method="post" class="form text-white" autocomplete="off">
             {% csrf_token %}
             {% bootstrap_messages %}
             <!-- CAMPO PARA PESQUISAR TWEET -->

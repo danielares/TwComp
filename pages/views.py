@@ -12,7 +12,7 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-    
+
 
 class UserOptionsView(TemplateView):
     template_name = 'user_options.html'
@@ -28,11 +28,14 @@ class TestPhraseView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-    
 
 
 class TestResultView(TemplateView):
     template_name = 'testPhrase/test-result.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
     
     def post(self, request, **kwargs):
         phrase = request.POST['phrase']

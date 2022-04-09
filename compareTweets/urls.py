@@ -4,6 +4,6 @@ from compareTweets.views import ViewCompareTweetsView, CompareTweetsView, Compar
     
 urlpatterns = [
     path('search-tweets-compare/', login_required(ViewCompareTweetsView.as_view()), name='search-tweets-compare'),
-    path('view-tweets-compare/<int:userpk>/', CompareTweetsView.as_view(), name='view-tweets-compare'),
-    path('api/chart/compare-chart-data/<int:userid>/<str:term1>-<str:term2>/', CompareChartData.as_view()),
+    path('view-tweets-compare/', CompareTweetsView.as_view(), name='view-tweets-compare'),
+    path('view-tweets-compare/api/', CompareChartData.as_view()),
 ]

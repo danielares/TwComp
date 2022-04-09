@@ -6,6 +6,6 @@ from .views import ChartData
 
 urlpatterns = [
     path('search-tweets/', login_required(TakeTweetsView.as_view()), name='search-tweets'),
-    path('view-tweets/<int:userid>/', ViewTweetsView.as_view(), name='view-tweets'),
-    path('api/chart/data/<int:userid>/<str:term>/', ChartData.as_view()),
+    path('search-tweets/results/', ViewTweetsView.as_view(), name='view-tweets'),
+    path('search-tweets/api/', ChartData.as_view()),
 ]
