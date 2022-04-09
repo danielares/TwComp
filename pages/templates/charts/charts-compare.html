@@ -11,23 +11,11 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
     var endpoint = '/view-tweets-compare/api/'
-
-    var api_labels1 = "{{ chartsInfo1.labels|safe }}"
-    var api_data1 = "{{ chartsInfo1.qtd_tweets|safe }}"
-    var api_term1 = "{{ term1|safe }}"
-
-    var api_labels2 = "{{ chartsInfo2.labels|safe }}"
-    var api_data2 = "{{ chartsInfo2.qtd_tweets|safe }}"
-    var api_term2 = "{{ term2|safe }}"
-
-    var defaultData = []
-    var labels = []
     $.ajax({
         method: "GET",
         url: endpoint,
@@ -65,17 +53,17 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: {{ chartsInfo1.labels | safe }},
+                labels: labels1,
     datasets: [{
-        label: api_term1,
-        data: {{ chartsInfo1.qtd_tweets | safe }},
+        label: term1,
+        data: defaultData1,
         backgroundColor: 'rgba(255, 50 , 50, 0.8)',
         borderColor: 'black',
         borderWidth: 1
                 },
     {
-        label: api_term2,
-        data: {{ chartsInfo2.qtd_tweets | safe }},
+        label: term2,
+        data: defaultData2,
         backgroundColor: 'rgba(50, 50 , 255, 0.8)',
         borderColor: 'black',
         borderWidth: 1

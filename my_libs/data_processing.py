@@ -92,8 +92,8 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, filter_reply, 
             tweet_dict['tweet_referenced_tweets'] = tweet.referenced_tweets
             results.append(tweet_dict)
         except:
-            print(tweet.data)
             print('deu erro na coleta')
+            
     return results
 
 

@@ -11,19 +11,10 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     var endpoint = '/search-tweets/api/'
-
-    var api_labels = {{ chartsInfo.labels| safe }}
-    var api_data = {{ chartsInfo.qtd_tweets| safe }}
-    var api_colors = {{ chartsInfo.colors| safe }}
-
-    var defaultData = []
-    var labels = []
-
     $.ajax({
 
         method: "GET",
@@ -51,11 +42,11 @@
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: api_labels,
+                labels: labels,
                 datasets: [{
                     label: 'Sentimentos',
-                    data: api_data,
-                    backgroundColor: api_colors,
+                    data: defaultData,
+                    backgroundColor: colors,
                     borderColor: 'black',
                     borderWidth: 1
                 }]
@@ -75,11 +66,11 @@
         var myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: api_labels,
+                labels: labels,
                 datasets: [{
                     label: 'Sentimentos',
-                    data: api_data,
-                    backgroundColor: api_colors,
+                    data: defaultData,
+                    backgroundColor: colors,
                     borderColor: 'black',
                     borderWidth: 1
                 }]
