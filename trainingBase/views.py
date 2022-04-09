@@ -1,3 +1,4 @@
+from io import StringIO
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -20,7 +21,39 @@ class TrainingBaseView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
     
+
+@method_decorator(staff_member_required, name='dispatch')
+class UploadBaseView(TemplateView):
+    template_name = 'trainingBase/upload-training-base.html'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def post(self, request, **kwargs):
+        try:
+            csv_file = request.FILES['file']
+            option = request.POST['Options']
+            
+            if not csv_file.name.endswith('.csv'):
+                messages.error(request, 'Você deve enviar um arquivo csv')
+                return render(request, self.template_name)
+            
+            data_frame = pd.read_csv(csv_file, sep=';')
+            
+            if option == 'simple': training_base = TrainingBase
+            else: training_base = TrainingBaseAdvanced
+            
+            for (texto, sentimento) in zip_longest(data_frame['texto'], data_frame['sentimento']):
+                training_base.objects.create(texto=texto, sentimento=sentimento)
+            
+            messages.success(request, 'Base de treinamento adicionada!')
+            return render(request, self.template_name)
+        except:
+            messages.error(request, 'Algum erro ocorreu.')
+            return render(request, self.template_name)
+            
+      
 @method_decorator(staff_member_required, name='dispatch')
 class SearchTweetsTrainingView(TemplateView):
     template_name = 'trainingBase/search-tweets-training.html'
@@ -118,7 +151,7 @@ def generateCsvTrainingBase(request):
     option = request.POST['gerar_csv']
     
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=tweets.csv'
+    response['Content-Disposition'] = 'attachment; filename=base de treinamento.csv'
     
     # Encode UTF-8
     response.write(u'\ufeff'.encode('utf8'))
@@ -127,7 +160,7 @@ def generateCsvTrainingBase(request):
     writer = csv.writer(response, delimiter=';')
     
     # Designate the Model
-    if option == "CSV Simple":
+    if option == "CSV Simples":
         objects = TrainingBase.objects.all()
     else:
         objects = TrainingBaseAdvanced.objects.all()

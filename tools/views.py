@@ -129,11 +129,12 @@ def generateCsv(request):
     term = api['term']
 
     #Add column headings for the csv file
-    writer.writerow([term+': Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet polaridade'])
+    writer.writerow([term+': Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet analise', 'Tweet polaridade'])
     
     # Loop through the tweets
     for tweet in api['tweets']:
-        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], tweet['tweet_analise']])
+        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], 
+                         tweet['tweet_analise'], tweet['tweet_analise'][0]])
         
     return response
 

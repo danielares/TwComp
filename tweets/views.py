@@ -57,9 +57,6 @@ class ViewTweetsView(TemplateView):
                 context['tweets'] = tweets
                 context['probability'] = probability
                 context['amoutTweets'] = number_of_tweets
-                context['tweetsAnalyzed'] = len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                context['tweetsError'] = int(number_of_tweets) - len(tweets) # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
-                context['qtd_tweets'] = charts_info['qtd_tweets'] # FAZER ISSO DIRETAMENTE QUANDO CRIA O DICIONARIO DOS TWEETS E RETORNAR O VALOR DENTRO DO DICIONARIO
                 return render(request, self.template_name, context)
             # else para se o usuario não fez alguma pesquisa
             else:       
@@ -70,16 +67,6 @@ class ViewTweetsView(TemplateView):
         def return_api_data():
             global api
             return api
-        
-class ViewAllTweetsView(TemplateView):
-    template_name = 'tweets/view-all-tweets.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        api = ViewTweetsView.return_api_data()
-        context = {"chartsInfo": api['chartsInfo'],
-                   "tweets": api['tweets']}   
-        return context
 
 
 class ChartData(APIView):

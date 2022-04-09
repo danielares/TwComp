@@ -14,6 +14,11 @@
                 Treinar com tweets
             </a>
 
+            <a class="text-white mx-5 my-5" href="{% url 'upload-training-base' %}">
+                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                Trainar com CSV
+            </a>
+
             <!-- FORM PARA GERAR CSV -->
             <form action="{% url 'generate-csv-training-base' %}" method="post" class="form text-white"
                 autocomplete="off" target="_blank">

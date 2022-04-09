@@ -68,11 +68,11 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, filter_reply, 
 
     # loop para salvar os tweets coletados em um dicionario python
     results = []
-    for (tweet, tweet_user) in zip_longest(tweets.data, tweets.includes['users']):
+    for tweet in tweets.data:
         try:
             tweet_dict = {}
-            tweet_dict['tweet_username'] = tweet_user.username
-            tweet_dict['tweet_location'] = tweet_user.location
+            #tweet_dict['tweet_username'] = tweet_user.username
+            #tweet_dict['tweet_location'] = tweet_user.location
             tweet_dict['tweet_id'] = tweet.id
             if tweet.text[:2] != "RT":
                 tweet_dict['tweet_text'] = tweet.text
@@ -92,6 +92,7 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, filter_reply, 
             tweet_dict['tweet_referenced_tweets'] = tweet.referenced_tweets
             results.append(tweet_dict)
         except:
+            print(tweet.data)
             print('deu erro na coleta')
     return results
 
