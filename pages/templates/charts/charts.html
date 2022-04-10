@@ -14,39 +14,26 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    var endpoint = '/search-tweets/api/'
-    $.ajax({
+    let labels = {{chartsInfo.labels|safe}}
+    let defaultData = {{chartsInfo.qtd_tweets|safe}}
+    let colors = {{chartsInfo.colors|safe}}
 
-        method: "GET",
-        url: endpoint,
-        success: function (data) {
-
-            labels = data.chartsInfo.labels
-            defaultData = data.chartsInfo.qtd_tweets
-            colors = data.chartsInfo.colors
-
-            setChart()
-
-        },
-        error: function (error_data) {
-            console.log("error")
-            console.log(error_data)
-        }
-    })
-
-    function setChart() {
+    console.log(labels)
+    console.log(defaultData)
+    console.log(colors)
+    
+    $(document).ready(function() {
         var ctx = document.getElementById("myChart").getContext('2d');
         var ctx2 = document.getElementById("myChart2").getContext('2d');
-
 
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: ['negativo', 'neutro', 'positivo'],
                 datasets: [{
                     label: 'Sentimentos',
                     data: defaultData,
-                    backgroundColor: colors,
+                    backgroundColor: ['red', 'gray', 'green'],
                     borderColor: 'black',
                     borderWidth: 1
                 }]
@@ -72,6 +59,6 @@
                 responsive: true,
             }
         })
-    }
+    })
 
 </script>

@@ -14,18 +14,33 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    let term1 = '{{ term1|safe }}'
-    let labels1 = {{ chartsInfo1.labels|safe }}
-    let defaultData1 = {{ chartsInfo1.qtd_tweets|safe }}
-    let colors1 = {{ chartsInfo1.colors|safe }}
-    
-    let term2 = '{{ term2|safe}}'
-    let labels2 = {{ chartsInfo2.labels|safe }}
-    let defaultData2 = {{ chartsInfo2.qtd_tweets|safe }}
-    let colors2 = {{ chartsInfo2.colors|safe }}
 
+    var endpoint = '/view-tweets-compare/api/'
+    $.ajax({
+        method: "GET",
+        url: endpoint,
+        success: function (data) {
 
-    $(document).ready(function () {
+            term1 = data.term1
+            labels1 = data.chartsInfo1.labels
+            defaultData1 = data.chartsInfo1.qtd_tweets
+            colors1 = data.chartsInfo1.colors
+
+            term2 = data.term2
+            labels2 = data.chartsInfo2.labels
+            defaultData2 = data.chartsInfo2.qtd_tweets
+            colors2 = data.chartsInfo2.colors
+
+            setChart()
+
+        },
+        error: function (error_data) {
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    function setChart() {
 
         const chartOptionBar = document.getElementById("bar")
         const chartOptionRadar = document.getElementById("radar")
@@ -73,6 +88,6 @@
             myChart.update()
             console.log(myChart.config.type)
         }
-    })
+    }
 
 </script>
