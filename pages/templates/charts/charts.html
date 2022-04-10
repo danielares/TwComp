@@ -29,11 +29,11 @@
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['negativo', 'neutro', 'positivo'],
+                labels: labels,
                 datasets: [{
                     label: 'Sentimentos',
                     data: defaultData,
-                    backgroundColor: ['red', 'gray', 'green'],
+                    backgroundColor: colors,
                     borderColor: 'black',
                     borderWidth: 1
                 }]
