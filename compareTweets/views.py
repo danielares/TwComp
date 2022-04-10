@@ -35,23 +35,25 @@ class CompareTweetsView(TemplateView):
             number_of_tweets = request.POST['amoutTweets']
             option = request.POST['inlineRadioOptions']
             
-            try:
-                filter_retweets = bool(request.POST['filterRetweets'])
-            except MultiValueDictKeyError:
-                filter_retweets = False
+            # Opção para incluir mapas
+            try: option_maps = request.POST['includeMaps']
+            except: option_maps = False
             
-            try:
-                filter_reply = bool(request.POST['filterReply'])
-            except MultiValueDictKeyError:
-                filter_reply = False
+            # Opção para filtrar retweets
+            try: filter_retweets = bool(request.POST['filterRetweets'])
+            except MultiValueDictKeyError: filter_retweets = False
+            
+            # Opção para filtrar respostas
+            try: filter_reply = bool(request.POST['filterReply'])
+            except MultiValueDictKeyError: filter_reply = False
             
             # if para veficiar se o usuario fez alguma pesquisa
             if search_1 and search_2:
                     
                 tokens = self.request.user.bearerToken 
                 
-                tweets1, chartsInfo1, probability1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, tokens)
-                tweets2, chartsInfo2, probability2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, tokens)
+                tweets1, chartsInfo1, probability1, geo_locations1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
+                tweets2, chartsInfo2, probability2, geo_locations2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
                 probability = (probability1 + probability2)/2
                 
                 wordcloud_image_1 = wordCloud(tweets1, search_1)
@@ -76,7 +78,9 @@ class CompareTweetsView(TemplateView):
                 context['tweets2'] = tweets2
                 context['probability'] = probability
                 context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
-                context['qtd_tweets2'] = chartsInfo2['qtd_tweets']    
+                context['qtd_tweets2'] = chartsInfo2['qtd_tweets']
+                context['locations1'] = geo_locations1
+                context['locations2'] = geo_locations2
             
                 return render(request, self.template_name, context)
             

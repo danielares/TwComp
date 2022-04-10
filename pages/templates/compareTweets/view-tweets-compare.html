@@ -27,6 +27,10 @@
         <h3 class="text-white pt-3">Precisão da análise: {{probability}}%</h3>
         {% include 'charts/charts-compare.html' %}
 
+        {% if locations1 != False %}
+            <h3 class="text-white">Mapas:</h3>
+            {% include 'maps/maps-compare.html' %}
+        {% endif %}
 
         <div class="row justify-content-center">
             <!-- FORM PARA GERAR PDF -->
