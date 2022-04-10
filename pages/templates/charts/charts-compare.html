@@ -54,46 +54,40 @@
             type: 'bar',
             data: {
                 labels: labels1,
-    datasets: [{
-        label: term1,
-        data: defaultData1,
-        backgroundColor: 'rgba(255, 50 , 50, 0.8)',
-        borderColor: 'black',
-        borderWidth: 1
+                datasets: [{
+                    label: term1,
+                    data: defaultData1,
+                    backgroundColor: 'rgba(255, 50 , 50, 0.8)',
+                    borderColor: 'black',
+                    borderWidth: 1
                 },
-    {
-        label: term2,
-        data: defaultData2,
-        backgroundColor: 'rgba(50, 50 , 255, 0.8)',
-        borderColor: 'black',
-        borderWidth: 1
+                {
+                    label: term2,
+                    data: defaultData2,
+                    backgroundColor: 'rgba(50, 50 , 255, 0.8)',
+                    borderColor: 'black',
+                    borderWidth: 1
                 }]
             },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
-        responsive: true,
+            options: {
+
+                responsive: true,
             }
         })
 
-    function changeBar() {
-        const updatetype = 'bar'
-        myChart.config.type = updatetype
-        myChart.update()
-        console.log(myChart.config.type)
-    }
+        function changeBar() {
+            const updatetype = 'bar'
+            myChart.config.type = updatetype
+            myChart.update()
+            console.log(myChart.config.type)
+        }
 
-    function changeRadar() {
-        const updatetype = 'line'
-        myChart.config.type = updatetype
-        myChart.update()
-        console.log(myChart.config.type)
-    }
+        function changeRadar() {
+            const updatetype = 'line'
+            myChart.config.type = updatetype
+            myChart.update()
+            console.log(myChart.config.type)
+        }
     }
 
 </script>
