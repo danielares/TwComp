@@ -29,22 +29,25 @@ class ViewTweetsView(TemplateView):
             search = request.POST['searched']
             number_of_tweets = request.POST['amoutTweets']
             option = request.POST['inlineRadioOptions']
-        
-            try:
-                filter_retweets = bool(request.POST['filterRetweets'])
-            except MultiValueDictKeyError:
-                filter_retweets = False
             
-            try:
-                filter_reply = bool(request.POST['filterReply'])
-            except MultiValueDictKeyError:
-                filter_reply = False
+            # Opção para incluir mapas
+            try: option_maps = request.POST['includeMaps']
+            except: option_maps = False
+            
+            # Opção para filtrar retweets
+            try: filter_retweets = bool(request.POST['filterRetweets'])
+            except MultiValueDictKeyError: filter_retweets = False
+            
+            # Opção para filtrar respostas
+            try: filter_reply = bool(request.POST['filterReply'])
+            except MultiValueDictKeyError: filter_reply = False
             
             # if para veficiar se o usuario fez alguma pesquisa
             if search:
                 
                 tokens = self.request.user.bearerToken
-                tweets, charts_info, probability = get_tweets(search, number_of_tweets, option, filter_retweets, filter_reply, tokens) 
+                tweets, charts_info, probability, geo_locations = get_tweets(search, number_of_tweets, option, filter_retweets, 
+                                                                             filter_reply, option_maps, tokens) 
                 word_cloud_image = wordCloud(tweets, search)
                 api = {"term": search, "amoutTweets": number_of_tweets, 
                         "chartsInfo": charts_info, 'tweets': tweets}
@@ -57,6 +60,7 @@ class ViewTweetsView(TemplateView):
                 context['tweets'] = tweets
                 context['probability'] = probability
                 context['amoutTweets'] = number_of_tweets
+                context['locations'] = geo_locations
                 return render(request, self.template_name, context)
             # else para se o usuario não fez alguma pesquisa
             else:       

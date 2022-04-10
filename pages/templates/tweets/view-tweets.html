@@ -17,9 +17,13 @@
 
             </div>
         </div>
-        <h3 class="text-white">Gráficos: </h3>
-        
+        <h3 class="text-white">Gráficos:</h3>
         {% include 'charts/charts.html' %}
+
+        {% if locations != False %}
+            <h3 class="text-white">Mapas:</h3>
+            {% include 'maps/maps.html' %}
+        {% endif %}
         
         <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
         <div class="row justify-content-center">
