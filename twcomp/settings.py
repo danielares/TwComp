@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2wd6r-evddy0vgt1=sw9714tv0b_7mike#p4hqg6#w83f7u+n$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -86,20 +86,20 @@ WSGI_APPLICATION = 'twcomp.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 #PARA DESENVOLVIMENTO BANCO DE DADOS LOCAL
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 '''
+
 #PARA DEPLOY BANCO DE DADOS DO SITE A FAZER DEPLOY (HEROKU)
 DATABASES = {
     'default': dj_database_url.config()
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
