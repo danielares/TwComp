@@ -17,7 +17,8 @@
                 <h6>Sentimento detectado: {{tweet.tweet_analise.0}} // Probabilidade {{tweet.tweet_analise.1}}</h6>
                 <h6>Tweet Original: {{tweet.tweet_text}}</h6>
                 <h6 for="pesquisaTweet">Tweet na forma a ser adicionado: </h6>
-                <input type="text" class="form-control" value="{{ tweet.tweet_clean }}" id="pesquisaTweet" name="tweetDB_{{tweet.tweet_id}}">
+                <input type="text" class="form-control" value="{{ tweet.tweet_clean }}" id="pesquisaTweet"
+                    name="tweetDB_{{tweet.tweet_id}}">
                 <small id="emailHelp" class="form-text text-muted"></small>
 
                 {% if option == 'advanced' %}
@@ -74,7 +75,8 @@
                 {% endif %}
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="True" name="addTweetDB_{{tweet.tweet_id}}" id="addTweetDB">
+                    <input class="form-check-input" type="checkbox" value="True" name="addTweetDB_{{tweet.tweet_id}}"
+                        id="addTweetDB">
                     <label class="form-check-label" for="addTweetDB">
                         Adicionar este tweet a base de dados?
                     </label>

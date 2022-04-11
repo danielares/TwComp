@@ -8,7 +8,7 @@
 <section class="vh-100">
     <div class="container h-100">
 
-        <h1 class="row justify-content-center text-white pt-5">Search for tweets</h1>
+        <h1 class="row justify-content-center text-white pt-2">Search for tweets</h1>
         <form action="{% url 'view-tweets' %}" method="post" class="form text-white" autocomplete="off">
             {% csrf_token %}
             {% bootstrap_messages %}

@@ -1,12 +1,12 @@
 /* Gerais */
-* { 
+* {
     text-decoration: none;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: rgb(0,0,0);
-    background: linear-gradient(to right, rgba(0,0,0,1), rgba(44,44,44,1));
+    background: rgb(0, 0, 0);
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(44, 44, 44, 1));
 }
 
 .row {
@@ -20,7 +20,8 @@ body {
 
 /* Barra de navegação */
 
-header, .navbar {
+header,
+.navbar {
     background-color: rgba(45, 46, 47);
     font-size: 15px;
 }
@@ -35,7 +36,7 @@ header, .navbar {
     width: 55px;
 }
 
-.navbar-brand{
+.navbar-brand {
     padding: 0;
     color: white;
 }
@@ -65,7 +66,7 @@ header, .navbar {
     font-size: 25px;
 }
 
-.searchbox{
+.searchbox {
     color: black;
     font-size: 25px;
     width: 300px;
@@ -89,7 +90,7 @@ header, .navbar {
     margin-left: 10px;
 }
 
-.checkbox-analise{
+.checkbox-analise {
     margin-left: 25px;
     margin-bottom: 20px;
 }
@@ -121,19 +122,19 @@ p {
     overflow: hidden;
 }
 
-.zoom img{
+.zoom img {
     max-width: 100%;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
-.zoom:hover img{
+.zoom:hover img {
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
 
-#map { 
+#map {
     height: 500px;
 }

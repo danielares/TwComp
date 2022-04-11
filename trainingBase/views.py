@@ -109,7 +109,7 @@ class ViewTweetsTrainingView(TemplateView):
         filter_reply = True
         
         if search_term:
-            tweets = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, tokens)
+            tweets, locations = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, tokens)
             
             '''
             for tweet in tweets:

@@ -7,5 +7,5 @@ urlpatterns = [
     path('contact/', ContactView, name='contact'),
     path('test-phrase/', TestPhraseView.as_view(), name='test-phrase'),
     path('test-phrase/result/', TestResultView.as_view(), name='test-result'),
-    path('user-options/', UserOptionsView.as_view(), name='user_options')
+    path('user-options/', UserOptionsView.as_view(), name='user-options')
 ]

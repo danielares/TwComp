@@ -22,7 +22,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="consumerKey" value={{request.user.consumerKey}} name="consumerKey" class="form-control" />
+                                            <input type="text" id="consumerKey" value={{request.user.consumerKey}}
+                                                name="consumerKey" class="form-control" />
                                             <label class="form-label" for="consumerKey">Consumer key</label>
                                         </div>
                                     </div>
@@ -32,7 +33,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="consumerSecret" value={{request.user.consumerSecret}} name="consumerSecret" class="form-control" />
+                                            <input type="text" id="consumerSecret" value={{request.user.consumerSecret}}
+                                                name="consumerSecret" class="form-control" />
                                             <label class="form-label" for="consumerSecret">Consumer key secret</label>
                                         </div>
                                     </div>
@@ -42,7 +44,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="accessToken" value={{request.user.accessToken}} name="accessToken" class="form-control" />
+                                            <input type="text" id="accessToken" value={{request.user.accessToken}}
+                                                name="accessToken" class="form-control" />
                                             <label class="form-label" for="accessToken">Acces token</label>
                                         </div>
                                     </div>
@@ -52,8 +55,11 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="accessTokenSecret" value={{request.user.accessTokenSecret}} name="accessTokenSecret" class="form-control" />
-                                            <label class="form-label" for="accessTokenSecret">Access token secret</label>
+                                            <input type="text" id="accessTokenSecret"
+                                                value={{request.user.accessTokenSecret}} name="accessTokenSecret"
+                                                class="form-control" />
+                                            <label class="form-label" for="accessTokenSecret">Access token
+                                                secret</label>
                                         </div>
                                     </div>
                                     <!-- ACCESS TOKEN SECRET - FIM -->
@@ -62,7 +68,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="bearerToken" value={{request.user.bearerToken}} name="bearerToken" class="form-control" />
+                                            <input type="text" id="bearerToken" value={{request.user.bearerToken}}
+                                                name="bearerToken" class="form-control" />
                                             <label class="form-label" for="bearerToken">Bearer token</label>
                                         </div>
                                     </div>
@@ -76,7 +83,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="firstname" value={{request.user.first_name}} name="firstname" class="form-control" />
+                                            <input type="text" id="firstname" value={{request.user.first_name}}
+                                                name="firstname" class="form-control" />
                                             <label class="form-label" for="firstname">Primeiro Nome</label>
                                         </div>
                                     </div>
@@ -86,7 +94,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="lastname" value={{request.user.last_name}} name="lastname" class="form-control" />
+                                            <input type="text" id="lastname" value={{request.user.last_name}}
+                                                name="lastname" class="form-control" />
                                             <label class="form-label" for="lastname">Último nome</label>
                                         </div>
                                     </div>
@@ -96,11 +105,23 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="email" value={{request.user.email}} name="email" class="form-control" autocomplete="off" />
+                                            <input type="email" id="email" value={{request.user.email}} name="email"
+                                                class="form-control" autocomplete="off" />
                                             <label class="form-label" for="email">Seu e-mail</label>
                                         </div>
                                     </div>
                                     <!-- E-MAIL - FIM -->
+
+                                    <!-- SENHA - INICIO -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <a href="{% url 'password_change' %}">
+                                                Mudar Senha
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- SENHA - FIM -->
 
 
                                 </div>
