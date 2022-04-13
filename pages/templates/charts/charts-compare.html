@@ -1,9 +1,12 @@
 {% load static %}
-<div class="row d-flex justify-content-center">
-    <div class="col-sm-8">
-        <canvas id="myChart" width="600" height="400"></canvas>
-        <p class="mx-2 text-white">Tipo de gráfico:</p>
-        <div class="row d-flex justify-content-left">
+<div class="row d-flex justify-content-center my-3">
+    <div class="columnStyle">
+        <div class="col-sm-12">
+            <h3 class="row d-flex justify-content-center text-white py-3">Gráficos</h3>
+            <canvas id="myChart" width="800" height="400"></canvas>
+            <p class="mx-2 text-white">Tipo de gráfico:</p>
+        </div>
+        <div class="col-sm-12">
             <button class="btn btn-dark mx-2 my-2" id="bar">Barras</button>
             <button class="btn btn-dark mx-2 my-2" id="radar">Linha</button>
         </div>
@@ -15,14 +18,14 @@
 
 <script>
     let term1 = '{{ term1|safe }}'
-    let labels1 = {{ chartsInfo1.labels|safe }}
-    let defaultData1 = {{ chartsInfo1.qtd_tweets|safe }}
-    let colors1 = {{ chartsInfo1.colors|safe }}
-    
+    let labels1 = {{ chartsInfo1.labels| safe }}
+    let defaultData1 = {{ chartsInfo1.qtd_tweets| safe }}
+    let colors1 = {{ chartsInfo1.colors| safe }}
+
     let term2 = '{{ term2|safe}}'
-    let labels2 = {{ chartsInfo2.labels|safe }}
-    let defaultData2 = {{ chartsInfo2.qtd_tweets|safe }}
-    let colors2 = {{ chartsInfo2.colors|safe }}
+    let labels2 = {{ chartsInfo2.labels| safe }}
+    let defaultData2 = {{ chartsInfo2.qtd_tweets| safe }}
+    let colors2 = {{ chartsInfo2.colors| safe }}
 
 
     $(document).ready(function () {

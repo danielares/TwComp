@@ -12,6 +12,11 @@
     <div class="container h-100">
 
         <div class="row">
+            <div class="col-sm-4">
+                <div class="columnStyle">
+                    {% include 'tweets/infos.html' %}
+                </div>
+            </div>
             <div class="col-sm-8">
                 <div class="columnStyle">
                     <h3 class="row d-flex justify-content-center text-white py-3">Wordcloud</h3>
@@ -20,11 +25,6 @@
                             <img class="img-fluid" id="magnifying_img" src="{{ wordcloud }}" alt="Imagem word cloud">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="columnStyle">
-                    {% include 'tweets/infos.html' %}
                 </div>
             </div>
         </div>
