@@ -1,36 +1,30 @@
 {% load static %}
 
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="columnStyle row d-flex justify-content-center text-white py-3">
-            <p>Gráfico de barras</p>
-            <canvas id="myChart" width="400" height="400"></canvas>
-        </div>
+<div class="row d-flex justify-content-center">
+    <div class="col-sm-5 mx-3">
+        <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 
-    <div class="col-sm-6">
-        <div class="columnStyle row d-flex justify-content-center text-white py-3">
-            <p>Gráfico de pizza</p>
-            <canvas id="myChart2" width="400" height="400"></canvas>
-        </div>
+    <div class="col-sm-5 mx-3">
+        <canvas id="myChart2" width="400" height="400"></canvas>
     </div>
 </div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    let labels = {{ chartsInfo.labels| safe}}
-    let defaultData = {{ chartsInfo.qtd_tweets| safe}}
-    let colors = {{ chartsInfo.colors| safe}}
+    let labels = ['alegria','nojo','medo','raiva','surpresa','tristeza']
+    let defaultData = [{{trainingBaseAdvanced.0|safe}}, {{trainingBaseAdvanced.1|safe}}, {{trainingBaseAdvanced.2|safe}},
+                        {{trainingBaseAdvanced.3|safe}}, {{trainingBaseAdvanced.4|safe}}, {{trainingBaseAdvanced.5|safe}}]
+    let colors = ['yellow','green','purple','red','blue','gray']
+    
 
-    console.log(labels)
-    console.log(defaultData)
-    console.log(colors)
+    let labels2 = ['positivo','neutro','negativo']
+    let defaultData2 = [{{trainingBaseSimple.0|safe}}, {{trainingBaseSimple.1|safe}}, {{trainingBaseSimple.2|safe}}]
+    let colors2 = ['green','gray','red']
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         var ctx = document.getElementById("myChart").getContext('2d');
         var ctx2 = document.getElementById("myChart2").getContext('2d');
 
@@ -52,13 +46,13 @@
         })
 
         var myChart2 = new Chart(ctx2, {
-            type: 'pie',
+            type: 'bar',
             data: {
-                labels: labels,
+                labels: labels2,
                 datasets: [{
                     label: 'Sentimentos',
-                    data: defaultData,
-                    backgroundColor: colors,
+                    data: defaultData2,
+                    backgroundColor: colors2,
                     borderColor: 'black',
                     borderWidth: 1
                 }]

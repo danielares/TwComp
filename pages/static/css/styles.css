@@ -138,3 +138,8 @@ p {
 #map {
     height: 500px;
 }
+
+.columnStyle{
+    background-color: rgb(29, 30, 30);
+    border-radius: 25px;
+}

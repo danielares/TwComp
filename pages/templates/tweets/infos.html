@@ -1,0 +1,48 @@
+<div class="row text-white">
+    <div class="col-sm-12 py-3">
+        <p>Termo pesquisado: {{ term }}</p>
+    </div>
+
+    <div class="col-sm-12 py-3">
+        <p>Tipo de análise: {{ option }}</p>
+    </div>
+
+    <div class="col-sm-12 py-3">
+        <p>Quantidade de tweets coletados: {{amoutTweets}}</p>
+    </div>
+
+    <div class="col-sm-12 py-3">
+        <p>Precisão da análise: {{probability}}%</p>
+    </div>
+
+    <div class="col-sm-12 py-3">
+        <p>Data da análise: hoje</p>
+    </div>
+
+    <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+
+    <!-- FORM PARA GERAR PDF -->
+    <div class="col-sm-12 py-3">
+        <div class="row">
+            <div class="col-6">
+                <form action="{% url 'generate-pdf' %}" method="get" class="form text-white" autocomplete="off"
+                    target="_blank">
+                    {% csrf_token %}
+                    <input class="btn btn-primary my-2" style="width: 100px;" type="submit" value="Gerar PDF" />
+                </form>
+            </div>
+            <!-- FORM PARA GERAR CSV -->
+            <div class="col-6">
+                <form action="{% url 'generate-csv' %}" method="get" class="form text-white" autocomplete="off"
+                    target="_blank">
+                    {% csrf_token %}
+                    <input class="btn btn-primary my-2" style="width: 100px;" type="submit" value="Gerar CSV" />
+                </form>
+            </div>
+            <!-- FIM - FORM PARA GERAR CSV -->
+        </div>
+    </div>
+    <!-- FIM - FORM PARA GERAR PDF -->
+
+
+</div>

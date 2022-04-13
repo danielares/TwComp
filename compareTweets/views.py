@@ -143,7 +143,7 @@ class ViewScraperTweetsCompareView(TemplateView):
         # TERMO 2:
         context['chartsInfo2'] = charts_info2
         context['wordcloud2'] = word_cloud_image2
-        context['term'] = search_2
+        context['term2'] = search_2
         context['tweets2'] = tweets2
 
         return render(request, self.template_name, context)
