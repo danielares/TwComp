@@ -1,14 +1,16 @@
 {% load static %}
-<div class="row d-flex justify-content-center my-3">
-    <div class="columnStyle">
-        <div class="col-sm-12">
+<div class="row">
+
+    <div class="col-sm-12">
+        <div class="columnStyle">
             <h3 class="row d-flex justify-content-center text-white py-3">Gráficos</h3>
             <canvas id="myChart" width="800" height="400"></canvas>
-            <p class="mx-2 text-white">Tipo de gráfico:</p>
-        </div>
-        <div class="col-sm-12">
-            <button class="btn btn-dark mx-2 my-2" id="bar">Barras</button>
-            <button class="btn btn-dark mx-2 my-2" id="radar">Linha</button>
+
+            <div class="pl-2 ml-2">
+                <p class="mx-2 text-white">Tipo de gráfico:</p>
+                <button class="btn btn-dark mx-2 my-2" id="bar">Barras</button>
+                <button class="btn btn-dark mx-2 my-2" id="radar">Linha</button>
+            </div>
         </div>
     </div>
 </div>

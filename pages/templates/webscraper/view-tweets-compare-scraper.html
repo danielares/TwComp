@@ -10,43 +10,64 @@
 
 <section class="vh-100">
     <div class="container h-100">
+        
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-4 my-3">
                 <div class="columnStyle">
                     {% include 'compareTweets/infos.html' %}
                 </div>
             </div>
-        </div>
-
-        <div class="row">>
-            <div class="col-12">
+            <div class="col-sm-8 my-3">
                 <div class="columnStyle">
                     <h3 class="row d-flex justify-content-center text-white py-3">Wordcloud</h3>
-                    <div class="d-flex justify-content-center my-2">
-                        <div class="zoom" id="magnifying_area" style="width: 55em;">
-                            <img class="img-fluid px-2" id="magnifying_img" src="{{ wordcloud1 }}"
-                                alt="Imagem word cloud">
-                            <figcaption class="d-flex justify-content-center figure-caption py-3 text-white">Word Cloud:
-                                {{term1}}
-                            </figcaption>
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner" style="border-radius: 55px 55px 55px 55px;">
+                            <div class="carousel-item active">
+                                <div class="d-flex justify-content-center mx-2 px-2 py-2 my-2">
+                                    <div class="zoom" id="magnifying_area" style="width: 55em;">
+                                        <img class="d-block w-100" src="{{ wordcloud1 }}" alt="First slide">
+                                        <figcaption
+                                            class="d-flex justify-content-center figure-caption py-3 text-white">Word
+                                            Cloud:
+                                            {{term1}}
+                                        </figcaption>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="d-flex justify-content-center mx-2 px-2 py-2 my-2">
+                                    <div class="zoom" id="magnifying_area" style="width: 55em;">
+                                        <img class="d-block w-100" src="{{ wordcloud2 }}" alt="Second slide">
+                                        <figcaption
+                                            class="d-flex justify-content-center figure-caption py-3 text-white">Word
+                                            Cloud:
+                                            {{term2}}
+                                        </figcaption>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="zoom" id="magnifying_area" style="width: 55rem;">
-                            <img class="img-fluid px-2" id="magnifying_img" src="{{ wordcloud2 }}"
-                                alt="Imagem word cloud">
-                            <figcaption class="d-flex justify-content-center figure-caption py-3 text-white">Word Cloud:
-                                {{term2}}
-                            </figcaption>
-                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                            data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                            data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
         {% include 'charts/charts-compare.html' %}
-
         {% include 'compareTweets/tweets-analysis.html' %}
-
     </div>
 </section>
 

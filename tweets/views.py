@@ -60,7 +60,7 @@ class ViewTweetsView(TemplateView):
                 context['option'] = option
                 context['term'] = search
                 context['tweets'] = tweets
-                context['probability'] = probability
+                context['probability'] = round(probability, 2)
                 context['amoutTweets'] = number_of_tweets
                 context['locations'] = geo_locations
                 return render(request, self.template_name, context)
@@ -106,7 +106,7 @@ class ViewScraperTweetsView(TemplateView):
             context['option'] = option
             context['term'] = search
             context['tweets'] = tweets
-            context['probability'] = probability
+            context['probability'] = round(probability, 2)
             context['amoutTweets'] = number_of_tweets
 
             return render(request, self.template_name, context)
