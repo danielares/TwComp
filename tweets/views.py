@@ -9,6 +9,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from my_libs.word_cloud import wordCloud
 from my_libs.return_data_view import get_tweets
+from my_libs.training_analysis import search_tweets_scraper
+from my_libs.return_data_view import generate_data, probability_average
 
 
 @method_decorator(login_required, name='dispatch')
@@ -72,6 +74,42 @@ class ViewTweetsView(TemplateView):
             global api
             return api
 
+
+class ScraperTweetsView(TemplateView):
+        template_name = 'webscraper/search-tweets-scraper.html'
+        
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            return context
+   
+        
+class ViewScraperTweetsView(TemplateView):
+        template_name = 'webscraper/view-tweets-scraper.html'
+        
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            return context
+        
+        def post(self, request, **kwargs):
+            search = request.POST['searched']
+            number_of_tweets = int(request.POST['amoutTweets'])
+            option = request.POST['inlineRadioOptions']
+            
+            tweets = search_tweets_scraper(search, number_of_tweets, option)
+            charts_info = generate_data(tweets, option)
+            probability = probability_average(tweets)
+            word_cloud_image = wordCloud(tweets, search)
+            
+            context = super().get_context_data(**kwargs)
+            context['chartsInfo'] = charts_info
+            context['wordcloud'] = word_cloud_image
+            context['option'] = option
+            context['term'] = search
+            context['tweets'] = tweets
+            context['probability'] = probability
+            context['amoutTweets'] = number_of_tweets
+
+            return render(request, self.template_name, context)
 
 class ChartData(APIView):
 

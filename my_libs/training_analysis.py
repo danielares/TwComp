@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import nltk
+import snscrape.modules.twitter as sntwitter
 
 from .data_processing import search_tweets, clean_tweet, search_more_than_100_tweet
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
@@ -162,5 +163,31 @@ def analyze_test_phrase(phrase, option):
     sentiment = analyze_tweet(phrase, classificador)
     
     return sentiment
+
+
+def search_tweets_scraper(query, number_of_tweets, option):
+    tweets = []
+    
+    classificador = inicialize(option)
+    
+    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
+        if len(tweets) == number_of_tweets:
+            break
+        else:
+            tweet_dict = {}
+            tweet_dict['tweet_text'] = tweet.content
+            tweet_dict['tweet_created_at'] = tweet.date
+            tweet_dict['username'] = tweet.user.username
+            tweet_dict['tweet_id'] = tweet.id
+            
+            tweet_clean = clean_tweet(tweet_dict['tweet_text'])
+            sentiment = analyze_tweet(tweet_clean, classificador)
+
+            tweet_dict['tweet_clean'] = tweet_clean
+            tweet_dict['tweet_analise'] = sentiment
+            
+            tweets.append(tweet_dict)
+    
+    return tweets
 
 

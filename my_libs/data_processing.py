@@ -1,6 +1,7 @@
 import re
-import tweepy
 from itertools import zip_longest
+
+import tweepy
 
 
 # Faz a autenticação utilizando o brarer token com o twitter atraves da biblioteca tweepy

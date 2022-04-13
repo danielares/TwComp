@@ -10,32 +10,70 @@
 {% block content %}
 <section class="vh-100">
     <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+        <h1 class="text-white d-flex justify-content-center mb-5">Opções</h1>
 
-            <a class="text-white mx-5 my-5" href="{% url 'test-phrase' %}">
-                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                Teste uma frase
-            </a>
+        <h2 class="text-white">Opções usando webscraper: </h2>
+        <div class="row my-4">
+            <div class="col-4">
+                <a class="text-white my-5" href="{% url 'search-tweets-scraper' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Procurar tweets - webscraper
+                </a>
+            </div>
+            <div class="col-4">
+                <a class="text-white my-5" href="{% url 'search-tweets-compare-scraper' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Comparar tweets - webscraper
+                </a>
+            </div>
+            <div class="col-4">
+                <p class="text-white">
+                    As opções utilizando webscraper não necessitam de cadastro na plataforma.
+                    Porém são mais limitadas.
+                </p>
+            </div>
+        </div>
 
-            <a class="text-white mx-5 my-5" href="{% url 'search-tweets' %}">
-                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                Procurar tweets
-            </a>
 
-            <a class="text-white mx-5 my-5" href="{% url 'search-tweets-compare' %}">
-                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                Comparar termos
-            </a>
+        {% if not user.is_anonymous %}
+        <h2 class="text-white pt-3">Opções usando API: </h2>
+        <div class="row my-4">
+            <div class="col-4">
+                <a class="text-white my-5" href="{% url 'search-tweets' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Procurar tweets - API
+                </a>
+            </div>
+
+            <div class="col-4">
+                <a class="text-white my-5" href="{% url 'search-tweets-compare' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Comparar tweets - API
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <h2 class="text-white pt-3">Outras opções: </h2>
+        <div class="row my-4">
+            <div class="col-4">
+                <a class="text-white my-5" href="{% url 'test-phrase' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Teste uma frase
+                </a>
+            </div>
 
             {% if user.is_staff %}
-            <a class="text-white mx-5 my-5" href="{% url 'training-base' %}">
-                <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                Base de treinamento
-            </a>
+            <div class="col-4">
+                <a class="text-white my-5" href="{% url 'training-base' %}">
+                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
+                    Base de treinamento
+                </a>
+            </div>
             {% endif %}
-            
 
         </div>
+
     </div>
 </section>
 {% endblock %}
