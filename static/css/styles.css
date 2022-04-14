@@ -33,7 +33,7 @@ header,
 }
 
 #logo {
-    width: 55px;
+    width: 75px;
 }
 
 #icons {
@@ -149,6 +149,6 @@ p {
     border-radius: 25px;
 }
 
-#optionIcons{
-    text-decoration:none
+#optionIcons {
+    text-decoration: none;
 }
