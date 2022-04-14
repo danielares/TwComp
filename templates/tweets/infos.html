@@ -1,49 +1,51 @@
 <h3 class="row d-flex justify-content-center text-white py-3">Resumo da análise</h3>
 <div class="row text-white">
     <div class="col-sm-12 py-3">
-        <p>Termo pesquisado: {{ term }}</p>
+        <p>
+            <i class="fas fa-search fa-lg me-3 fa-fw"></i>
+            &nbsp; Termo pesquisado: {{ term }}
+        </p>
     </div>
 
     <div class="col-sm-12 py-3">
-        <p>Tipo de análise: {{ option }}</p>
+        <p>
+            <i class="fas fa-line-chart fa-lg me-3 fa-fw"></i>
+            &nbsp; Tipo de análise: {{ option }}
+        </p>
     </div>
 
     <div class="col-sm-12 py-3">
-        <p>Quantidade de tweets coletados: {{amoutTweets}}</p>
+        <p>
+            <i class="fas fa-list-ol fa-lg me-3 fa-fw"></i>
+            &nbsp; Quantidade de tweets: {{amoutTweets}}
+        </p>
     </div>
 
     <div class="col-sm-12 py-3">
-        <p>Precisão da análise: {{probability}}%</p>
+        <p>
+            <i class="fas fa-percent fa-lg me-3 fa-fw"></i>
+            &nbsp; Precisão da análise: {{probability}}%
+        </p>
     </div>
 
     <div class="col-sm-12 py-3">
-        <p>Data da análise: hoje</p>
+        <p>
+            <i class="fas fa-calendar fa-lg me-3 fa-fw"></i>
+            &nbsp; Data da análise: hoje
+        </p>
     </div>
 
-    <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-
-    <!-- FORM PARA GERAR PDF -->
     <div class="col-sm-12 py-3">
-        <div class="row">
-            <div class="col-6">
-                <form action="{% url 'generate-pdf' %}" method="get" class="form text-white" autocomplete="off"
-                    target="_blank">
-                    {% csrf_token %}
-                    <input class="btn btn-primary my-2" style="width: 100px;" type="submit" value="Gerar PDF" />
-                </form>
-            </div>
-            <!-- FORM PARA GERAR CSV -->
-            <div class="col-6">
-                <form action="{% url 'generate-csv' %}" method="get" class="form text-white" autocomplete="off"
-                    target="_blank">
-                    {% csrf_token %}
-                    <input class="btn btn-primary my-2" style="width: 100px;" type="submit" value="Gerar CSV" />
-                </form>
-            </div>
-            <!-- FIM - FORM PARA GERAR CSV -->
-        </div>
+        <p>
+            <i class="fas fa-file-pdf fa-lg me-3 fa-fw"></i>
+            &nbsp; <a style="color: white;" href="{% url 'generate-pdf' %}" target="_blank">Gerar PDF</a>
+        </p>
     </div>
-    <!-- FIM - FORM PARA GERAR PDF -->
 
-
+    <div class="col-sm-12 py-3 pb-4,5">
+        <p>
+            <i class="fas fa-file-excel fa-lg me-3 fa-fw"></i>
+            &nbsp; <a style="color: white;" href="{% url 'generate-csv' %}">Gerar CSV</a>
+        </p>
+    </div>
 </div>

@@ -47,27 +47,43 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbar-links">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-item nav-link" id="home-menu" href="{% url 'index' %}">Início</a>
+                        <a class="nav-item nav-link" id="home-menu" href="{% url 'index' %}">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            &nbsp; Início
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-item nav-link" id="about-menu" href="{% url 'about' %}">Sobre nós</a>
+                        <a class="nav-item nav-link" id="about-menu" href="{% url 'about' %}">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                            &nbsp; Sobre nós
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'contact' %}">Entre em contato</a>
+                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'contact' %}">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            &nbsp; Entre em contato
+                        </a>
                     </li>
                     {% if user.is_anonymous %}
                     <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">Entrar</a>
+                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'login' %}">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            &nbsp; Entrar
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'create_user' %}">Cadastrar</a>
+                        <a class="nav-item nav-link" id="contact-menu" href="{% url 'create_user' %}">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            &nbsp; Cadastrar
+                        </a>
                     </li>
                     {% else %}
 
                     <div class="dropdown show">
                         <a class="nav-item nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{user.username }}
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            &nbsp; {{user.username }}
                         </a>
 
                         <div class="dropdown-menu" style="background-color: rgba(45, 46, 47);" id="dropdownMenu"
