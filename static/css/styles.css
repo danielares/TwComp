@@ -36,6 +36,10 @@ header,
     width: 55px;
 }
 
+#icons {
+    width: 75px;
+}
+
 .navbar-brand {
     padding: 0;
     color: white;
@@ -143,4 +147,8 @@ p {
 .columnStyle {
     background-color: rgb(29, 30, 30);
     border-radius: 25px;
+}
+
+#optionIcons{
+    text-decoration:none
 }
