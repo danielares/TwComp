@@ -24,7 +24,7 @@ class TakeTweetsView(TemplateView):
   
 class ViewTweetsView(TemplateView):
         template_name = 'tweets/view-tweets.html'
-                
+        
         def post(self, request, **kwargs):
             global api    
             
@@ -51,6 +51,7 @@ class ViewTweetsView(TemplateView):
                 tweets, charts_info, probability, geo_locations = get_tweets(search, number_of_tweets, option, filter_retweets, 
                                                                              filter_reply, option_maps, tokens) 
                 word_cloud_image = wordCloud(tweets, search)
+                
                 api = {"term": search, "amoutTweets": number_of_tweets, 
                         "chartsInfo": charts_info, 'tweets': tweets}
 
@@ -69,7 +70,6 @@ class ViewTweetsView(TemplateView):
                 messages.success(request, 'Você deve pesquisar algo')
                 return redirect('search-tweets')
                 
-        @staticmethod
         def return_api_data():
             global api
             return api

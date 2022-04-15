@@ -139,9 +139,9 @@ p {
 
 .zoom img {
     max-width: 100%;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
 }
 
 .zoom:hover img {
@@ -156,8 +156,14 @@ p {
 }
 
 .columnStyle {
+    transition: background-color 0.5s ease;
     background-color: rgb(29, 30, 30);
     border-radius: 25px;
+}
+
+.columnStyle:hover{
+    transition: background-color 0.5s ease;
+    background-color: rgb(24, 25, 25);
 }
 
 #optionIcons {
