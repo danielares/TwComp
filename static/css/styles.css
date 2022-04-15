@@ -38,6 +38,17 @@ header,
 
 #icons {
     width: 75px;
+    color: black;
+}
+
+#iconsLow {
+    width: 25px;
+
+}
+
+.dropdown-item:hover img {
+    -webkit-filter: invert(1);
+    filter: invert(1);
 }
 
 .navbar-brand {

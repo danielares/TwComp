@@ -11,61 +11,113 @@
 <section class="vh-100">
     <div class="container h-100">
         <h1 class="text-white d-flex justify-content-center mb-5">Opções</h1>
-
-        <h2 class="text-white">Opções usando webscraper: </h2>
-        <div class="row my-4">
-            <div class="col-4">
-                <a class="text-white my-5" href="{% url 'search-tweets-scraper' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Procurar tweets - webscraper
-                </a>
-            </div>
-            <div class="col-4">
-                <a class="text-white my-5" href="{% url 'search-tweets-compare-scraper' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Comparar tweets - webscraper
-                </a>
-            </div>
-        </div>
-
         {% if not user.is_anonymous %}
-        <h2 class="text-white pt-3">Opções usando API: </h2>
-        <div class="row my-4">
-            <div class="col-4">
-                <a class="text-white my-5" href="{% url 'search-tweets' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Procurar tweets - API
+        <div class="row my-3">
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'search-tweets' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 280px;">
+                            <p class="py-1">
+                                <img id="icons" src="{% static '/images/icons/search-api.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Procurar tweets<br>API do twitter</h4>
+                            <p style="font-size: 15px;">
+                                Procura um termo no twitter utilizando a API do Twitter. É necessario se cadastrar com
+                                os dados da API do twitter
+                            </p>
+
+                        </div>
+                    </div>
                 </a>
             </div>
-
-            <div class="col-4">
-                <a class="text-white my-5" href="{% url 'search-tweets-compare' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Comparar tweets - API
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'search-tweets-compare' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 280px;">
+                            <p class="py-2">
+                                <img id="icons" src="{% static '/images/icons/search-api-compare.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Comparar tweets<br>API do twitter</h4>
+                            <p style="font-size: 15px;">
+                                Compara dois termos pesquisados utilizando a API do Twitter. É necessario se cadastrar
+                                com os dados da API do twitter
+                            </p>
+                        </div>
+                    </div>
                 </a>
             </div>
-        </div>
-        {% endif %}
-
-        <h2 class="text-white pt-3">Outras opções: </h2>
-        <div class="row my-4">
-            <div class="col-4">
-                <a class="text-white my-5" href="{% url 'test-phrase' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Teste uma frase
-                </a>
-            </div>
-
             {% if user.is_staff %}
-            <div class="col-4">
-                <a class="text-white my-5" href="{% url 'training-base' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Base de treinamento
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'training-base' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 280px;">
+                            <p class="py-2">
+                                <img id="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Base de treinamento</h4>
+                            <p style="font-size: 15px;">
+                                Opções relacionadas a base de treinamento. Como adicionar tweets a base e baixar CSV da
+                                base de treinamento
+                            </p>
+                        </div>
+                    </div>
                 </a>
             </div>
             {% endif %}
-
         </div>
+        {% endif %}
+
+        <div class="row my-3">
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'search-tweets-scraper' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 280px;">
+                            <p class="py-1">
+                                <img id="icons" src="{% static '/images/icons/web-scaping.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Procurar tweets<br>Web Scraping</h4>
+                            <p style="font-size: 15px;">
+                                Procura um termo no twitter utilizando Web Scraping. Não necessita de cadastrar com
+                                os dados da API do twitter porém as opções são mais limitadas
+                            </p>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'search-tweets-compare-scraper' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 280px;">
+                            <p class="py-2">
+                                <img id="icons" src="{% static '/images/icons/web-scaping-2.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Comparar tweets<br>Web Scraping</h4>
+                            <p style="font-size: 15px;">
+                                Compara dois termos pesquisados utilizando Web Scraping. Não necessita de cadastrar
+                                com os dados da API do twitter porém as opções são mais limitadas
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'test-phrase' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 280px;">
+                            <p class="py-2">
+                                <img id="icons" src="{% static '/images/icons/phrase-icon.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Teste uma frase</h4>
+                            <p style="font-size: 15px;">
+                                Digite uma frase qualquer para testar como funciona a análise
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
 
     </div>
 </section>

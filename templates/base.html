@@ -88,22 +88,37 @@
 
                         <div class="dropdown-menu" style="background-color: rgba(45, 46, 47);" id="dropdownMenu"
                             aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="{% url 'test-phrase' %}">
-                                <i class="fas  fa-paragraph fa-lg me-3 fa-fw"></i>
-                                Teste uma frase
-                            </a>
+
                             <a class="dropdown-item" href="{% url 'search-tweets' %}">
-                                <i class="fas  fa-line-chart fa-lg me-3 fa-fw"></i>
+                                <img id="iconsLow" src="{% static '/images/icons/search-api.png' %}" alt="TWComp">
                                 Procurar tweets
                             </a>
                             <a class="dropdown-item" href="{% url 'search-tweets-compare' %}">
-                                <i class="fas  fa-pie-chart fa-lg me-3 fa-fw"></i>
+                                <img id="iconsLow" src="{% static '/images/icons/search-api-compare.png' %}"
+                                    alt="TWComp">
                                 Comparar tweets
                             </a>
+                            <a class="dropdown-item" href="{% url 'test-phrase' %}">
+                                <img id="iconsLow" src="{% static '/images/icons/phrase-icon.png' %}" alt="TWComp">
+                                Teste uma frase
+                            </a>
                             <a class="dropdown-item" href="{% url 'training-base' %}">
-                                <i class="fas  fa-database fa-lg me-3 fa-fw"></i>
+                                <img id="iconsLow" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
                                 Base de treinamento
                             </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="{% url 'search-tweets-scraper' %}">
+                                <img id="iconsLow" src="{% static '/images/icons/web-scaping.png' %}" alt="TWComp">
+                                Procurar tweets - Scraping
+                            </a>
+
+                            <a class="dropdown-item" href="{% url 'search-tweets-compare-scraper' %}">
+                                <img id="iconsLow" src="{% static '/images/icons/web-scaping-2.png' %}" alt="TWComp">
+                                Comparar tweets - Scraping
+                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'user-options' %}">
                                 <i class="fas  fa-bar-chart fa-lg me-3 fa-fw"></i>
