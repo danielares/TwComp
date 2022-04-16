@@ -20,13 +20,13 @@ class TakeTweetsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-  
-  
+
+
 class ViewTweetsView(TemplateView):
         template_name = 'tweets/view-tweets.html'
         
         def post(self, request, **kwargs):
-            global api    
+            global api
             
             search = request.POST['searched']
             number_of_tweets = request.POST['amoutTweets']
@@ -45,30 +45,28 @@ class ViewTweetsView(TemplateView):
             except MultiValueDictKeyError: filter_reply = False
             
             # if para veficiar se o usuario fez alguma pesquisa
-            if search:
-                
-                tokens = self.request.user.bearerToken
-                tweets, charts_info, probability, geo_locations = get_tweets(search, number_of_tweets, option, filter_retweets, 
-                                                                             filter_reply, option_maps, tokens) 
-                word_cloud_image = wordCloud(tweets, search)
-                
-                api = {"term": search, "amoutTweets": number_of_tweets, 
-                        "chartsInfo": charts_info, 'tweets': tweets}
-
-                context = super().get_context_data(**kwargs)
-                context['chartsInfo'] = charts_info
-                context['wordcloud'] = word_cloud_image
-                context['option'] = option
-                context['term'] = search
-                context['tweets'] = tweets
-                context['probability'] = round(probability, 2)
-                context['amoutTweets'] = number_of_tweets
-                context['locations'] = geo_locations
-                return render(request, self.template_name, context)
-            # else para se o usuario não fez alguma pesquisa
-            else:       
-                messages.success(request, 'Você deve pesquisar algo')
+            if not search:
+                messages.error(request, 'Você deve pesquisar algo')
                 return redirect('search-tweets')
+                
+            tokens = self.request.user.bearerToken
+            tweets, charts_info, probability, geo_locations = get_tweets(search, number_of_tweets, option, filter_retweets, 
+                                                                            filter_reply, option_maps, tokens) 
+            word_cloud_image = wordCloud(tweets, search)
+            
+            api = {"term": search, "amoutTweets": number_of_tweets, 
+                    "chartsInfo": charts_info, 'tweets': tweets}
+
+            context = super().get_context_data(**kwargs)
+            context['chartsInfo'] = charts_info
+            context['wordcloud'] = word_cloud_image
+            context['option'] = option
+            context['term'] = search
+            context['tweets'] = tweets
+            context['probability'] = round(probability, 2)
+            context['amoutTweets'] = number_of_tweets
+            context['locations'] = geo_locations
+            return render(request, self.template_name, context)
                 
         def return_api_data():
             global api
@@ -94,6 +92,10 @@ class ViewScraperTweetsView(TemplateView):
             search = request.POST['searched']
             number_of_tweets = int(request.POST['amoutTweets'])
             option = request.POST['inlineRadioOptions']
+            
+            if not search:
+                messages.error(request, 'Você deve pesquisar algo')
+                return redirect('search-tweets-scraper') 
             
             tweets = search_tweets_scraper(search, number_of_tweets, option)
             charts_info = generate_data(tweets, option)

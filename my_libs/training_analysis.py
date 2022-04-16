@@ -138,7 +138,7 @@ def create_dict_training(option, query, amount, filter_retweets, filter_reply, b
     classificador = inicialize(option) 
     
     # Coleta os tweets e os adiciona em uma lista de dicionarios
-    if int(amount) < 100:
+    if int(amount) <= 100:
         all_tweets, locations = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
     else:
         all_tweets = search_more_than_100_tweet(query, amount, filter_retweets, filter_reply, bearerToken)

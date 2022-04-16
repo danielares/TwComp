@@ -22,7 +22,8 @@
                     <div class="form-group">
                         <label for="pesquisaTweet1">Primeiro termo</label>
                         <input type="text" class="form-control" id="pesquisaTweet1" name="searched1"
-                            placeholder="Digite o primeiro termo">
+                            placeholder="Digite o termo">
+                        <small id="emailHelp" class="form-text text-muted">Primeiro termo para comprar tweets</small>
                     </div>
                 </div>
                 <!-- CAMPO PARA PESQUISAR TWEET 1 -->
@@ -32,20 +33,22 @@
                     <div class="form-group">
                         <label for="pesquisaTweet2">Segundo Termo</label>
                         <input type="text" class="form-control" id="pesquisaTweet2" name="searched2"
-                            placeholder="Digite o segundo termo">
+                            placeholder="Digite o termo">
+                        <small id="emailHelp" class="form-text text-muted">Segundo termo para comprar tweets</small>
                     </div>
                 </div>
             </div>
             <!-- CAMPO PARA PESQUISAR TWEET 2 -->
 
 
-            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS -->
             <div class="form-group">
                 <label for="numeroTweets">Numero de tweets</label>
                 <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
-                    placeholder="Numero de tweets" min="10" max="500" value="10">
+                    placeholder="Numero de tweets" min="10" max="100" value="10">
+                <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
             </div>
-            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS -->
 
             <!-- TIPO DE PESQUISA A SER FEITA -->
 
@@ -70,16 +73,6 @@
 
                     <!-- TIPO DE PESQUISA A SER FEITA -->
 
-                    <!-- OPÇÃO PARA INCLUIR MAPAS -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True" name="includeMaps"
-                            id="includeMaps">
-                        <label class="form-check-label" for="includeMaps">
-                            Incluir mapas (Pode causar lentidão)
-                        </label>
-                    </div>
-                    <!-- OPÇÃO PARA INCLUIR MAPAS -->
-
                     <!-- OPÇÃO PARA FILTRAR RETWEETS -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="True" name="filterRetweets"
@@ -98,14 +91,27 @@
                             Filtrar respostas
                         </label>
                     </div>
+                    <!-- OPÇÃO PARA FILTRAR REPLYS -->
+
+                    <!-- OPÇÃO PARA INCLUIR MAPAS -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="True" name="includeMaps"
+                            id="includeMaps">
+                        <label class="form-check-label" for="includeMaps">
+                            Incluir mapas (BETA)
+                        </label>
+                    </div>
+                    <!-- OPÇÃO PARA INCLUIR MAPAS -->
                 </div>
-                <!-- OPÇÃO PARA FILTRAR REPLYS -->
+                
+
 
                 <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
                 <div class="col-4">
                     <div class="row justify-content-center">
                         <div>
-                            <input class="btn btn-primary btn-lg" style="width: 120px;" type="submit" value="Pesquisar" />
+                            <input class="btn btn-primary btn-lg" style="width: 120px;" type="submit"
+                                value="Pesquisar" />
                         </div>
                     </div>
                 </div>

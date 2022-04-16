@@ -14,21 +14,42 @@
         <h1 class="text-white d-flex justify-content-center mb-5">Base de treinamento</h1>
 
         <h2 class="text-white mb-4">Opções de treinamento: </h2>
-        <div class="row">
-            <div class="col-4">
-                <a class="text-white" href="{% url 'search-tweets-training' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Treinar com tweets
+        <div class="row my-3">
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'search-tweets-training' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" id="columnStyleId" style="width: 350px; height: 220px;">
+                            <p class="py-2">
+                                <img id="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Treinar com tweets</h4>
+                            <p style="font-size: 15px;">
+                                Procura tweets para inserir na base de treinamento.
+                            </p>
+
+                        </div>
+                    </div>
                 </a>
             </div>
-
-            <div class="col-4">
-                <a class="text-white" href="{% url 'upload-training-base' %}">
-                    <img height="60" id="options" src="{% static '/images/search-tweets.png' %}"><br>
-                    Treinar com CSV
+            <div class="col-sm-4 py-2">
+                <a class="text-white my-5" id="optionIcons" href="{% url 'upload-training-base' %}">
+                    <div class="zoom">
+                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 220px;">
+                            <p class="py-2">
+                                <img id="icons" src="{% static '/images/icons/csv.png' %}" alt="TWComp">
+                            </p>
+                            <h4>Treinar com CSV</h4>
+                            <p style="font-size: 15px;">
+                                Faz o upload de uma base de treinamento por um arquivo CSV.
+                            </p>
+                        </div>
+                    </div>
                 </a>
             </div>
         </div>
+
+
+
 
         <h2 class="text-white pt-4 my-4">Baixar base de treinamento: </h2>
         <div class="row">

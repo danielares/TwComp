@@ -108,22 +108,21 @@ class ViewTweetsTrainingView(TemplateView):
         filter_retweets = True
         filter_reply = True
         
-        if search_term:
-            tweets, locations = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, tokens)
-            
-            '''
-            for tweet in tweets:
-                tweet['tweet_clean'] = re.sub(r"\b{}\b".format(search_term), "", tweet['tweet_clean'])
-            '''
-            
-            context = super().get_context_data(**kwargs)
-            context['tweets'] = tweets
-            context['option'] = option
-            return render(request, self.template_name, context)
-        else:
-            messages.success(request, 'Você deve pesquisar algo')
+        if not search_term:
+            messages.error(request, 'Você deve pesquisar algo')
             return redirect('search-tweets-training')
-
+        
+        tweets, locations = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, tokens)
+        
+        '''
+        for tweet in tweets:
+            tweet['tweet_clean'] = re.sub(r"\b{}\b".format(search_term), "", tweet['tweet_clean'])
+        '''
+        
+        context = super().get_context_data(**kwargs)
+        context['tweets'] = tweets
+        context['option'] = option
+        return render(request, self.template_name, context)
 
 @method_decorator(staff_member_required, name='dispatch')
 class TrainingBaseSuccessView(TemplateView):

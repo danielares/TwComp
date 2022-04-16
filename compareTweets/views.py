@@ -49,46 +49,43 @@ class CompareTweetsView(TemplateView):
             except MultiValueDictKeyError: filter_reply = False
             
             # if para veficiar se o usuario fez alguma pesquisa
-            if search_1 and search_2:
-                    
-                tokens = self.request.user.bearerToken 
-                
-                tweets1, chartsInfo1, probability1, geo_locations1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
-                tweets2, chartsInfo2, probability2, geo_locations2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
-                probability = round((probability1 + probability2)/2, 2)
-
-                wordcloud_image_1 = wordCloud(tweets1, search_1)
-                wordcloud_image_2 = wordCloud(tweets2, search_2)
-                
-                
-                api = {"term1": search_1, "term2": search_2,
-                        "amoutTweets": number_of_tweets,
-                        "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
-                        "tweets1": tweets1, "tweets2": tweets2}
-
-                context = super().get_context_data(**kwargs)
-                context['chartsInfo1'] = chartsInfo1
-                context['chartsInfo2'] = chartsInfo2
-                context['wordcloud1'] = wordcloud_image_1
-                context['wordcloud2'] = wordcloud_image_2
-                context['option'] = option
-                context['amoutTweets'] = number_of_tweets
-                context['term1'] = search_1
-                context['term2'] = search_2
-                context['tweets1'] = tweets1
-                context['tweets2'] = tweets2
-                context['probability'] = probability
-                context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
-                context['qtd_tweets2'] = chartsInfo2['qtd_tweets']
-                context['locations1'] = geo_locations1
-                context['locations2'] = geo_locations2
-            
-                return render(request, self.template_name, context)
-            
-            # else para se o usuario não fez alguma pesquisa
-            else:       
-                messages.success(request, 'Você deve pesquisar algo')
+            if not search_1 or not search_2:
+                messages.error(request, 'Você deve digitar dois termos para pesquisar')
                 return redirect('search-tweets-compare')
+                    
+            tokens = self.request.user.bearerToken 
+            
+            tweets1, chartsInfo1, probability1, geo_locations1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
+            tweets2, chartsInfo2, probability2, geo_locations2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
+            probability = round((probability1 + probability2)/2, 2)
+
+            wordcloud_image_1 = wordCloud(tweets1, search_1)
+            wordcloud_image_2 = wordCloud(tweets2, search_2)
+            
+            
+            api = {"term1": search_1, "term2": search_2,
+                    "amoutTweets": number_of_tweets,
+                    "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
+                    "tweets1": tweets1, "tweets2": tweets2}
+
+            context = super().get_context_data(**kwargs)
+            context['chartsInfo1'] = chartsInfo1
+            context['chartsInfo2'] = chartsInfo2
+            context['wordcloud1'] = wordcloud_image_1
+            context['wordcloud2'] = wordcloud_image_2
+            context['option'] = option
+            context['amoutTweets'] = number_of_tweets
+            context['term1'] = search_1
+            context['term2'] = search_2
+            context['tweets1'] = tweets1
+            context['tweets2'] = tweets2
+            context['probability'] = probability
+            context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
+            context['qtd_tweets2'] = chartsInfo2['qtd_tweets']
+            context['locations1'] = geo_locations1
+            context['locations2'] = geo_locations2
+        
+            return render(request, self.template_name, context)
                 
         @staticmethod
         def return_api_data():
@@ -116,6 +113,10 @@ class ViewScraperTweetsCompareView(TemplateView):
         search_2 = request.POST['searched2']
         number_of_tweets = int(request.POST['amoutTweets'])
         option = request.POST['inlineRadioOptions']
+        
+        if not search_1 or not search_2:
+            messages.error(request, 'Você deve digitar dois termos para pesquisar')
+            return redirect('search-tweets-compare-scraper')
         
         #TERMO 1
         tweets1 = search_tweets_scraper(search_1, number_of_tweets, option)

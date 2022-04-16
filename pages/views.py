@@ -40,17 +40,18 @@ class TestResultView(TemplateView):
     def post(self, request, **kwargs):
         phrase = request.POST['phrase']
         option = request.POST['inlineRadioOptions']
-        if phrase:
-
-            sentiment = analyze_test_phrase(phrase, option)
-            
-            context = super().get_context_data(**kwargs)
-            context['sentiment'] = sentiment
-            
-            return render(request, self.template_name, context)
-        else:   
-            messages.success(request, 'Você deve pesquisar algo')
+        
+        if not phrase:
+            messages.error(request, 'Você deve digitar uma frase')
             return redirect('test-phrase')
+        
+        sentiment = analyze_test_phrase(phrase, option)
+        
+        context = super().get_context_data(**kwargs)
+        context['sentiment'] = sentiment
+        
+        return render(request, self.template_name, context)
+
 
 
 def ContactView(request):

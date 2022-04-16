@@ -35,6 +35,7 @@ class CreateUserView(TemplateView):
                                                     accessToken=accessToken, 
                                                     accessTokenSecret=accessTokenSecret, 
                                                     bearerToken=bearerToken)
+
         return render(request, 'registration/login.html')
     
 
