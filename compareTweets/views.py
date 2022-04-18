@@ -7,6 +7,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 
+import json
+
 from my_libs.word_cloud import wordCloud
 from my_libs.return_data_view import get_tweets
 from my_libs.training_analysis import search_tweets_scraper
@@ -31,52 +33,76 @@ class CompareTweetsView(TemplateView):
         def post(self, request, **kwargs):
             global api         
             
-            search_1 = request.POST['searched1']
-            search_2 = request.POST['searched2']
-            number_of_tweets = request.POST['amoutTweets']
-            option = request.POST['inlineRadioOptions']
+            options1 = {}
+            options2 = {}
+            
+            options1['search'] = request.POST['searched1']
+            options2['search'] = request.POST['searched2']
+            
+            options1['number_of_tweets'] = request.POST['amoutTweets']
+            options2['number_of_tweets'] = request.POST['amoutTweets']
+            
+            options1['type_of_analysis'] = request.POST['inlineRadioOptions']
+            options2['type_of_analysis'] = request.POST['inlineRadioOptions']
             
             # Opção para incluir mapas
-            try: option_maps = request.POST['includeMaps']
-            except: option_maps = False
+            try: 
+                options1['option_maps'] = request.POST['includeMaps']
+                options2['option_maps'] = request.POST['includeMaps']
+            except: 
+                 options1['option_maps'] = False
+                 options2['option_maps'] = False
             
             # Opção para filtrar retweets
-            try: filter_retweets = bool(request.POST['filterRetweets'])
-            except MultiValueDictKeyError: filter_retweets = False
+            try: 
+                options1['filter_retweets'] = bool(request.POST['filterRetweets'])
+                options2['filter_retweets'] = bool(request.POST['filterRetweets'])
+            except MultiValueDictKeyError: 
+                options1['filter_retweets'] = False
+                options2['filter_retweets'] = False
             
             # Opção para filtrar respostas
-            try: filter_reply = bool(request.POST['filterReply'])
-            except MultiValueDictKeyError: filter_reply = False
+            try: 
+                options1['filter_reply'] = bool(request.POST['filterReply'])
+                options2['filter_reply'] = bool(request.POST['filterReply'])
+            except MultiValueDictKeyError: 
+                options1['filter_reply'] = False
+                options2['filter_reply'] = False
             
             # if para veficiar se o usuario fez alguma pesquisa
-            if not search_1 or not search_2:
+            if not options1['search'] or not options2['search']:
                 messages.error(request, 'Você deve digitar dois termos para pesquisar')
                 return redirect('search-tweets-compare')
                     
-            tokens = self.request.user.bearerToken 
+            api_access_tokens = self.request.user.bearerToken 
             
-            tweets1, chartsInfo1, probability1, geo_locations1 = get_tweets(search_1, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
-            tweets2, chartsInfo2, probability2, geo_locations2 = get_tweets(search_2, number_of_tweets, option, filter_retweets, filter_reply, option_maps, tokens)
+            tweets1, chartsInfo1, probability1, geo_locations1, context_infos = get_tweets(api_access_tokens, options1)
+            tweets2, chartsInfo2, probability2, geo_locations2, context_infos = get_tweets(api_access_tokens, options2)
             probability = round((probability1 + probability2)/2, 2)
 
-            wordcloud_image_1 = wordCloud(tweets1, search_1)
-            wordcloud_image_2 = wordCloud(tweets2, search_2)
+            wordcloud_image_1 = wordCloud(tweets1, options1['search'])
+            wordcloud_image_2 = wordCloud(tweets2, options2['search'])
             
             
-            api = {"term1": search_1, "term2": search_2,
-                    "amoutTweets": number_of_tweets,
-                    "chartsInfo1": chartsInfo1, "chartsInfo2": chartsInfo2,
-                    "tweets1": tweets1, "tweets2": tweets2}
+            request.session['search1'] = options1['search']
+            request.session['number_of_tweets1'] = options1['number_of_tweets']
+            request.session['charts_info1'] = chartsInfo1
+            request.session['tweets1'] = json.dumps(tweets1, indent=4, sort_keys=True, default=str)
+            
+            request.session['search2'] = options2['search']
+            request.session['number_of_tweets2'] = options2['number_of_tweets']
+            request.session['charts_info2'] = chartsInfo2
+            request.session['tweets2'] = json.dumps(tweets2, indent=4, sort_keys=True, default=str)
 
             context = super().get_context_data(**kwargs)
             context['chartsInfo1'] = chartsInfo1
             context['chartsInfo2'] = chartsInfo2
             context['wordcloud1'] = wordcloud_image_1
             context['wordcloud2'] = wordcloud_image_2
-            context['option'] = option
-            context['amoutTweets'] = number_of_tweets
-            context['term1'] = search_1
-            context['term2'] = search_2
+            context['option'] = options1['type_of_analysis']
+            context['amoutTweets'] = options1['number_of_tweets']
+            context['term1'] = options1['search']
+            context['term2'] = options2['search']
             context['tweets1'] = tweets1
             context['tweets2'] = tweets2
             context['probability'] = probability
@@ -109,58 +135,49 @@ class ViewScraperTweetsCompareView(TemplateView):
         return context
 
     def post(self, request, **kwargs):
-        search_1 = request.POST['searched1']
-        search_2 = request.POST['searched2']
-        number_of_tweets = int(request.POST['amoutTweets'])
-        option = request.POST['inlineRadioOptions']
+        options1 = {}
+        options2 = {}
         
-        if not search_1 or not search_2:
+        options1['search'] = request.POST['searched1']
+        options2['search'] = request.POST['searched2']
+        options1['number_of_tweets'] = int(request.POST['amoutTweets'])
+        options2['number_of_tweets'] = int(request.POST['amoutTweets'])
+        options1['type_of_analysis'] = request.POST['inlineRadioOptions']
+        options2['type_of_analysis'] = request.POST['inlineRadioOptions']
+        
+        if not options1['search'] or not options2['search']:
             messages.error(request, 'Você deve digitar dois termos para pesquisar')
             return redirect('search-tweets-compare-scraper')
         
         #TERMO 1
-        tweets1 = search_tweets_scraper(search_1, number_of_tweets, option)
-        charts_info1 = generate_data(tweets1, option)
+        tweets1 = search_tweets_scraper(options1)
+        charts_info1 = generate_data(tweets1, options1['type_of_analysis'])
         probability1 = probability_average(tweets1)
-        word_cloud_image1 = wordCloud(tweets1, search_1)
+        word_cloud_image1 = wordCloud(tweets1, options1['search'])
         
         #TERMO 2
-        tweets2 = search_tweets_scraper(search_2, number_of_tweets, option)
-        charts_info2 = generate_data(tweets2, option)
+        tweets2 = search_tweets_scraper(options2)
+        charts_info2 = generate_data(tweets2, options2['type_of_analysis'])
         probability2 = probability_average(tweets2)
-        word_cloud_image2 = wordCloud(tweets2, search_2)
+        word_cloud_image2 = wordCloud(tweets2, options2['search'])
         
         probability = round((probability1 + probability2)/2, 2)
         
         context = super().get_context_data(**kwargs)
-        context['option'] = option
+        context['option'] = options1['type_of_analysis']
         context['probability'] = probability
-        context['amoutTweets'] = number_of_tweets
+        context['amoutTweets'] = options1['number_of_tweets']
+        
         # TERMO 1:
         context['chartsInfo1'] = charts_info1
         context['wordcloud1'] = word_cloud_image1
-        context['term1'] = search_1
+        context['term1'] = options1['search']
         context['tweets1'] = tweets1
+        
         # TERMO 2:
         context['chartsInfo2'] = charts_info2
         context['wordcloud2'] = word_cloud_image2
-        context['term2'] = search_2
+        context['term2'] = options2['search']
         context['tweets2'] = tweets2
 
         return render(request, self.template_name, context)
-        
-        
-class CompareChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-    def get(self, request, format=None, userid=None, term1=None, term2=None):
-        api = CompareTweetsView.return_api_data()
-        '''
-        api_chart = {"term1": api['term1'], "term2": api['term2'],
-                     "amoutTweets": api['amoutTweets'], 
-                     "chartsInfo1": api['chartsInfo1'],
-                     "chartsInfo2": api['chartsInfo2'],}
-        '''
-        #retorna o dicionario de dados para gerar os graficos com o chartjs
-        #os dados da variavel global foram obtidos anteriormente com as funções "generate_simple_data" e "generate_advanced_data"
-        return Response(api)

@@ -3,6 +3,7 @@ import urllib, base64
 
 from wordcloud import WordCloud
 import nltk
+nltk.download('stopwords')
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt

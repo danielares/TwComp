@@ -12,15 +12,23 @@ para a view que serão enviados para o front como contexto.
 Uma vez que a função de criar o dicionario é chamada ela já chama todas outras função, 
 Como: buscar tweets, limpar tweets, analisar tweets....
 '''
-def get_tweets(search_term, number_of_tweets, option, filter_retweets, filter_reply, option_maps, bearer_token):
+def get_tweets(api_access_tokens, options):
     
-    tweets, locations = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, bearer_token)
-    charts_info = generate_data(tweets, option)
+    tweets, locations = create_dict_training(api_access_tokens, options)
+    charts_info = generate_data(tweets, options['type_of_analysis'])
     probability = probability_average(tweets)
-    if option_maps: geo_location = get_geo_location(locations)
+    if options['option_maps']: geo_location = get_geo_location(locations)
     else: geo_location = False
+    
+    context_infos = {
+        'tweets': tweets,
+        'charts_info': charts_info,
+        'probability': probability,
+        'geo_location': geo_location,
+        'options': options,
+    }
 
-    return tweets, charts_info, probability, geo_location
+    return tweets, charts_info, probability, geo_location, context_infos
 
 
 '''
@@ -84,6 +92,7 @@ def probability_average(tweets):
         quantity += 1
 
     return round((average/quantity) * 100, 2)
+
 
 def get_geo_location(locations):
     

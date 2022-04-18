@@ -10,6 +10,8 @@ from trainingBase.models import TrainingBase, TrainingBaseAdvanced
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 np.transpose(list_stopwords_portuguese)
 
+nltk.download('stopwords')
+nltk.download('rslp')
 
 # Função para remover stop words (palavras não significativas para a análise)
 def remove_stop_words(texto):
@@ -131,17 +133,17 @@ def inicialize(option):
 
 
 # Cria um novo dicionario com base no que já existia.
-def create_dict_training(option, query, amount, filter_retweets, filter_reply, bearerToken):
+def create_dict_training(type_of_analysis, options):
 
     # retorna o classificador que foi criado com base na base de treinamento 
     # e sera utilizado como parametro para a função analyze_tweet
-    classificador = inicialize(option) 
+    classificador = inicialize(options['type_of_analysis']) 
     
     # Coleta os tweets e os adiciona em uma lista de dicionarios
-    if int(amount) <= 100:
-        all_tweets, locations = search_tweets(query, amount, filter_retweets, filter_reply, bearerToken)
+    if int(options['number_of_tweets']) <= 100:
+        all_tweets, locations = search_tweets(type_of_analysis, options)
     else:
-        all_tweets = search_more_than_100_tweet(query, amount, filter_retweets, filter_reply, bearerToken)
+        all_tweets = search_more_than_100_tweet(type_of_analysis, options)
         
     # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
     for tweet in all_tweets:
@@ -165,13 +167,13 @@ def analyze_test_phrase(phrase, option):
     return sentiment
 
 
-def search_tweets_scraper(query, number_of_tweets, option):
+def search_tweets_scraper(options):
     tweets = []
     
-    classificador = inicialize(option)
+    classificador = inicialize(options['type_of_analysis'])
     
-    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-        if len(tweets) == number_of_tweets:
+    for tweet in sntwitter.TwitterSearchScraper(options['search']).get_items():
+        if len(tweets) == options['number_of_tweets']:
             break
         else:
             tweet_dict = {}

@@ -5,14 +5,14 @@ import tweepy
 
 
 # Faz a autenticação utilizando o brarer token com o twitter atraves da biblioteca tweepy
-def get_client(tokens):
-    client = tweepy.Client(bearer_token=tokens)
+def get_client(api_access_tokens):
+    client = tweepy.Client(bearer_token=api_access_tokens)
     return client
 
 
-def search_more_than_100_tweet(search_term, number_of_tweets, filter_retweets, filter_reply, tokens):
+def search_more_than_100_tweet(search_term, number_of_tweets, filter_retweets, filter_reply, api_access_tokens):
 
-    client = get_client(tokens)
+    client = get_client(api_access_tokens)
 
     # Campos de extensão opcionais buscados durante uma requisição na API do twitter
     expansions_options = ['author_id','referenced_tweets.id']
@@ -49,10 +49,10 @@ def search_more_than_100_tweet(search_term, number_of_tweets, filter_retweets, f
 
 
 # Procura os tweets com base no termo pesquisado
-def search_tweets(search_term, number_of_tweets, filter_retweets, filter_reply, tokens):
+def search_tweets(api_access_tokens, options):
 
     # chama a função que cria o cliente com o qual fazemos as requisições a API do twitter
-    client = get_client(tokens)
+    client = get_client(api_access_tokens)
 
     # Campos de extensão opcionais buscados durante uma requisição na API do twitter
     expansions_options = ['author_id','referenced_tweets.id']
@@ -62,18 +62,23 @@ def search_tweets(search_term, number_of_tweets, filter_retweets, filter_reply, 
     # Busca os tweets mais recentes
     # -is:retweet -> filtro para não pegar retweets
     # lang:pt -> para pegar somente tweets em portugues
-    if filter_retweets: search_term = search_term + ' -is:retweet'
-    if filter_reply: search_term = search_term + ' -is:reply'
-    tweets = client.search_recent_tweets(query=search_term+' lang:pt', max_results=number_of_tweets, expansions=expansions_options,
-                                         tweet_fields=tweet_fields_options, user_fields=tweets_user_fields)
+    query_search = options['search']
+    if options['filter_retweets']: 
+        query_search = query_search + ' -is:retweet'
+    if options['filter_reply']: 
+        query_search = query_search + ' -is:reply'
+    print(query_search)
+    tweets = client.search_recent_tweets(query=query_search+' lang:pt', 
+                                         max_results=options['number_of_tweets'], 
+                                         expansions=expansions_options,
+                                         tweet_fields=tweet_fields_options, 
+                                         user_fields=tweets_user_fields)
 
     # loop para salvar os tweets coletados em um dicionario python
     results = []
     for tweet in tweets.data:
         try:
             tweet_dict = {}
-            #tweet_dict['tweet_username'] = tweet_user.username
-            #tweet_dict['tweet_location'] = tweet_user.location
             tweet_dict['tweet_id'] = tweet.id
             if tweet.text[:2] != "RT":
                 tweet_dict['tweet_text'] = tweet.text
