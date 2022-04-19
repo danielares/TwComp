@@ -76,40 +76,33 @@ class CompareTweetsView(TemplateView):
                     
             api_access_tokens = self.request.user.bearerToken 
             
-            tweets1, chartsInfo1, probability1, geo_locations1, context_infos = get_tweets(api_access_tokens, options1)
-            tweets2, chartsInfo2, probability2, geo_locations2, context_infos = get_tweets(api_access_tokens, options2)
-            probability = round((probability1 + probability2)/2, 2)
+            chartsInfo1, context_infos1 = get_tweets(api_access_tokens, options1)
+            chartsInfo2, context_infos2 = get_tweets(api_access_tokens, options2)
 
-            wordcloud_image_1 = wordCloud(tweets1, options1['search'])
-            wordcloud_image_2 = wordCloud(tweets2, options2['search'])
-            
+            wordcloud_image_1 = wordCloud(context_infos1['tweets'], options1['search'])
+            wordcloud_image_2 = wordCloud(context_infos2['tweets'], options2['search'])
             
             request.session['search1'] = options1['search']
             request.session['number_of_tweets1'] = options1['number_of_tweets']
             request.session['charts_info1'] = chartsInfo1
-            request.session['tweets1'] = json.dumps(tweets1, indent=4, sort_keys=True, default=str)
+            request.session['tweets1'] = json.dumps(context_infos1['tweets'], indent=4, sort_keys=True, default=str)
             
             request.session['search2'] = options2['search']
             request.session['number_of_tweets2'] = options2['number_of_tweets']
             request.session['charts_info2'] = chartsInfo2
-            request.session['tweets2'] = json.dumps(tweets2, indent=4, sort_keys=True, default=str)
+            request.session['tweets2'] = json.dumps(context_infos2['tweets'], indent=4, sort_keys=True, default=str)
 
+            request.session.modified = True
+            
             context = super().get_context_data(**kwargs)
+            context['context_infos1'] = context_infos1
+            context['context_infos2'] = context_infos2
             context['chartsInfo1'] = chartsInfo1
             context['chartsInfo2'] = chartsInfo2
             context['wordcloud1'] = wordcloud_image_1
             context['wordcloud2'] = wordcloud_image_2
-            context['option'] = options1['type_of_analysis']
-            context['amoutTweets'] = options1['number_of_tweets']
-            context['term1'] = options1['search']
-            context['term2'] = options2['search']
-            context['tweets1'] = tweets1
-            context['tweets2'] = tweets2
-            context['probability'] = probability
-            context['qtd_tweets1'] = chartsInfo1['qtd_tweets']
-            context['qtd_tweets2'] = chartsInfo2['qtd_tweets']
-            context['locations1'] = geo_locations1
-            context['locations2'] = geo_locations2
+            context['locations1'] = context_infos1['geo_location']
+            context['locations2'] = context_infos2['geo_location']
         
             return render(request, self.template_name, context)
                 
@@ -163,21 +156,49 @@ class ViewScraperTweetsCompareView(TemplateView):
         
         probability = round((probability1 + probability2)/2, 2)
         
-        context = super().get_context_data(**kwargs)
-        context['option'] = options1['type_of_analysis']
-        context['probability'] = probability
-        context['amoutTweets'] = options1['number_of_tweets']
+        # SESSION PARA GERAR PDF E CSV TERMO 1
+        request.session['search1'] = options1['search']
+        request.session['number_of_tweets1'] = options1['number_of_tweets']
+        request.session['charts_info1'] = charts_info1
+        request.session['tweets1'] = json.dumps(tweets1, indent=4, sort_keys=True, default=str)
+
+        # SESSION PARA GERAR PDF E CSV TERMO 2
+        request.session['search2'] = options2['search']
+        request.session['number_of_tweets2'] = options2['number_of_tweets']
+        request.session['charts_info2'] = charts_info2
+        request.session['tweets2'] = json.dumps(tweets2, indent=4, sort_keys=True, default=str)
         
+        request.session.modified = True
+        
+        context_infos1 = {
+            'options': {
+                'search': options1['search'],
+                'type_of_analysis': options1['type_of_analysis'],
+                'number_of_tweets': options1['number_of_tweets'],
+            },
+            'tweets': tweets1,
+            'probability': round(probability, 2),
+        }
+        
+        context_infos2 = {
+            'options': {
+                'search': options2['search'],
+                'type_of_analysis': options2['type_of_analysis'],
+                'number_of_tweets': options2['number_of_tweets'],
+            },
+            'tweets': tweets2,
+            'probability': round(probability, 2),
+        }
+        
+        # CONTEXT
+        context = super().get_context_data(**kwargs)
         # TERMO 1:
+        context['context_infos1'] = context_infos1
         context['chartsInfo1'] = charts_info1
         context['wordcloud1'] = word_cloud_image1
-        context['term1'] = options1['search']
-        context['tweets1'] = tweets1
-        
         # TERMO 2:
+        context['context_infos2'] = context_infos2
         context['chartsInfo2'] = charts_info2
         context['wordcloud2'] = word_cloud_image2
-        context['term2'] = options2['search']
-        context['tweets2'] = tweets2
 
         return render(request, self.template_name, context)

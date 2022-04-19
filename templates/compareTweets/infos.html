@@ -3,35 +3,35 @@
     <div class="col-sm-12 py-3">
         <p>
             <i class="fas fa-search fa-lg me-3 fa-fw"></i>
-            &nbsp; Primeiro termo: {{ term1 }}
+            &nbsp; Primeiro termo: {{ context_infos1.options.search }}
         </p>
     </div>
 
     <div class="col-sm-12 py-3">
         <p>
             <i class="fas fa-search fa-lg me-3 fa-fw"></i>
-            &nbsp; Segundo termo: {{term2}}
+            &nbsp; Segundo termo: {{ context_infos2.options.search }}
         </p>
     </div>
 
     <div class="col-sm-12 py-3">
         <p>
             <i class="fas fa-line-chart fa-lg me-3 fa-fw"></i>
-            &nbsp; Tipo de análise: {{ option }}
+            &nbsp; Tipo de análise: {{ context_infos1.options.type_of_analysis }}
         </p>
     </div>
 
     <div class="col-sm-12 py-3">
         <p>
             <i class="fas fa-list-ol fa-lg me-3 fa-fw"></i>
-            &nbsp; Quantidade de tweets: {{amoutTweets}}
+            &nbsp; Quantidade de tweets: {{ context_infos1.options.number_of_tweets }}
         </p>
     </div>
 
     <div class="col-sm-12 py-3">
         <p>
             <i class="fas fa-percent fa-lg me-3 fa-fw"></i>
-            &nbsp; Precisão da análise: {{probability}}%
+            &nbsp; Precisão da análise: {{ context_infos1.probability }}%
         </p>
     </div>
 

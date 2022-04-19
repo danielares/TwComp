@@ -1,8 +1,8 @@
 {% load static %}
 
-<h3 class="text-white my-5">Analises feitas: {{term1}}</h3>
+<h3 class="text-white my-5">Analises feitas: {{ context_infos1.options.search }}</h3>
 <div class="justify-content-left text-white">
-    {% for tweet in tweets1 %}
+    {% for tweet in context_infos1.tweets %}
         <p>Tweet ID: {{tweet.tweet_id}}</p>
         <p>Tweet Original: {{tweet.tweet_text}}</p>
         <p>Tweet Limpo: {{tweet.tweet_clean}}</p>
@@ -12,9 +12,9 @@
     {% endfor %}
 </div>
 
-<h3 class="text-white my-5">Analises feitas: {{term2}}</h3>
+<h3 class="text-white my-5">Analises feitas: {{ context_infos2.options.search }}</h3>
 <div class="justify-content-left text-white">
-    {% for tweet in tweets2 %}
+    {% for tweet in context_infos2.tweets %}
         <p>Tweet ID: {{tweet.tweet_id}}</p>
         <p>Tweet Original: {{tweet.tweet_text}}</p>
         <p>Tweet Limpo: {{tweet.tweet_clean}}</p>

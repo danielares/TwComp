@@ -180,6 +180,7 @@ def search_tweets_scraper(options):
             tweet_dict['tweet_text'] = tweet.content
             tweet_dict['tweet_created_at'] = tweet.date
             tweet_dict['username'] = tweet.user.username
+            tweet_dict['tweet_lang'] = tweet.lang
             tweet_dict['tweet_id'] = tweet.id
             
             tweet_clean = clean_tweet(tweet_dict['tweet_text'])

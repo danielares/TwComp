@@ -28,7 +28,7 @@ def get_tweets(api_access_tokens, options):
         'options': options,
     }
 
-    return tweets, charts_info, probability, geo_location, context_infos
+    return charts_info, context_infos
 
 
 '''

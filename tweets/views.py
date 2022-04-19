@@ -53,22 +53,22 @@ class ViewTweetsView(TemplateView):
                 return redirect('search-tweets')
                 
             api_access_tokens = self.request.user.bearerToken
-            tweets, charts_info, probability, geo_locations, context_infos = get_tweets(api_access_tokens, options) 
-            word_cloud_image = wordCloud(tweets, options['search'])
+            charts_info, context_infos = get_tweets(api_access_tokens, options) 
+            word_cloud_image = wordCloud(context_infos['tweets'], options['search'])
             
             request.session['search'] = options['search']
             request.session['number_of_tweets'] = options['number_of_tweets']
             request.session['charts_info'] = charts_info
-            request.session['tweets'] = json.dumps(tweets, indent=4, sort_keys=True, default=str)
+            request.session['tweets'] = json.dumps(context_infos['tweets'], indent=4, sort_keys=True, default=str)
             
             request.session.modified = True
-            
             
             context = super().get_context_data(**kwargs)
             context['context_infos'] = context_infos
             context['chartsInfo'] = charts_info
             context['wordcloud'] = word_cloud_image
-            context['locations'] = geo_locations
+            context['locations'] = context_infos['geo_location']
+            
             return render(request, self.template_name, context)
 
 
@@ -102,19 +102,25 @@ class ViewScraperTweetsView(TemplateView):
             probability = probability_average(tweets)
             word_cloud_image = wordCloud(tweets, options['search'])
             
-            api = {"term": options['search'], 
-                   "amoutTweets": options['number_of_tweets'], 
-                   "chartsInfo": charts_info, 'tweets': tweets}
+            request.session['search'] = options['search']
+            request.session['number_of_tweets'] = options['number_of_tweets']
+            request.session['charts_info'] = charts_info
+            request.session['tweets'] = json.dumps(tweets, indent=4, sort_keys=True, default=str)
+            request.session.modified = True
             
-            request.session['api'] = api
+            context_infos = {
+                'options': {
+                    'search': options['search'],
+                    'type_of_analysis': options['type_of_analysis'],
+                    'number_of_tweets': options['number_of_tweets'],
+                },
+                'tweets': tweets,
+                'probability': round(probability, 2),
+            }
             
             context = super().get_context_data(**kwargs)
+            context['context_infos'] = context_infos
             context['chartsInfo'] = charts_info
             context['wordcloud'] = word_cloud_image
-            context['option'] = options['type_of_analysis']
-            context['term'] = options['search']
-            context['tweets'] = tweets
-            context['probability'] = round(probability, 2)
-            context['amoutTweets'] = options['number_of_tweets']
 
             return render(request, self.template_name, context)

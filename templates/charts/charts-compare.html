@@ -19,12 +19,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    let term1 = '{{ term1|safe }}'
+    let term1 = '{{ context_infos1.options.search|safe }}'
     let labels1 = {{ chartsInfo1.labels| safe }}
     let defaultData1 = {{ chartsInfo1.qtd_tweets| safe }}
     let colors1 = {{ chartsInfo1.colors| safe }}
 
-    let term2 = '{{ term2|safe}}'
+    let term2 = '{{ context_infos2.options.search|safe}}'
     let labels2 = {{ chartsInfo2.labels| safe }}
     let defaultData2 = {{ chartsInfo2.qtd_tweets| safe }}
     let colors2 = {{ chartsInfo2.colors| safe }}

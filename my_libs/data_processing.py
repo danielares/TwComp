@@ -67,7 +67,6 @@ def search_tweets(api_access_tokens, options):
         query_search = query_search + ' -is:retweet'
     if options['filter_reply']: 
         query_search = query_search + ' -is:reply'
-    print(query_search)
     tweets = client.search_recent_tweets(query=query_search+' lang:pt', 
                                          max_results=options['number_of_tweets'], 
                                          expansions=expansions_options,
