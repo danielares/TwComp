@@ -12,7 +12,7 @@ import json
 from my_libs.word_cloud import wordCloud
 from my_libs.return_data_view import get_tweets
 from my_libs.training_analysis import search_tweets_scraper
-from my_libs.return_data_view import generate_data, probability_average
+from my_libs.return_data_view import generate_data, probability_average, get_tweets_to_show
 
 @method_decorator(login_required, name='dispatch')
 class ViewCompareTweetsView(TemplateView):
@@ -147,12 +147,14 @@ class ViewScraperTweetsCompareView(TemplateView):
         charts_info1 = generate_data(tweets1, options1['type_of_analysis'])
         probability1 = probability_average(tweets1)
         word_cloud_image1 = wordCloud(tweets1, options1['search'])
+        tweets_to_show1 = get_tweets_to_show(tweets1)
         
         #TERMO 2
         tweets2 = search_tweets_scraper(options2)
         charts_info2 = generate_data(tweets2, options2['type_of_analysis'])
         probability2 = probability_average(tweets2)
         word_cloud_image2 = wordCloud(tweets2, options2['search'])
+        tweets_to_show2 = get_tweets_to_show(tweets2)
         
         probability = round((probability1 + probability2)/2, 2)
         
@@ -178,6 +180,7 @@ class ViewScraperTweetsCompareView(TemplateView):
             },
             'tweets': tweets1,
             'probability': round(probability, 2),
+            'tweets_to_show': tweets_to_show1,
         }
         
         context_infos2 = {
@@ -188,6 +191,7 @@ class ViewScraperTweetsCompareView(TemplateView):
             },
             'tweets': tweets2,
             'probability': round(probability, 2),
+            'tweets_to_show': tweets_to_show2,
         }
         
         # CONTEXT

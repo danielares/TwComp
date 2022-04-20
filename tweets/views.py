@@ -13,7 +13,7 @@ import json
 from my_libs.word_cloud import wordCloud
 from my_libs.return_data_view import get_tweets
 from my_libs.training_analysis import search_tweets_scraper
-from my_libs.return_data_view import generate_data, probability_average
+from my_libs.return_data_view import generate_data, probability_average, get_tweets_to_show
 
 
 @method_decorator(login_required, name='dispatch')
@@ -101,6 +101,7 @@ class ViewScraperTweetsView(TemplateView):
             charts_info = generate_data(tweets, options['type_of_analysis'])
             probability = probability_average(tweets)
             word_cloud_image = wordCloud(tweets, options['search'])
+            tweets_to_show = get_tweets_to_show(tweets)
             
             request.session['search'] = options['search']
             request.session['number_of_tweets'] = options['number_of_tweets']
@@ -116,6 +117,7 @@ class ViewScraperTweetsView(TemplateView):
                 },
                 'tweets': tweets,
                 'probability': round(probability, 2),
+                'tweets_to_show': tweets_to_show,
             }
             
             context = super().get_context_data(**kwargs)

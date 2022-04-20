@@ -133,17 +133,16 @@ def inicialize(option):
 
 
 # Cria um novo dicionario com base no que já existia.
-def create_dict_training(type_of_analysis, options):
-
+def create_dict_training(api_access_tokens, options):
     # retorna o classificador que foi criado com base na base de treinamento 
     # e sera utilizado como parametro para a função analyze_tweet
     classificador = inicialize(options['type_of_analysis']) 
     
     # Coleta os tweets e os adiciona em uma lista de dicionarios
     if int(options['number_of_tweets']) <= 100:
-        all_tweets, locations = search_tweets(type_of_analysis, options)
+        all_tweets, locations = search_tweets(api_access_tokens, options)
     else:
-        all_tweets = search_more_than_100_tweet(type_of_analysis, options)
+        all_tweets = search_more_than_100_tweet(api_access_tokens, options)
         
     # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
     for tweet in all_tweets:

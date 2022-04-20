@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 import pandas as pd
 import csv
+import json
 from itertools import zip_longest
 
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
@@ -97,43 +98,40 @@ class SearchTweetsTrainingView(TemplateView):
 class ViewTweetsTrainingView(TemplateView):
     template_name = 'trainingBase/view-tweets-training.html'
     
-    def post(self, request, **kwargs):
-        global tweets
-        global option
+    def post(self, request, **kwargs):    
+        options = {}
+        options['search'] = request.POST['searched']
+        options['number_of_tweets'] = request.POST['amoutTweets']
+        options['type_of_analysis'] = request.POST['inlineRadioOptions']
+        options['filter_retweets'] = True
+        options['filter_reply'] = True
+        api_access_tokens = self.request.user.bearerToken
         
-        search_term = request.POST['searched']
-        number_of_tweets = request.POST['amoutTweets']
-        option = request.POST['inlineRadioOptions']
-        tokens = self.request.user.bearerToken
-        filter_retweets = True
-        filter_reply = True
-        
-        if not search_term:
+        if not options['search']:
             messages.error(request, 'Você deve pesquisar algo')
             return redirect('search-tweets-training')
         
-        tweets, locations = create_dict_training(option, search_term, number_of_tweets, filter_retweets, filter_reply, tokens)
+        tweets, locations = create_dict_training(api_access_tokens, options)
         
-        '''
-        for tweet in tweets:
-            tweet['tweet_clean'] = re.sub(r"\b{}\b".format(search_term), "", tweet['tweet_clean'])
-        '''
-        
+        request.session['type_of_analysis'] = options['number_of_tweets']
+        request.session['tweets'] = json.dumps(tweets, indent=4, sort_keys=True, default=str)
+
         context = super().get_context_data(**kwargs)
         context['tweets'] = tweets
-        context['option'] = option
+        context['option'] = options['type_of_analysis']
         return render(request, self.template_name, context)
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class TrainingBaseSuccessView(TemplateView):
     template_name = 'trainingBase/training-success.html'
     
     def post(self, request, **kwargs):
-        global tweets
-        global option
+        
+        type_of_analysis = request.session['type_of_analysis']
+        tweets = json.loads(request.session['tweets'])
         
         context = super().get_context_data(**kwargs)
-        
         
         for tweet in tweets:
             addTweetDB = 'addTweetDB_' + str(tweet['tweet_id'])
@@ -148,7 +146,7 @@ class TrainingBaseSuccessView(TemplateView):
                     value_label = request.POST[label]
                     text_tweetDB = request.POST[tweetDB]
                     
-                    if option == 'simple': training_base = TrainingBase
+                    if type_of_analysis == 'simple': training_base = TrainingBase
                     else: training_base = TrainingBaseAdvanced
                     training_base.objects.create(texto=text_tweetDB, sentimento=value_label)
                     

@@ -1,0 +1,31 @@
+<h3 class="text-white mt-3">Alguns tweets coletados: {{ context_infos1.options.search }}</h3>
+<div class="row">
+    {% for tweet in context_infos1.tweets_to_show %}
+    <div class="col-sm-4 my-3">
+        <p class="text-white">Análise: {{tweet.tweet_analise.0}}</p>
+        <p class="text-white">Probabilidade: {{tweet.tweet_analise.1}}</p>
+        <blockquote class="twitter-tweet" data-theme="dark">
+            <p lang="pt" dir="ltr">
+                <!--<a href="https://twitter.com/ThePSF/status/1516715574033883136?ref_src=twsrc%5Etfw"></a>-->
+                <a href="https://twitter.com/ThePSF/status/{{tweet.tweet_id}}?ref_src=twsrc%5Etfw"></a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    {% endfor %}
+</div>
+
+<h3 class="text-white mt-3">Alguns tweets coletados: {{ context_infos2.options.search }}</h3></h3>
+<div class="row">
+    {% for tweet in context_infos2.tweets_to_show %}
+    <div class="col-sm-4 my-3">
+        <p class="text-white">Análise: {{tweet.tweet_analise.0}}</p>
+        <p class="text-white">Probabilidade: {{tweet.tweet_analise.1}}</p>
+        <blockquote class="twitter-tweet" data-theme="dark">
+            <p lang="pt" dir="ltr">
+                <!--<a href="https://twitter.com/ThePSF/status/1516715574033883136?ref_src=twsrc%5Etfw"></a>-->
+                <a href="https://twitter.com/ThePSF/status/{{tweet.tweet_id}}?ref_src=twsrc%5Etfw"></a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    {% endfor %}
+</div>

@@ -17,6 +17,7 @@ def get_tweets(api_access_tokens, options):
     tweets, locations = create_dict_training(api_access_tokens, options)
     charts_info = generate_data(tweets, options['type_of_analysis'])
     probability = probability_average(tweets)
+    tweets_to_show = get_tweets_to_show(tweets)
     if options['option_maps']: geo_location = get_geo_location(locations)
     else: geo_location = False
     
@@ -26,6 +27,7 @@ def get_tweets(api_access_tokens, options):
         'probability': probability,
         'geo_location': geo_location,
         'options': options,
+        'tweets_to_show': tweets_to_show,
     }
 
     return charts_info, context_infos
@@ -71,13 +73,7 @@ def generate_data(tweets, option):
     
     # Lista somente com os valores do dicionario
     count_sentiments_list = list(count_sentiments.values())
-    
-    '''
-    Eu optei por salvar dessa forma(em listas) pq mudei um pouco a logica e anteriormente os valores eram entregue em lista
-    Para não ter que mudar nesse momento salve dessa forma..
-    Mas provavelmente ainda sera alterado para funcionar de maneira mais simples
-    '''
-    
+
     return {"qtd_tweets": count_sentiments_list,
             "labels": labels, 
             "colors":colors}
@@ -108,3 +104,16 @@ def get_geo_location(locations):
             print('Endereço não encontrado')
     
     return locations
+
+
+def get_tweets_to_show(tweets):  
+    list_tweets_to_show = []
+    
+    for tweet in tweets:
+        if len(list_tweets_to_show) < 6:
+            dict_tweets_to_show = {}
+            dict_tweets_to_show['tweet_id'] = tweet['tweet_id']
+            dict_tweets_to_show['tweet_analise'] = tweet['tweet_analise']
+            list_tweets_to_show.append(dict_tweets_to_show)
+            
+    return list_tweets_to_show
