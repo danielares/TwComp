@@ -49,6 +49,7 @@ class TestResultView(TemplateView):
         
         context = super().get_context_data(**kwargs)
         context['sentiment'] = sentiment
+        context['phrase'] = phrase
         
         return render(request, self.template_name, context)
 

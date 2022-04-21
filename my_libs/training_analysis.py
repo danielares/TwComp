@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 import nltk
-import snscrape.modules.twitter as sntwitter
 
-from .data_processing import search_tweets, clean_tweet, search_more_than_100_tweet
+from .data_processing import  clean_tweet
+from my_libs.twitter_api import search_more_than_100_tweet, search_tweets
 from trainingBase.models import TrainingBase, TrainingBaseAdvanced
 #from myLibs.training_base import training_base_advanced, training_base_simple
 
@@ -132,7 +132,6 @@ def inicialize(option):
     return classificador
 
 
-# Cria um novo dicionario com base no que já existia.
 def create_dict_training(api_access_tokens, options):
     # retorna o classificador que foi criado com base na base de treinamento 
     # e sera utilizado como parametro para a função analyze_tweet
@@ -147,10 +146,10 @@ def create_dict_training(api_access_tokens, options):
     # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
     for tweet in all_tweets:
         try:
-            tweet_clean = clean_tweet(tweet['tweet_text']) # limpa o tweet para ser analisado
-            analise = analyze_tweet(tweet_clean, classificador) # analisa o tweet e retorna seu provavel sentimento
-            tweet['tweet_clean'] = tweet_clean # Cria a nova chave tweet_clean nos dicionarios de tweets
-            tweet['tweet_analise'] = analise # Cria a nova chave tweet_analise nos dicionarios de tweets
+            tweet_clean = clean_tweet(tweet['tweet_text'])
+            analise = analyze_tweet(tweet_clean, classificador)
+            tweet['tweet_clean'] = tweet_clean
+            tweet['tweet_analise'] = analise
         except:
             print('Error dict')
             
@@ -164,32 +163,5 @@ def analyze_test_phrase(phrase, option):
     sentiment = analyze_tweet(phrase, classificador)
     
     return sentiment
-
-
-def search_tweets_scraper(options):
-    tweets = []
-    
-    classificador = inicialize(options['type_of_analysis'])
-    
-    for tweet in sntwitter.TwitterSearchScraper(options['search']).get_items():
-        if len(tweets) == options['number_of_tweets']:
-            break
-        else:
-            tweet_dict = {}
-            tweet_dict['tweet_text'] = tweet.content
-            tweet_dict['tweet_created_at'] = tweet.date
-            tweet_dict['username'] = tweet.user.username
-            tweet_dict['tweet_lang'] = tweet.lang
-            tweet_dict['tweet_id'] = tweet.id
-            
-            tweet_clean = clean_tweet(tweet_dict['tweet_text'])
-            sentiment = analyze_tweet(tweet_clean, classificador)
-
-            tweet_dict['tweet_clean'] = tweet_clean
-            tweet_dict['tweet_analise'] = sentiment
-            
-            tweets.append(tweet_dict)
-    
-    return tweets
 
 

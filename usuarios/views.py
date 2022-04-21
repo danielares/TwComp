@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
-from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 from django.contrib.auth.models import auth
 from django.contrib import messages
 

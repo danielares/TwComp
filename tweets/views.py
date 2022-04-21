@@ -1,18 +1,16 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.datastructures import MultiValueDictKeyError
-from django.core.serializers.json import DjangoJSONEncoder
 
+from datetime import datetime
 import json
 
 from my_libs.word_cloud import wordCloud
 from my_libs.return_data_view import get_tweets
-from my_libs.training_analysis import search_tweets_scraper
+from my_libs.scraper import search_tweets_scraper
 from my_libs.return_data_view import generate_data, probability_average, get_tweets_to_show
 
 
@@ -54,8 +52,7 @@ class ViewTweetsView(TemplateView):
                 
             api_access_tokens = self.request.user.bearerToken
             charts_info, context_infos = get_tweets(api_access_tokens, options) 
-            word_cloud_image = wordCloud(context_infos['tweets'], options['search'])
-            
+            word_cloud_image = wordCloud(context_infos['tweets'], options['search'])            
             request.session['search'] = options['search']
             request.session['number_of_tweets'] = options['number_of_tweets']
             request.session['charts_info'] = charts_info
@@ -118,6 +115,7 @@ class ViewScraperTweetsView(TemplateView):
                 'tweets': tweets,
                 'probability': round(probability, 2),
                 'tweets_to_show': tweets_to_show,
+                'data_time': datetime.today()
             }
             
             context = super().get_context_data(**kwargs)

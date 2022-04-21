@@ -8,8 +8,8 @@
 
 <section class="vh-100">
     <div class="container h-100">
-        <div class="h-100">
-            <div class="justify-content-center">
+        <div class="row">
+            <div class="col-12">
                 <!-- SIMPLES -->
                 {% if sentiment.0 == 'negativo' %}
                 <h1>👎👎👎</h1>
@@ -50,7 +50,7 @@
                 {% endif %}
                 <!-- AVANÇADO -->
 
-
+                <p class="text-white">Frase: {{phrase}}</p>
                 <p class="text-white">Sentimento: {{sentiment.0}}</p>
                 <p class="text-white">Probabilidade: {{sentiment.1}}</p>
                 <a class="text-white" href="{% url 'test-phrase' %}">

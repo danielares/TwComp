@@ -7,8 +7,6 @@ import json
 
 from weasyprint import HTML
 
-from tweets.views import ViewTweetsView
-from compareTweets.views import CompareTweetsView
 from my_libs.create_charts_png import create_pie_chart, create_bar_chart, create_bar_chart_compare
 from my_libs.word_cloud import wordCloud
 
