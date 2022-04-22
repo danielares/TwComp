@@ -82,7 +82,7 @@ class CompareTweetsView(TemplateView):
             wordcloud_image_1 = wordCloud(context_infos1['tweets'], options1['search'])
             wordcloud_image_2 = wordCloud(context_infos2['tweets'], options2['search'])
             
-            request.session['options'] = options1
+            request.session['options'] = json.dumps(options1, indent=4, sort_keys=True, default=str)
             
             request.session['search1'] = options1['search']
             request.session['number_of_tweets1'] = options1['number_of_tweets']
@@ -160,11 +160,14 @@ class ViewScraperTweetsCompareView(TemplateView):
         
         probability = round((probability1 + probability2)/2, 2)
         
+        request.session['options'] = json.dumps(options1, indent=4, sort_keys=True, default=str)
+        
         # SESSION PARA GERAR PDF E CSV TERMO 1
         request.session['search1'] = options1['search']
         request.session['number_of_tweets1'] = options1['number_of_tweets']
         request.session['charts_info1'] = charts_info1
         request.session['tweets1'] = json.dumps(tweets1, indent=4, sort_keys=True, default=str)
+        
 
         # SESSION PARA GERAR PDF E CSV TERMO 2
         request.session['search2'] = options2['search']
