@@ -3,27 +3,26 @@ from django.core.files.storage import FileSystemStorage
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 import csv
+import json
 
 from weasyprint import HTML
 
-from tweets.views import ViewTweetsView
-from compareTweets.views import CompareTweetsView
-from myLibs.create_charts_png import create_pie_chart, create_bar_chart, create_bar_chart_compare
-from myLibs.word_cloud import wordCloud
+from my_libs.create_charts_png import create_pie_chart, create_bar_chart, create_bar_chart_compare
+from my_libs.word_cloud import wordCloud
 
 
 class GeneratePdfView(TemplateView):
     
-    def get(self, request, *args, **kwargs):
-        api = ViewTweetsView.return_api_data()
+    def get(self, request, *args, **kwargs): 
         
-        term = api['term']
-        amoutTweets = api['amoutTweets']
-        chartsInfo = api['chartsInfo']
-        qtd_tweets = api['chartsInfo']['qtd_tweets']
-        colors = api['chartsInfo']['colors']
-        labels = api['chartsInfo']['labels']
-        tweets = api['tweets']
+        term = request.session['search']
+        amoutTweets = request.session['number_of_tweets']
+        chartsInfo = request.session['charts_info']
+        qtd_tweets = request.session['charts_info']['qtd_tweets']
+        colors = request.session['charts_info']['colors']
+        labels = request.session['charts_info']['labels']
+        tweets = json.loads(request.session['tweets'])
+        
         
         wordcloud = wordCloud(tweets, term)
         pie = create_pie_chart(qtd_tweets, labels, colors, term)
@@ -55,25 +54,22 @@ class GenerateComparePdfView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
     
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):   
+        term1 = request.session['search1']
+        term2 = request.session['search2']
+        amoutTweets = request.session['number_of_tweets1']
+        chartsInfo1 = request.session['charts_info1']
+        chartsInfo2 = request.session['charts_info2']
+        tweets1 = json.loads(request.session['tweets1'])
+        tweets2 = json.loads(request.session['tweets2'])
         
-        api = CompareTweetsView.return_api_data()
+        qtd_tweets1 = request.session['charts_info1']['qtd_tweets']
+        colors1 = request.session['charts_info1']['colors']
+        labels1 = request.session['charts_info1']['labels']
         
-        term1 = api['term1']
-        term2 = api['term2']
-        amoutTweets = api['amoutTweets']
-        chartsInfo1 = api['chartsInfo1']
-        chartsInfo2 = api['chartsInfo2']
-        tweets1 = api['tweets1']
-        tweets2 = api['tweets2']
-        
-        qtd_tweets1 = api['chartsInfo1']['qtd_tweets']
-        colors1 = api['chartsInfo1']['colors']
-        labels1 = api['chartsInfo1']['labels']
-        
-        qtd_tweets2 = api['chartsInfo2']['qtd_tweets']
-        colors2 = api['chartsInfo2']['colors']
-        labels2 = api['chartsInfo2']['labels']
+        qtd_tweets2 = request.session['charts_info2']['qtd_tweets']
+        colors2 = request.session['charts_info2']['colors']
+        labels2 = request.session['charts_info2']['labels']
         
         bar = create_bar_chart_compare(labels1, qtd_tweets1, term1,
                                        qtd_tweets2, term2)
@@ -114,6 +110,9 @@ class GenerateComparePdfView(TemplateView):
 
 
 def generateCsv(request):
+    search = request.session['search']
+    tweets = json.loads(request.session['tweets'])
+
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=tweets.csv'
     
@@ -123,22 +122,27 @@ def generateCsv(request):
     # Create a csv writer
     writer = csv.writer(response)
     
-    # Designate the Model
-    api = ViewTweetsView.return_api_data()
+    term = search
     
-    term = api['term']
-
     #Add column headings for the csv file
-    writer.writerow([term+': Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet polaridade'])
+    writer.writerow([term+': Tweet id', 'Tweet clean', 'Tweet language', 'Tweet date', 'Tweet analise', 'Tweet polaridade'])
     
     # Loop through the tweets
-    for tweet in api['tweets']:
-        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], tweet['tweet_analise']])
+    for tweet in tweets:
+        writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], 
+                         tweet['tweet_analise'], tweet['tweet_analise'][0]])
+
         
     return response
 
 
 def generateCsvCompare(request):
+    search1 = request.session['search1']
+    tweets1 = json.loads(request.session['tweets1'])
+    
+    search2 = request.session['search2']
+    tweets2 = json.loads(request.session['tweets2'])
+    
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=tweets.csv'
     
@@ -148,26 +152,20 @@ def generateCsvCompare(request):
     # Create a csv writer
     writer = csv.writer(response)
     
-    # Get api
-    api = CompareTweetsView.return_api_data()
-
-    term1 = api['term1']
-    term2 = api['term2']
-    
     #Add column headings for the csv file term 1
-    writer.writerow([term1+': Tweet id', ': Tweet clean', ': Tweet language', ': Tweet date', ': Tweet polaridade'])
+    writer.writerow([search1+': Tweet id', ': Tweet clean', ': Tweet language', ': Tweet date', ': Tweet polaridade'])
     
     # Loop through the tweets of term 1
-    for tweet in api['tweets1']:
+    for tweet in tweets1:
         writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], 
                          tweet['tweet_analise']])
         
         
     #Add column headings for the csv file term 2
-    writer.writerow([term2+': Tweet id', ': Tweet clean', ': Tweet language', ': Tweet date', ': Tweet polaridade'])
+    writer.writerow([search2+': Tweet id', ': Tweet clean', ': Tweet language', ': Tweet date', ': Tweet polaridade'])
     
     # Loop through the tweets of term 1
-    for tweet in api['tweets2']:
+    for tweet in tweets2:
         writer.writerow([tweet['tweet_id'], tweet['tweet_clean'], tweet['tweet_lang'], tweet['tweet_created_at'], 
                          tweet['tweet_analise']])
         

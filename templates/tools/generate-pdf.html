@@ -13,287 +13,59 @@
         <h1 id="title-page">Relatório de tweets: {{ term }}</h1>
         <address>
             TwComp
-            Analyze tweets in a simple way
+            Análises de tweets
         </address>
         <address>
-            contact@twcomp.or
-            https://twcomp.com.br
+            twcomp.contact@gmail.com
+            https://twcomp.xyz
         </address>
     </article>
 
     <article id="contents">
         <h2>Índice</h2>
-        <h3>Parte um</h3>
+        <h3>Seções</h3>
         <ul>
-            <li><a href="#columns-title"></a></li>
-            <li><a href="#columns-title-2"></a></li>
-            <li><a href="#columns-title-2-pie"></a></li>
-            <li><a href="#columns-title-2-bar"></a></li>
-            <li><a href="#skills-title"></a></li>
-        </ul>
-
-        <h3>Parte dois</h3>
-        <ul>
-            <li><a href="#offers-title"></a></li>
-            <li><a href="#chapter-title"></a></li>
-            <li><a href="#typography-title"></a></li>
+            <li><a href="#column-title-1"></a></li>
+            <li><a href="#column-title-2"></a></li>
         </ul>
     </article>
 
     <article id="columns">
-        <h2 id="columns-title">Word Cloud</h2>
+        <h2 id="column-title-1">Word Cloud</h2>
 
         <h3>Word Cloud gerada a partir dos tweets coletados</h3>
         <img src="{{ wordcloud }}" id="wordcloud">
-
-        <section>
-            <p>
-                O que é uma Word Cloud?<br><br>
-                Nuvem de palavras (word cloud) é um gráfico digital que mostra o grau de frequência das palavras em um
-                texto. Quanto mais a palavra é utilizada, mais chamativa é a representação dessa palavra no gráfico. As
-                palavras aparecem em fontes de vários tamanhos e em diferentes cores, indicando o que é mais relevante e
-                o que é menos relevante no contexto. Esse recurso pode ser utilizado em atividades de interpretação e
-                produção de textos.
-            </p>
-            <p>
-                Phasellus id nisl nec arcu tempor ultricies non id tortor. Mauris ex nibh, viverra vitae nisi eget,
-                placerat pharetra est.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id maximus diam. Cras molestie nisl vitae
-                iaculis convallis.
-                Vivamus molestie vitae nisl sed interdum. Nunc aliquam massa rhoncus finibus convallis.
-                Vivamus sed vulputate risus. Nunc dignissim magna velit, quis lobortis ex volutpat eget.
-                Proin dictum mauris condimentum consequat faucibus.
-            </p>
-        </section>
+        
     </article>
-
-
 
     <article id="columns">
-        <h2 id="columns-title-2">Gráficos</h2>
-
-        <h3 id="columns-title-2-pie">Gráfico de pizza</h3>
+        <h2 id="column-title-2">Gráficos</h2>
+        <p>
+            Com base na analise de {{amoutTweets}} tweets, o algoritmo identificou a seguinte quantidade de tweets
+            por sentimento:
+        <ul>
+            {% if type_of_analysis == 'advanced' %}
+            <li>{{chartsInfo.qtd_tweets.0}} - alegria;</li>
+            <li>{{chartsInfo.qtd_tweets.1}} - nojo;</li>
+            <li>{{chartsInfo.qtd_tweets.2}} - medo;</li>
+            <li>{{chartsInfo.qtd_tweets.3}} - raiva;</li>
+            <li>{{chartsInfo.qtd_tweets.4}} - surpresa;</li>
+            <li>{{chartsInfo.qtd_tweets.5}} - tristeza.</li>
+            {% else %}
+            <li>{{chartsInfo.qtd_tweets.0}} - negativo;</li>
+            <li>{{chartsInfo.qtd_tweets.1}} - neutro;</li>
+            <li>{{chartsInfo.qtd_tweets.2}} - positivo;</li>
+            {% endif %}
+        </ul>
+        </p>
+        <h3 id="charts-pie">Gráfico de pizza</h3>
         <img class="justify-content-left" src="{{ pieChart }}">
 
-        <section>
-            <p>
-                Um gráfico de pizza é um gráfico circular que exibe dados em um formato de fatia de pizza fácil de ler.
-                Cada fatia representa uma categoria de dados e o tamanho é proporcional à quantidade que representa.
-            </p>
-            <p>
-                Com base na analise de {{amoutTweets}} tweets, o algoritmo identificou a seguinte quantidade de tweets
-                por sentimento:
-            <ul>
-                <li>{{chartsInfo.qtd_tweets.0}} - alegria;</li>
-                <li>{{chartsInfo.qtd_tweets.1}} - nojo;</li>
-                <li>{{chartsInfo.qtd_tweets.2}} - medo;</li>
-                <li>{{chartsInfo.qtd_tweets.3}} - raiva;</li>
-                <li>{{chartsInfo.qtd_tweets.4}} - surpresa;</li>
-                <li>{{chartsInfo.qtd_tweets.5}} - tristeza.</li>
-            </ul>
-            </p>
-        </section>
-
-        <h3 id="columns-title-2-bar">Gráfico de barras</h3>
+        <h3 id="charts-bar">Gráfico de barras</h3>
         <img class="justify-content-left" src="{{ barChart }}">
 
-
-        <section>
-            <p>
-                Um gráfico de pizza é um gráfico circular que exibe dados em um formato de fatia de pizza fácil de ler.
-                Cada fatia representa uma categoria de dados e o tamanho é proporcional à quantidade que representa.
-            </p>
-            <p>
-                Phasellus id nisl nec arcu tempor ultricies non id tortor. Mauris ex nibh, viverra vitae nisi eget,
-                placerat pharetra est.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id maximus diam. Cras molestie nisl vitae
-                iaculis convallis.
-                Vivamus molestie vitae nisl sed interdum. Nunc aliquam massa rhoncus finibus convallis.
-                Vivamus sed vulputate risus. Nunc dignissim magna velit, quis lobortis ex volutpat eget.
-                Proin dictum mauris condimentum consequat faucibus.
-            </p>
-        </section>
-
     </article>
 
-    <!--
-    <article id="skills">
-        <h2 id="skills-title">This is another big title, on a page full of work presentation</h2>
-
-        <h3>We present you some of WeasyPrint's features.</h3>
-
-        <section id="table-content">
-            <h4>Table of contents</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mi ante, tincidunt quis vehicula
-                sed, vehicula sed augue. Cras eget ante turpis.
-            </p>
-        </section>
-
-        <section id="heading">
-            <h4>Heading titles and page counters</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mi ante, tincidunt quis vehicula
-                sed, vehicula sed augue. Cras eget ante turpis.
-            </p>
-        </section>
-
-        <section id="multi-columns">
-            <h4>Multi-column text</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mi ante, tincidunt quis vehicula
-                sed, vehicula sed augue. Cras eget ante turpis.
-            </p>
-        </section>
-
-        <section id="internal-links">
-            <h4>Internal links</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mi ante, tincidunt quis vehicula
-                sed, vehicula sed augue. Cras eget ante turpis.
-            </p>
-        </section>
-
-        <section id="style">
-            <h4>Different page types</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mi ante, tincidunt quis vehicula
-                sed, vehicula sed augue. Cras eget ante turpis.
-            </p>
-        </section>
-    </article>
-
-    <article id="offers">
-        <h2 id="offers-title">Big title on the first right page</h2>
-
-        <section>
-            <h4>Offer #1</h4>
-            <p>€135</p>
-            <ul>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Nullam at diam eget urna consequat.</li>
-                <li>Sed fringilla quam at augue semper aliquam.</li>
-                <li>Cras nec lacus eu turpis finibus vulputate.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h4>Offer #2</h4>
-            <p>€175</p>
-            <ul>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Nullam at diam eget urna consequat.</li>
-                <li>Sed fringilla quam at augue semper aliquam.</li>
-                <li>Mauris viverra nulla vel semper mollis.</li>
-                <li>Nulla quis massa eu urna suscipit vehicula.</li>
-                <li>Curabitur a odio id risus pharetra iaculis.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h4>Offer #3</h4>
-            <p>€200</p>
-            <ul>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Nullam at diam eget urna consequat.</li>
-                <li>Sed fringilla quam at augue semper aliquam.</li>
-                <li>Mauris viverra nulla vel semper mollis.</li>
-                <li>Cras nec lacus eu turpis finibus vulputate.</li>
-                <li>Nulla quis massa eu urna suscipit vehicula.</li>
-                <li>Curabitur a odio id risus pharetra iaculis.</li>
-                <li>Mauris viverra nulla vel semper mollis.</li>
-                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            </ul>
-        </section>
-    </article>
-
-    <article id="chapter">
-        <h2 id="chapter-title">This is a chapter of a new section</h2>
-    </article>
-
-    <article id="typography">
-        <h2 id="typography-title">About some typography features</h2>
-
-        <section>
-            <h4>Italic and Bold Text</h4>
-            <p>
-                Lorem ipsum dolor <em>sit amet, consectetur adipiscing elit.</em> Ut
-                pulvinar dolor <strong>ac orci finibus elementum. Praesent</strong>
-                sit amet ligula turpis.
-            </p>
-        </section>
-
-        <section id="small-caps">
-            <h4>Small Caps Text</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar
-                dolor ac orci finibus elementum.
-            </p>
-        </section>
-
-        <section id="ligatures">
-            <h4>Ligatures</h4>
-            <dl>
-                <dt>Classical</dt>
-                <dd><span class="none">Offer</span> → <span class="common">Offer</span></dd>
-                <dt>Discretionary</dt>
-                <dd><span class="none">Often</span> → <span class="discretionary">Often</span></dd>
-                <dt>Contextual</dt>
-                <dd><span class="none">#&amp;</span> → <span class="contextual">#&amp;</span></dd>
-            </dl>
-        </section>
-
-        <section id="numbers">
-            <h4>Numbers</h4>
-            <dl>
-                <dt>Fractions</dt>
-                <dd>421/42 → <span id="fractions">421/42</span></dd>
-                <dt>Ordinals</dt>
-                <dd>2a 3o → <span id="ordinals">2a 3o</span></dd>
-                <dt>Slashed zero</dt>
-                <dd>1000 → <span id="slashed">1000</span></dd>
-                <dt>Superscript</dt>
-                <dd>a2 → <span id="super">a2</span></dd>
-                <dt>Subscript</dt>
-                <dd>C8H10N4O2 → <span id="sub">C8H10N4O2</span></dd>
-                </ul>
-        </section>
-
-        <section id="figures">
-            <h4>Figures</h4>
-            <dl>
-                <dt>Lining</dt>
-                <dd>
-                    <ul>
-                        <li>409,280</li>
-                        <li>367,112</li>
-                    </ul>
-                </dd>
-                <dt>Old-Style</dt>
-                <dd>
-                    <ul id="oldstyle">
-                        <li>409,280</li>
-                        <li>367,112</li>
-                    </ul>
-                </dd>
-                <dt>Tabular</dt>
-                <dd>
-                    <ul id="tabular">
-                        <li>409,280</li>
-                        <li>367,112</li>
-                    </ul>
-                </dd>
-                <dt>Old &amp; Tab.</dt>
-                <dd>
-                    <ul id="old-tabular">
-                        <li>409,280</li>
-                        <li>367,112</li>
-                    </ul>
-                </dd>
-            </dl>
-        </section>
-    </article>
-    -->
 </body>
 
 </html>

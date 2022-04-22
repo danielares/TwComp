@@ -82,6 +82,8 @@ class CompareTweetsView(TemplateView):
             wordcloud_image_1 = wordCloud(context_infos1['tweets'], options1['search'])
             wordcloud_image_2 = wordCloud(context_infos2['tweets'], options2['search'])
             
+            request.session['options'] = options1
+            
             request.session['search1'] = options1['search']
             request.session['number_of_tweets1'] = options1['number_of_tweets']
             request.session['charts_info1'] = chartsInfo1

@@ -15,28 +15,39 @@ class GeneratePdfView(TemplateView):
     
     def get(self, request, *args, **kwargs): 
         
-        term = request.session['search']
         amoutTweets = request.session['number_of_tweets']
         chartsInfo = request.session['charts_info']
         qtd_tweets = request.session['charts_info']['qtd_tweets']
         colors = request.session['charts_info']['colors']
         labels = request.session['charts_info']['labels']
+        options = json.loads(request.session['options'])
         tweets = json.loads(request.session['tweets'])
         
+        search = options['search']
         
-        wordcloud = wordCloud(tweets, term)
-        pie = create_pie_chart(qtd_tweets, labels, colors, term)
-        bar = create_bar_chart(labels, qtd_tweets, term, colors)
+        print(options)
+        wordcloud = wordCloud(tweets, search)
+        pie = create_pie_chart(qtd_tweets, labels, colors, search)
+        bar = create_bar_chart(labels, qtd_tweets, search, colors)
         
         
-        html_string = render_to_string('tools/generate-pdf.html', {'term': term, 'amoutTweets': amoutTweets,
+        html_string = render_to_string('tools/generate-pdf.html', {'term': search, 'amoutTweets': amoutTweets,
                                                                    'chartsInfo': chartsInfo, 'pieChart': pie,
-                                                                   'barChart': bar, 'wordcloud': wordcloud})
+                                                                   'barChart': bar, 'wordcloud': wordcloud,
+                                                                   'type_of_analysis': options['type_of_analysis']})
              
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
+        
+        #Para usar localmente
+        #html.write_pdf(target='C:/Users/danie/Documents/projetos django/twitter 3 - DOCKER/tmp/relatorio_tweets.pdf')
+        
+        
+        #PARA DEPLOY
         html.write_pdf(target='/tmp/relatorio_tweets.pdf')
         fs = FileSystemStorage('/tmp')
-           
+        #ADICIONAR FS. ANTES DO OPEN
+        
+        
         with fs.open('relatorio_tweets.pdf') as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             #Faz o download do arquivo PDF
@@ -60,6 +71,7 @@ class GenerateComparePdfView(TemplateView):
         amoutTweets = request.session['number_of_tweets1']
         chartsInfo1 = request.session['charts_info1']
         chartsInfo2 = request.session['charts_info2']
+        options = json.loads(request.session['options'])
         tweets1 = json.loads(request.session['tweets1'])
         tweets2 = json.loads(request.session['tweets2'])
         
@@ -79,24 +91,30 @@ class GenerateComparePdfView(TemplateView):
         wordcloud1 = wordCloud(tweets1, term1)
         wordcloud2 = wordCloud(tweets2, term2)
 
-        
+        print(options['type_of_analysis'])
         html_string = render_to_string('tools/generate-compare-pdf.html', {'term1': term1, 
-                                                                   'term2': term2,
-                                                                   'amoutTweets': amoutTweets,
-                                                                   'chartsInfo1': chartsInfo1,
-                                                                   'chartsInfo2': chartsInfo2,
-                                                                   'barChart': bar,
-                                                                   'pieChart1': pie1,
-                                                                   'pieChart2': pie2,
-                                                                   'wordcloud1': wordcloud1,
-                                                                   'wordcloud2': wordcloud2})
+                                                                            'term2': term2,
+                                                                            'amoutTweets': amoutTweets,
+                                                                            'chartsInfo1': chartsInfo1,
+                                                                            'chartsInfo2': chartsInfo2,
+                                                                            'barChart': bar,
+                                                                            'pieChart1': pie1,
+                                                                            'pieChart2': pie2,
+                                                                            'wordcloud1': wordcloud1,
+                                                                            'wordcloud2': wordcloud2,
+                                                                            'type_of_analysis': options['type_of_analysis']})
         
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
+        
+        #Usado localmente
+        #html.write_pdf(target='C:/Users/danie/Documents/projetos django/twitter 3 - DOCKER/tmp/relatorio_tweets.pdf')
+        
+        
+        #PARA DEPLOY
         html.write_pdf(target='/tmp/relatorio_compare_tweets.pdf')
-        
-        
         fs = FileSystemStorage('/tmp')
-        
+        #ADICIONAR FS. ANTES DO OPEN
+    
         
         with fs.open('relatorio_compare_tweets.pdf') as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')

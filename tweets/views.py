@@ -52,8 +52,10 @@ class ViewTweetsView(TemplateView):
                 
             api_access_tokens = self.request.user.bearerToken
             charts_info, context_infos = get_tweets(api_access_tokens, options) 
-            word_cloud_image = wordCloud(context_infos['tweets'], options['search'])            
+            word_cloud_image = wordCloud(context_infos['tweets'], options['search'])  
+                      
             request.session['search'] = options['search']
+            request.session['options'] = json.dumps(options, indent=4, sort_keys=True, default=str)
             request.session['number_of_tweets'] = options['number_of_tweets']
             request.session['charts_info'] = charts_info
             request.session['tweets'] = json.dumps(context_infos['tweets'], indent=4, sort_keys=True, default=str)
@@ -101,6 +103,7 @@ class ViewScraperTweetsView(TemplateView):
             tweets_to_show = get_tweets_to_show(tweets)
             
             request.session['search'] = options['search']
+            request.session['options'] = json.dumps(options, indent=4, sort_keys=True, default=str)
             request.session['number_of_tweets'] = options['number_of_tweets']
             request.session['charts_info'] = charts_info
             request.session['tweets'] = json.dumps(tweets, indent=4, sort_keys=True, default=str)

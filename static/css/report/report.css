@@ -28,14 +28,14 @@
 
 @page {
   @top-left {
-    background: #fbc847;
+    background: #2d2e2f;
     content: counter(page);
     height: 1cm;
     text-align: center;
     width: 1cm;
   }
   @top-center {
-    background: #fbc847;
+    background: #2d2e2f;
     content: '';
     display: block;
     height: .05cm;
@@ -61,12 +61,12 @@
   @top-right { content: none }
 }
 @page :first {
-  background: url(report-cover.jpg) no-repeat center;
+  background: url(report-cover.png) no-repeat center;
   background-size: cover;
   margin: 0;
 }
 @page chapter {
-  background: #fbc847;
+  background: #2d2e2f;
   margin: 0;
   @top-left { content: none }
   @top-center { content: none }
@@ -82,7 +82,7 @@ html {
 }
 
 h1 {
-  color: #fbc847;
+  color: #e6e6e6;
   font-size: 38pt;
   margin: 4cm 2cm 0 2cm;
   page: no-chapter;
@@ -112,12 +112,18 @@ h4 {
   height: 297mm;
 }
 #cover address {
-  background: #fbc847;
+  background: #2d2e2f;
   flex: 1 50%;
   margin: 0 -2cm;
   padding: 1cm 0;
   white-space: pre-wrap;
 }
+
+address {
+  color: #e6e6e6;
+}
+
+
 #cover address:first-of-type {
   padding-left: 3cm;
 }
@@ -136,7 +142,7 @@ h4 {
   margin: 3em 0 1em;
 }
 #contents h3::before {
-  background: #fbc847;
+  background: #2d2e2f;
   content: '';
   display: block;
   height: .08cm;
@@ -153,7 +159,7 @@ h4 {
   padding-top: .25cm;
 }
 #contents ul li::before {
-  color: #fbc847;
+  color: #2d2e2f;
   content: '• ';
   font-size: 40pt;
   line-height: 16pt;
@@ -167,7 +173,7 @@ h4 {
   content: target-text(attr(href));
 }
 #contents ul li a::after {
-  color: #fbc847;
+  color: #2d2e2f;
   content: target-counter(attr(href), page);
   float: right;
 }
@@ -185,7 +191,7 @@ h4 {
 }
 
 #skills h3 {
-  background: #fbc847;
+  background: #2d2e2f;
   margin: 0 -3cm 1cm;
   padding: 1cm 1cm 1cm 3cm;
   width: 21cm;
@@ -194,7 +200,7 @@ h4 {
   padding: .5cm 0;
 }
 #skills section#table-content::before {
-  background: url(table-content.svg) no-repeat center #fbc847;
+  background: url(table-content.svg) no-repeat center #2d2e2f;
   background-size: 50%;
   content: '';
   display: inline-block;
@@ -205,7 +211,7 @@ h4 {
   width: 2cm;
 }
 #skills section#heading::before {
-  background: url(heading.svg) no-repeat center #fbc847;
+  background: url(heading.svg) no-repeat center #2d2e2f;
   background-size: 50%;
   content: '';
   display: inline-block;
@@ -216,7 +222,7 @@ h4 {
   width: 2cm;
 }
 #skills section#multi-columns::before {
-  background: url(multi-columns.svg) no-repeat center #fbc847;
+  background: url(multi-columns.svg) no-repeat center #2d2e2f;
   background-size: 50%;
   content: '';
   display: inline-block;
@@ -227,7 +233,7 @@ h4 {
   width: 2cm;
 }
 #skills section#internal-links::before {
-  background: url(internal-links.svg) no-repeat center #fbc847;
+  background: url(internal-links.svg) no-repeat center #2d2e2f;
   background-size: 50%;
   content: '';
   display: inline-block;
@@ -238,7 +244,7 @@ h4 {
   width: 2cm;
 }
 #skills section#style::before {
-  background: url(style.svg) no-repeat center #fbc847;
+  background: url(style.svg) no-repeat center #2d2e2f;
   background-size: 50%;
   content: '';
   display: inline-block;
@@ -278,7 +284,7 @@ h4 {
   margin: .5cm 0;
 }
 #offers section p {
-  background: #fbc847;
+  background: #2d2e2f;
   display: block;
   font-size: 15pt;
   font-weight: 700;
