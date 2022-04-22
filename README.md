@@ -12,7 +12,7 @@
 <hr>
 <br>
 <a href='https://twcomp.xyz/'>
-<img src='./github/todo.gif'>
+<img src='./static/images/twcomp.gif'>
 </a>
 <br>
 <br>
