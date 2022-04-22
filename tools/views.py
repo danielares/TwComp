@@ -25,7 +25,6 @@ class GeneratePdfView(TemplateView):
         
         search = options['search']
         
-        print(options)
         wordcloud = wordCloud(tweets, search)
         pie = create_pie_chart(qtd_tweets, labels, colors, search)
         bar = create_bar_chart(labels, qtd_tweets, search, colors)
@@ -91,7 +90,6 @@ class GenerateComparePdfView(TemplateView):
         wordcloud1 = wordCloud(tweets1, term1)
         wordcloud2 = wordCloud(tweets2, term2)
 
-        print(options['type_of_analysis'])
         html_string = render_to_string('tools/generate-compare-pdf.html', {'term1': term1, 
                                                                             'term2': term2,
                                                                             'amoutTweets': amoutTweets,
