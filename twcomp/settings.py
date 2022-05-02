@@ -10,12 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import os
+
 import dj_database_url
 from pathlib import Path
+import os
 
 from django_key import SECRET_KEY_DJANGO
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY_DJANGO
+SECRET_KEY = 'django-insecure-2wd6r-evddy0vgt1=sw9714tv0b_7mike#p4hqg6#w83f7u+n$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'bootstrap4',
     'rest_framework',
     
     'usuarios',
     'pages',
-    'bootstrap4',
     'tweets',
     'compareTweets',
     'trainingBase',
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,20 +88,20 @@ WSGI_APPLICATION = 'twcomp.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 #PARA DESENVOLVIMENTO BANCO DE DADOS LOCAL
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 '''
+
 #PARA DEPLOY BANCO DE DADOS DO SITE A FAZER DEPLOY (HEROKU)
 DATABASES = {
     'default': dj_database_url.config()
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -170,5 +170,3 @@ EMAIL_PORT = 587
 EMAIL_USER_TSL = True
 EMAIL_HOST_PASSWORD = 'sua-senha'
 """
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

@@ -1,6 +1,7 @@
 /* Gerais */
 * {
     text-decoration: none;
+    color: #FFF;
 }
 
 body {
@@ -133,6 +134,7 @@ p {
     padding-bottom: 1px;
 }
 
+/* IMAGENS */
 .zoom {
     overflow: hidden;
 }
@@ -161,7 +163,7 @@ p {
     border-radius: 25px;
 }
 
-.columnStyle:hover{
+.columnStyle:hover {
     transition: background-color 0.5s ease;
     background-color: rgb(24, 25, 25);
 }
@@ -169,3 +171,12 @@ p {
 #optionIcons {
     text-decoration: none;
 }
+
+.card {
+    background-color: rgb(29, 30, 30);
+}
+
+/* INDEX */
+
+
+/* FOOTER */

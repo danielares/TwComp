@@ -6,58 +6,56 @@
 
 {% block content %}
 
-<section class="vh-100">
-    <div class="container h-100">
-        <div class="row">
-            <div class="col-12">
-                <!-- SIMPLES -->
-                {% if sentiment.0 == 'negativo' %}
-                <h1>👎👎👎</h1>
-                {% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- SIMPLES -->
+            {% if sentiment.0 == 'negativo' %}
+            <h1>👎👎👎</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'positivo' %}
-                <h1>👍👍👍</h1>
-                {% endif %}
+            {% if sentiment.0 == 'positivo' %}
+            <h1>👍👍👍</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'neutro' %}
-                <h1>🤝🤝🤝</h1>
-                {% endif %}
-                <!-- SIMPLES -->
+            {% if sentiment.0 == 'neutro' %}
+            <h1>🤝🤝🤝</h1>
+            {% endif %}
+            <!-- SIMPLES -->
 
-                <!-- AVANÇADO -->
-                {% if sentiment.0 == 'alegria' %}
-                <h1>🥳🥳🥳</h1>
-                {% endif %}
+            <!-- AVANÇADO -->
+            {% if sentiment.0 == 'alegria' %}
+            <h1>🥳🥳🥳</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'nojo' %}
-                <h1>🤮🤮🤮</h1>
-                {% endif %}
+            {% if sentiment.0 == 'nojo' %}
+            <h1>🤮🤮🤮</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'medo' %}
-                <h1>😱😱😱</h1>
-                {% endif %}
+            {% if sentiment.0 == 'medo' %}
+            <h1>😱😱😱</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'tristeza' %}
-                <h1>😥😥😥</h1>
-                {% endif %}
+            {% if sentiment.0 == 'tristeza' %}
+            <h1>😥😥😥</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'surpresa' %}
-                <h1>😳😳😳</h1>
-                {% endif %}
+            {% if sentiment.0 == 'surpresa' %}
+            <h1>😳😳😳</h1>
+            {% endif %}
 
-                {% if sentiment.0 == 'raiva' %}
-                <h1>🤬🤬🤬</h1>
-                {% endif %}
-                <!-- AVANÇADO -->
+            {% if sentiment.0 == 'raiva' %}
+            <h1>🤬🤬🤬</h1>
+            {% endif %}
+            <!-- AVANÇADO -->
 
-                <p class="text-white">Frase: {{phrase}}</p>
-                <p class="text-white">Sentimento: {{sentiment.0}}</p>
-                <p class="text-white">Probabilidade: {{sentiment.1}}</p>
-                <a class="text-white" href="{% url 'test-phrase' %}">
-                    <input class="btn btn-primary btn-lg" type="submit" value="Nova análise" />
-                </a>
-            </div>
+            <p>Frase: {{phrase}}</p>
+            <p>Sentimento: {{sentiment.0}}</p>
+            <p>Probabilidade: {{sentiment.1}}</p>
+            <a href="{% url 'test-phrase' %}">
+                <input class="btn btn-primary btn-lg" type="submit" value="Nova análise" />
+            </a>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

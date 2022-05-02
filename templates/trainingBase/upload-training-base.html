@@ -7,39 +7,35 @@
 
 {% block content %}
 
-<section class="vh-100">
-    <div class="container h-100">
-        <div class="d-flex justify-content-center text-white">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% bootstrap_messages %}
-                <h1 class="pb-5">Enviar base de treinamento</h1>
-                <input type="file" name="file">
-                <p>Somente são aceitos arquivos csv</p>
-                <p>O formato é "Texto","Sentimento"</p>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_messages %}
+            <h1 class="pb-5">Enviar base de treinamento</h1>
+            <input type="file" name="file">
+            <p>Somente são aceitos arquivos csv</p>
+            <p>O formato é "Texto","Sentimento"</p>
 
-                <p>Qual base treinar: </p>
-                <!-- BASE SIMPLES -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Options" id="searchSimple" value="simple"
-                        checked />
-                    <label class="form-check-label" for="searchSimple">Simples</label>
-                </div>
-                <!-- BASE SIMPLES -->
+            <p>Qual base treinar: </p>
+            <!-- BASE SIMPLES -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Options" id="searchSimple" value="simple" checked />
+                <label class="form-check-label" for="searchSimple">Simples</label>
+            </div>
+            <!-- BASE SIMPLES -->
 
-                <!-- BASE AVANÇADA -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Options" id="searchAdvanced" value="advanced" />
-                    <label class="form-check-label" for="searchAdvanced">Avançado</label>
-                </div>
-                <!-- BASE AVANÇADA -->
+            <!-- BASE AVANÇADA -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Options" id="searchAdvanced" value="advanced" />
+                <label class="form-check-label" for="searchAdvanced">Avançado</label>
+            </div>
+            <!-- BASE AVANÇADA -->
 
-                <br>
-                <button class="btn btn-primary btn-lg type=" submit">Enviar</button>
-            </form>
+            <br>
+            <button class="btn btn-primary btn-lg type=" submit">Enviar</button>
+        </form>
 
-        </div>
     </div>
-
-</section>
+</div>
 {% endblock %}

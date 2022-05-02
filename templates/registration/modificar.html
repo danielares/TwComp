@@ -9,140 +9,138 @@
 
 {% block content %}
 
-<section class="vh-100">
-    <div class="container h-100">
-        {% bootstrap_messages %}
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="card-body p-md-5">
-                        <form action="{% url 'modify-user' %}" method="post" autocomplete="off">
-                            {% csrf_token %}
-                            <div class="row justify-content-center">
-                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Dados da api</p>
+<div class="container">
+    {% bootstrap_messages %}
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                    <form action="{% url 'modify-user' %}" method="post" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Dados da api</p>
 
-                                    <!-- CONSUMER KEY - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="consumerKey" value={{request.user.consumerKey}}
-                                                name="consumerKey" class="form-control" />
-                                            <label class="form-label" for="consumerKey">Consumer key</label>
-                                        </div>
+                                <!-- CONSUMER KEY - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="consumerKey" value={{request.user.consumerKey}}
+                                            name="consumerKey" class="form-control" />
+                                        <label class="form-label" for="consumerKey">Consumer key</label>
                                     </div>
-                                    <!-- CONSUMER KEY - FIM -->
-
-                                    <!-- CONSUMER SECRET - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="consumerSecret" value={{request.user.consumerSecret}}
-                                                name="consumerSecret" class="form-control" />
-                                            <label class="form-label" for="consumerSecret">Consumer key secret</label>
-                                        </div>
-                                    </div>
-                                    <!-- CONSUMER SECRET - FIM -->
-
-                                    <!-- ACCESS TOKEN - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="accessToken" value={{request.user.accessToken}}
-                                                name="accessToken" class="form-control" />
-                                            <label class="form-label" for="accessToken">Acces token</label>
-                                        </div>
-                                    </div>
-                                    <!-- ACCESS TOKEN - FIM -->
-
-                                    <!-- ACCESS TOKEN SECRET - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="accessTokenSecret"
-                                                value={{request.user.accessTokenSecret}} name="accessTokenSecret"
-                                                class="form-control" />
-                                            <label class="form-label" for="accessTokenSecret">Access token
-                                                secret</label>
-                                        </div>
-                                    </div>
-                                    <!-- ACCESS TOKEN SECRET - FIM -->
-
-                                    <!-- BEARER TOKEN - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="bearerToken" value={{request.user.bearerToken}}
-                                                name="bearerToken" class="form-control" />
-                                            <label class="form-label" for="bearerToken">Bearer token</label>
-                                        </div>
-                                    </div>
-                                    <!-- BEARER TOKEN - FIM -->
-
                                 </div>
-                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Seus dados</p>
+                                <!-- CONSUMER KEY - FIM -->
 
-                                    <!-- PRIMEIRO NOME - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="firstname" value={{request.user.first_name}}
-                                                name="firstname" class="form-control" />
-                                            <label class="form-label" for="firstname">Primeiro Nome</label>
-                                        </div>
+                                <!-- CONSUMER SECRET - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="consumerSecret" value={{request.user.consumerSecret}}
+                                            name="consumerSecret" class="form-control" />
+                                        <label class="form-label" for="consumerSecret">Consumer key secret</label>
                                     </div>
-                                    <!-- NOME - FIM -->
-
-                                    <!-- ULTIMO NOME - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="lastname" value={{request.user.last_name}}
-                                                name="lastname" class="form-control" />
-                                            <label class="form-label" for="lastname">Último nome</label>
-                                        </div>
-                                    </div>
-                                    <!-- NOME - FIM -->
-
-                                    <!-- E-MAIL - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="email" value={{request.user.email}} name="email"
-                                                class="form-control" autocomplete="off" />
-                                            <label class="form-label" for="email">Seu e-mail</label>
-                                        </div>
-                                    </div>
-                                    <!-- E-MAIL - FIM -->
-
-                                    <!-- SENHA - INICIO -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <a href="{% url 'password_change' %}">
-                                                Mudar Senha
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- SENHA - FIM -->
-
-
                                 </div>
-                            </div>
+                                <!-- CONSUMER SECRET - FIM -->
 
-                            <!-- BOTÃO DE REGISTRO - INICIO -->
-                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
-                            </div>
-                            <!-- BOTÃO DE REGISTRO - FIM -->
+                                <!-- ACCESS TOKEN - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="accessToken" value={{request.user.accessToken}}
+                                            name="accessToken" class="form-control" />
+                                        <label class="form-label" for="accessToken">Acces token</label>
+                                    </div>
+                                </div>
+                                <!-- ACCESS TOKEN - FIM -->
 
-                        </form>
-                    </div>
+                                <!-- ACCESS TOKEN SECRET - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="accessTokenSecret"
+                                            value={{request.user.accessTokenSecret}} name="accessTokenSecret"
+                                            class="form-control" />
+                                        <label class="form-label" for="accessTokenSecret">Access token
+                                            secret</label>
+                                    </div>
+                                </div>
+                                <!-- ACCESS TOKEN SECRET - FIM -->
+
+                                <!-- BEARER TOKEN - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="bearerToken" value={{request.user.bearerToken}}
+                                            name="bearerToken" class="form-control" />
+                                        <label class="form-label" for="bearerToken">Bearer token</label>
+                                    </div>
+                                </div>
+                                <!-- BEARER TOKEN - FIM -->
+
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Seus dados</p>
+
+                                <!-- PRIMEIRO NOME - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="firstname" value={{request.user.first_name}}
+                                            name="firstname" class="form-control" />
+                                        <label class="form-label" for="firstname">Primeiro Nome</label>
+                                    </div>
+                                </div>
+                                <!-- NOME - FIM -->
+
+                                <!-- ULTIMO NOME - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="text" id="lastname" value={{request.user.last_name}}
+                                            name="lastname" class="form-control" />
+                                        <label class="form-label" for="lastname">Último nome</label>
+                                    </div>
+                                </div>
+                                <!-- NOME - FIM -->
+
+                                <!-- E-MAIL - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input type="email" id="email" value={{request.user.email}} name="email"
+                                            class="form-control" autocomplete="off" />
+                                        <label class="form-label" for="email">Seu e-mail</label>
+                                    </div>
+                                </div>
+                                <!-- E-MAIL - FIM -->
+
+                                <!-- SENHA - INICIO -->
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <a href="{% url 'password_change' %}">
+                                            Mudar Senha
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- SENHA - FIM -->
+
+
+                            </div>
+                        </div>
+
+                        <!-- BOTÃO DE REGISTRO - INICIO -->
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+                        </div>
+                        <!-- BOTÃO DE REGISTRO - FIM -->
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 {% endblock %}

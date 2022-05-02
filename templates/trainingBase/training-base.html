@@ -9,71 +9,66 @@
 
 {% block content %}
 
-<section class="vh-100">
-    <div class="container h-100">
-        <h1 class="text-white d-flex justify-content-center mb-5">Base de treinamento</h1>
+<div class="container">
+    <h1 class="d-flex justify-content-center mb-5">Base de treinamento</h1>
 
-        <h2 class="text-white mb-4">Opções de treinamento: </h2>
-        <div class="row my-3">
-            <div class="col-sm-4 py-2">
-                <a class="text-white my-5" id="optionIcons" href="{% url 'search-tweets-training' %}">
-                    <div class="zoom">
-                        <div class="columnStyle px-3 py-3" id="columnStyleId" style="width: 350px; height: 220px;">
-                            <p class="py-2">
-                                <img id="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
-                            </p>
-                            <h4>Treinar com tweets</h4>
-                            <p style="font-size: 15px;">
-                                Procura tweets para inserir na base de treinamento.
-                            </p>
+    <h2 class="mb-4">Opções de treinamento: </h2>
+    <div class="row my-3">
+        <div class="col-sm-4 py-2">
+            <a class="my-5" id="optionIcons" href="{% url 'search-tweets-training' %}">
+                <div class="zoom">
+                    <div class="columnStyle px-3 py-3" id="columnStyleId" style="width: 350px; height: 220px;">
+                        <p class="py-2">
+                            <img id="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
+                        </p>
+                        <h4>Treinar com tweets</h4>
+                        <p style="font-size: 15px;">
+                            Procura tweets para inserir na base de treinamento.
+                        </p>
 
-                        </div>
                     </div>
-                </a>
-            </div>
-            <div class="col-sm-4 py-2">
-                <a class="text-white my-5" id="optionIcons" href="{% url 'upload-training-base' %}">
-                    <div class="zoom">
-                        <div class="columnStyle px-3 py-3" style="width: 350px; height: 220px;">
-                            <p class="py-2">
-                                <img id="icons" src="{% static '/images/icons/csv.png' %}" alt="TWComp">
-                            </p>
-                            <h4>Treinar com CSV</h4>
-                            <p style="font-size: 15px;">
-                                Faz o upload de uma base de treinamento por um arquivo CSV.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
-
-
-
-
-        <h2 class="text-white pt-4 my-4">Baixar base de treinamento: </h2>
-        <div class="row">
-            <div class="col-4">
-                <!-- FORM PARA GERAR CSV -->
-                <form action="{% url 'generate-csv-training-base' %}" method="post" class="form text-white"
-                    autocomplete="off" target="_blank">
-                    {% csrf_token %}
-                    <div class="my-3">
-                        <input class="btn btn-primary btn-lg" style="width: 200px;" name="gerar_csv" type="submit" value="CSV Simples" />
+        <div class="col-sm-4 py-2">
+            <a class="my-5" id="optionIcons" href="{% url 'upload-training-base' %}">
+                <div class="zoom">
+                    <div class="columnStyle px-3 py-3" style="width: 350px; height: 220px;">
+                        <p class="py-2">
+                            <img id="icons" src="{% static '/images/icons/csv.png' %}" alt="TWComp">
+                        </p>
+                        <h4>Treinar com CSV</h4>
+                        <p style="font-size: 15px;">
+                            Faz o upload de uma base de treinamento por um arquivo CSV.
+                        </p>
                     </div>
-
-                    <div class="my-3">
-                        <input class="btn btn-primary btn-lg" style="width: 200px;" name="gerar_csv" type="submit" value="CSV Avançado" />
-                    </div>
-                </form>
-                <!-- FIM - FORM PARA GERAR CSV -->
-            </div>
+                </div>
+            </a>
         </div>
-
-
-
-
     </div>
+
+
+
+
+    <h2 class="pt-4 my-4">Baixar base de treinamento: </h2>
+    <div class="row">
+        <div class="col-4">
+            <!-- FORM PARA GERAR CSV -->
+            <form action="{% url 'generate-csv-training-base' %}" method="post" class="form" autocomplete="off"
+                target="_blank">
+                {% csrf_token %}
+                <div class="my-3">
+                    <input class="btn btn-primary btn-lg" style="width: 200px;" name="gerar_csv" type="submit"
+                        value="CSV Simples" />
+                </div>
+
+                <div class="my-3">
+                    <input class="btn btn-primary btn-lg" style="width: 200px;" name="gerar_csv" type="submit"
+                        value="CSV Avançado" />
+                </div>
+            </form>
+            <!-- FIM - FORM PARA GERAR CSV -->
+        </div>
     </div>
-</section>
+</div>
 {% endblock %}

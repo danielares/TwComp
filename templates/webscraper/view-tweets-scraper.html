@@ -7,34 +7,31 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
 
-<section class="vh-100">
-    <div class="container h-100">
-
-        <div class="row">
-            <div class="col-sm-4 my-3">
-                <div class="columnStyle">
-                    {% include 'tweets/infos.html' %}
-                </div>
+    <div class="row">
+        <div class="col-sm-4 my-3">
+            <div class="columnStyle">
+                {% include 'tweets/infos.html' %}
             </div>
-            <div class="col-sm-8 my-3">
-                <div class="columnStyle">
-                    <h3 class="row d-flex justify-content-center text-white py-3">Wordcloud</h3>
-                    <div class="d-flex justify-content-center my-3 mx-3 pb-3">
-                        <div class="zoom" id="magnifying_area" style="width: 65rem;">
-                            <img class="img-fluid" id="magnifying_img" src="{{ wordcloud }}" alt="Imagem word cloud">
-                        </div>
+        </div>
+        <div class="col-sm-8 my-3">
+            <div class="columnStyle">
+                <h3 class="row d-flex justify-content-center py-3">Wordcloud</h3>
+                <div class="d-flex justify-content-center my-3 mx-3 pb-3">
+                    <div class="zoom" id="magnifying_area" style="width: 65rem;">
+                        <img class="img-fluid" id="magnifying_img" src="{{ wordcloud }}" alt="Imagem word cloud">
                     </div>
                 </div>
             </div>
         </div>
-
-        {% include 'charts/charts.html' %}
-
-        {% include 'other/include-tweets.html' %}
-        <!--{% include 'tweets/tweets-analysis.html' %}-->
-
     </div>
-</section>
+
+    {% include 'charts/charts.html' %}
+
+    {% include 'other/include-tweets.html' %}
+    <!--{% include 'tweets/tweets-analysis.html' %}-->
+
+</div>
 
 {% endblock %}
