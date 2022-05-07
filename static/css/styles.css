@@ -41,12 +41,12 @@ header,
     width: 75px;
 }
 
-#icons {
+.icons {
     width: 75px;
     color: black;
 }
 
-#iconsLow {
+.iconsLow {
     width: 25px;
 
 }
@@ -138,6 +138,12 @@ p {
     padding-bottom: 1px;
 }
 
+/* INDEX */
+.indexColumn {
+    padding: 15px;
+    height: 280px;
+}
+
 /* IMAGENS */
 .zoom {
     overflow: hidden;
@@ -172,7 +178,7 @@ p {
     background-color: rgb(24, 25, 25);
 }
 
-#optionIcons {
+a.optionIcons {
     text-decoration: none;
 }
 

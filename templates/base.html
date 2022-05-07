@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <header class="container" id="nav-container">
+    <header class="container-fluid" id="nav-container">
 
         <nav class="navbar navbar-inverse bg-inverse navbar-expand-lg fixed-top">
 
@@ -91,32 +91,32 @@
                             aria-labelledby="dropdownMenuLink">
 
                             <a class="dropdown-item" href="{% url 'search-tweets' %}">
-                                <img id="iconsLow" src="{% static '/images/icons/search-api.png' %}" alt="TWComp">
+                                <img class="iconsLow" src="{% static '/images/icons/search-api.png' %}" alt="TWComp">
                                 Procurar tweets
                             </a>
                             <a class="dropdown-item" href="{% url 'search-tweets-compare' %}">
-                                <img id="iconsLow" src="{% static '/images/icons/search-api-compare.png' %}"
+                                <img class="iconsLow" src="{% static '/images/icons/search-api-compare.png' %}"
                                     alt="TWComp">
                                 Comparar tweets
                             </a>
                             <a class="dropdown-item" href="{% url 'test-phrase' %}">
-                                <img id="iconsLow" src="{% static '/images/icons/phrase-icon.png' %}" alt="TWComp">
+                                <img class="iconsLow" src="{% static '/images/icons/phrase-icon.png' %}" alt="TWComp">
                                 Teste uma frase
                             </a>
                             <a class="dropdown-item" href="{% url 'training-base' %}">
-                                <img id="iconsLow" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
+                                <img class="iconsLow" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
                                 Base de treinamento
                             </a>
 
                             <div class="dropdown-divider"></div>
 
                             <a class="dropdown-item" href="{% url 'search-tweets-scraper' %}">
-                                <img id="iconsLow" src="{% static '/images/icons/web-scaping.png' %}" alt="TWComp">
+                                <img class="iconsLow" src="{% static '/images/icons/web-scaping.png' %}" alt="TWComp">
                                 Procurar tweets - Scraping
                             </a>
 
                             <a class="dropdown-item" href="{% url 'search-tweets-compare-scraper' %}">
-                                <img id="iconsLow" src="{% static '/images/icons/web-scaping-2.png' %}" alt="TWComp">
+                                <img class="iconsLow" src="{% static '/images/icons/web-scaping-2.png' %}" alt="TWComp">
                                 Comparar tweets - Scraping
                             </a>
 

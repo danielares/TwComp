@@ -13,13 +13,13 @@
             <div class="d-flex justify-content-center">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner" style="border-radius: 25px;">
-                        <div class="carousel-item active">
+                        <div class="carousel-item active carousel-image">
                             <img class="d-block w-100" src="{% static '/images/banner/1.png' %}" alt="First slide">
                         </div>
-                        <div class="carousel-item">
+                        <div class="carousel-item carousel-image">
                             <img class="d-block w-100" src="{% static '/images/banner/2.png' %}" alt="Second slide">
                         </div>
-                        <div class="carousel-item">
+                        <div class="carousel-item carousel-image">
                             <img class="d-block w-100" src="{% static '/images/banner/3.png' %}" alt="Third slide">
                         </div>
                     </div>
@@ -36,12 +36,12 @@
         </div>
     </div>
 
-    <div class="row my-3">
-        <div class="col-sm-4 py-1">
-            <a class="my-3" id="optionIcons" href="{% url 'search-tweets-scraper' %}">
-                <div class="columnStyle zoom px-3 py-1" style="width: 350px; height: 260px;">
-                    <p class="py-1">
-                        <img id="icons" src="{% static '/images/icons/web-scaping.png' %}" alt="TWComp">
+    <div class="row my-3 text-center">
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'search-tweets-scraper' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/web-scaping.png' %}" alt="TWComp">
                     </p>
                     <h4>Procurar tweets<br>Web Scraping</h4>
                     <p style="font-size: 15px;">
@@ -52,11 +52,11 @@
                 </div>
             </a>
         </div>
-        <div class="col-sm-4 py-1">
-            <a class="my-3" id="optionIcons" href="{% url 'search-tweets-compare-scraper' %}">
-                <div class="columnStyle zoom px-3 py-1" style="width: 350px; height: 260px;">
-                    <p class="py-1">
-                        <img id="icons" src="{% static '/images/icons/web-scaping-2.png' %}" alt="TWComp">
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'search-tweets-compare-scraper' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/web-scaping-2.png' %}" alt="TWComp">
                     </p>
                     <h4>Comparar tweets<br>Web Scraping</h4>
                     <p style="font-size: 15px;">
@@ -67,11 +67,11 @@
                 </div>
             </a>
         </div>
-        <div class="col-sm-4 py-1">
-            <a class="my-3" id="optionIcons" href="{% url 'test-phrase' %}">
-                <div class="columnStyle zoom px-3 py-1" style="width: 350px; height: 260px;">
-                    <p class="py-1">
-                        <img id="icons" src="{% static '/images/icons/phrase-icon.png' %}" alt="TWComp">
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'test-phrase' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/phrase-icon.png' %}" alt="TWComp">
                     </p>
                     <h4>Teste uma frase</h4>
                     <p style="font-size: 15px;">
@@ -80,15 +80,14 @@
                 </div>
             </a>
         </div>
-    </div>
 
-    {% if not user.is_anonymous %}
-    <div class="row my-3">
-        <div class="col-sm-4 py-1">
-            <a class="my-3" id="optionIcons" href="{% url 'search-tweets' %}">
-                <div class="columnStyle zoom px-3 py-1" style="width: 350px; height: 260px;">
-                    <p class="py-1">
-                        <img id="icons" src="{% static '/images/icons/search-api.png' %}" alt="TWComp">
+        {% if not user.is_anonymous %}
+
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'search-tweets' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/search-api.png' %}" alt="TWComp">
                     </p>
                     <h4>Procurar tweets<br>API do twitter</h4>
                     <p style="font-size: 15px;">
@@ -98,11 +97,11 @@
                 </div>
             </a>
         </div>
-        <div class="col-sm-4 py-1">
-            <a class="my-3" id="optionIcons" href="{% url 'search-tweets-compare' %}">
-                <div class="columnStyle zoom px-3 py-1" style="width: 350px; height: 260px;">
-                    <p class="py-1">
-                        <img id="icons" src="{% static '/images/icons/search-api-compare.png' %}" alt="TWComp">
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'search-tweets-compare' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/search-api-compare.png' %}" alt="TWComp">
                     </p>
                     <h4>Comparar tweets<br>API do twitter</h4>
                     <p style="font-size: 15px;">
@@ -113,11 +112,11 @@
             </a>
         </div>
         {% if user.is_staff %}
-        <div class="col-sm-4 py-1">
-            <a class="my-3" id="optionIcons" href="{% url 'training-base' %}">
-                <div class="columnStyle zoom px-3 py-1" style="width: 350px; height: 260px;">
-                    <p class="py-1">
-                        <img id="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'training-base' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
                     </p>
                     <h4>Base de treinamento</h4>
                     <p style="font-size: 15px;">

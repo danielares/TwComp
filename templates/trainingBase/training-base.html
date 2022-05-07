@@ -9,44 +9,38 @@
 
 {% block content %}
 
-<div class="container">
-    <h1 class="d-flex justify-content-center mb-5">Base de treinamento</h1>
+<div class="container min-vh-100">
+    <p class="h1 text-center font-weight-bold">Base de treinamento</p>
 
     <h2 class="mb-4">Opções de treinamento: </h2>
-    <div class="row my-3">
-        <div class="col-sm-4 py-2">
-            <a class="my-5" id="optionIcons" href="{% url 'search-tweets-training' %}">
-                <div class="zoom">
-                    <div class="columnStyle px-3 py-3" id="columnStyleId" style="width: 350px; height: 220px;">
-                        <p class="py-2">
-                            <img id="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
-                        </p>
-                        <h4>Treinar com tweets</h4>
-                        <p style="font-size: 15px;">
-                            Procura tweets para inserir na base de treinamento.
-                        </p>
-
-                    </div>
+    <div class="row my-3 text-center">
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'search-tweets-training' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/training-base.png' %}" alt="TWComp">
+                    </p>
+                    <h4>Treinar com tweets</h4>
+                    <p style="font-size: 15px;">
+                        Procura tweets para inserir na base de treinamento.
+                    </p>
                 </div>
             </a>
         </div>
-        <div class="col-sm-4 py-2">
-            <a class="my-5" id="optionIcons" href="{% url 'upload-training-base' %}">
-                <div class="zoom">
-                    <div class="columnStyle px-3 py-3" style="width: 350px; height: 220px;">
-                        <p class="py-2">
-                            <img id="icons" src="{% static '/images/icons/csv.png' %}" alt="TWComp">
-                        </p>
-                        <h4>Treinar com CSV</h4>
-                        <p style="font-size: 15px;">
-                            Faz o upload de uma base de treinamento por um arquivo CSV.
-                        </p>
-                    </div>
+        <div class="col-12 col-md-4 my-2">
+            <a class="optionIcons" href="{% url 'upload-training-base' %}">
+                <div class="columnStyle indexColumn zoom">
+                    <p>
+                        <img class="icons" src="{% static '/images/icons/csv.png' %}" alt="TWComp">
+                    </p>
+                    <h4>Treinar com CSV</h4>
+                    <p style="font-size: 15px;">
+                        Faz o upload de uma base de treinamento por um arquivo CSV.
+                    </p>
                 </div>
             </a>
         </div>
     </div>
-
 
 
 
