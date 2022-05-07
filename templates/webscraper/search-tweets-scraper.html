@@ -9,72 +9,75 @@
 
 {% block content %}
 
-<div class="container">
-
-    <h1 class="row justify-content-center pt-2">Procurar tweets com Web Scraping</h1>
-    <form action="{% url 'view-tweets-scraper' %}" method="post" class="form" autocomplete="off">
-        {% csrf_token %}
-        {% bootstrap_messages %}
-        <!-- CAMPO PARA PESQUISAR TWEET -->
-        <div class="form-group">
-            <label for="pesquisaTweet">Pesquisar tweet</label>
-            <input type="text" class="form-control" id="pesquisaTweet" name="searched" placeholder="Digite o termo">
-            <small id="emailHelp" class="form-text text-muted">Digite aqui o termo que você deseja analisar
-                tweets</small>
+<div class="container min-vh-100">
+    <div class="row mt-5">
+        <div class="col-12">
+            <h1 class="text-center font-weight-bold">Procurar tweets com Web Scraping</h1>
+        </div>
+        <div class="col-12">
+            <form action="{% url 'view-tweets-scraper' %}" method="post" class="form" autocomplete="off">
+                {% csrf_token %}
+                {% bootstrap_messages %}
+                <!-- CAMPO PARA PESQUISAR TWEET -->
+                <div class="form-group">
+                    <label for="pesquisaTweet">Pesquisar tweet</label>
+                    <input type="text" class="form-control" id="pesquisaTweet" name="searched"
+                        placeholder="Digite o termo">
+                    <small id="emailHelp" class="form-text text-muted">Digite aqui o termo que você deseja analisar
+                        tweets</small>
+                </div>
         </div>
         <!-- CAMPO PARA PESQUISAR TWEET -->
 
+
+
         <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
-        <div class="form-group">
-            <label for="numeroTweets">Numero de tweets</label>
-            <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
-                placeholder="Numero de tweets" min="10" max="100" value="10">
-            <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="numeroTweets">Numero de tweets</label>
+                <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
+                    placeholder="Numero de tweets" min="10" max="100" value="10">
+                <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
+            </div>
         </div>
         <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
 
         <!-- TIPO DE PESQUISA A SER FEITA -->
+        <div class="col-12">
+            <h6>Tipo de análise: </h6>
 
-        <h6>Tipo de análise: </h6>
-        <div class="row">
             <!-- OPÇÃO PESQUISA SIMPLES -->
-            <div class="col-4">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchSimple"
-                        value="simple" checked />
-                    <label class="form-check-label" for="searchSimple">Simples</label>
-                </div>
-                <!-- OPÇÃO PESQUISA SIMPLES -->
-
-                <!-- OPÇÃO PESQUISA TREINAMENTO -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
-                        value="advanced" />
-                    <label class="form-check-label" for="searchAdvanced">Avançado</label>
-                </div>
-                <!-- OPÇÃO PESQUISA TREINAMENTO -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchSimple" value="simple"
+                    checked />
+                <label class="form-check-label" for="searchSimple">Simples</label>
             </div>
+            <!-- OPÇÃO PESQUISA SIMPLES -->
 
-            <!-- TIPO DE PESQUISA A SER FEITA -->
+            <!-- OPÇÃO PESQUISA TREINAMENTO -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
+                    value="advanced" />
+                <label class="form-check-label" for="searchAdvanced">Avançado</label>
+            </div>
+            <!-- OPÇÃO PESQUISA TREINAMENTO -->
 
+        </div>
+        <div class="col-12 text-center mt-4">
             <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-            <div class="col-4">
-                <div class="row justify-content-center">
-                    <div>
-                        <input class="btn btn-primary btn-lg" style="width: 120px;" type="submit" value="Pesquisar" />
-                    </div>
-                </div>
-            </div>
+            <input class="btn btn-outline-primary btn-lg" style="width: 100%;" type="submit" value="Pesquisar" />
         </div>
         <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-
+    </div>
     </form>
 
     <div>
         <em>
-            <p class="mt-4">Tipos de análise:</p>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12 mt-4">
+                    <p>Tipos de análise:</p>
+                </div>
+                <div class="col-12 col-md-6">
                     <p>Avançado: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
                     <ul>
                         <li>alegria</li>
@@ -85,7 +88,7 @@
                         <li>tristeza</li>
                     </ul>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <p>Simples: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
                     <ul>
                         <li>positivo</li>
@@ -97,4 +100,5 @@
         </em>
     </div>
 </div>
+
 {% endblock %}

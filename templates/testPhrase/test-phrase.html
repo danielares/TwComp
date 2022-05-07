@@ -9,64 +9,62 @@
 
 {% block content %}
 
-<div class="container">
-
-    <h1 class="row justify-content-center pt-2">Faça um teste com uma frase</h1>
-    <form action="{% url 'test-result' %}" method="post" class="form" autocomplete="off">
-        {% csrf_token %}
-        {% bootstrap_messages %}
-
-        <!-- FRASE DE TESTE -->
-        <div class="form-group">
-            <label for="pesquisaTweet">Frase de teste</label>
-            <input type="text" class="form-control" id="pesquisaTweet" name="phrase" placeholder="Digite a frase">
-            <small id="emailHelp" class="form-text text-muted">Digite uma frase para testar</small>
+<div class="container min-vh-100">
+    <div class="row mt-3">
+        <div class="col-12">
+            <h1 class="text-center font-weight-bold">Faça um teste com uma frase</h1>
         </div>
-        <!-- FRASE DE TESTE -->
-
+        <div class="col-12">
+            <form action="{% url 'test-result' %}" method="post" class="form" autocomplete="off">
+                {% csrf_token %}
+                {% bootstrap_messages %}
+                <!-- CAMPO PARA PESQUISAR TWEET -->
+                <div class="form-group">
+                    <label for="pesquisaTweet">Frase de teste</label>
+                    <input type="text" class="form-control" id="pesquisaTweet" name="phrase"
+                        placeholder="Digite o termo">
+                    <small id="emailHelp" class="form-text text-muted">Digite uma frase para testar</small>
+                </div>
+        </div>
+        <!-- CAMPO PARA PESQUISAR TWEET -->
 
         <!-- TIPO DE PESQUISA A SER FEITA -->
-        <div class="row">
-            <div class="col-4">
-                <h6>Tipo de análise: </h6>
+        <div class="col-12">
+            <h6>Tipo de análise: </h6>
 
-                <!-- OPÇÃO PESQUISA SIMPLES -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchSimple"
-                        value="simple" checked />
-                    <label class="form-check-label" for="searchSimple">Simples</label>
-                </div>
-                <!-- OPÇÃO PESQUISA SIMPLES -->
-
-                <!-- OPÇÃO PESQUISA TREINAMENTO -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
-                        value="advanced" />
-                    <label class="form-check-label" for="searchAdvanced">Avançado</label>
-                </div>
-                <!-- OPÇÃO PESQUISA TREINAMENTO -->
+            <!-- OPÇÃO PESQUISA SIMPLES -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchSimple" value="simple"
+                    checked />
+                <label class="form-check-label" for="searchSimple">Simples</label>
             </div>
+            <!-- OPÇÃO PESQUISA SIMPLES -->
 
-            <!-- TIPO DE PESQUISA A SER FEITA -->
-
-            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-            <div class="col-4">
-                <div class="row justify-content-center">
-                    <div>
-                        <input class="btn btn-primary btn-lg" style="width: 120px;" type="submit" value="Testar" />
-                    </div>
-                </div>
+            <!-- OPÇÃO PESQUISA TREINAMENTO -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
+                    value="advanced" />
+                <label class="form-check-label" for="searchAdvanced">Avançado</label>
             </div>
-            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+            <!-- OPÇÃO PESQUISA TREINAMENTO -->
+
         </div>
+        <div class="col-12 text-center mt-4">
+            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+            <input class="btn btn-outline-primary btn-lg" style="width: 100%;" type="submit" value="Pesquisar" />
+        </div>
+        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+    </div>
     </form>
 
     <div>
         <em>
-            <p class="mt-4">Tipos de análise:</p>
             <div class="row">
-                <div class="col-6">
-                    <p>Avançado: Tenta categorizar a frase nas seguintes polaridades:</p>
+                <div class="col-12 mt-4">
+                    <p>Tipos de análise:</p>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Avançado: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
                     <ul>
                         <li>alegria</li>
                         <li>nojo</li>
@@ -76,8 +74,8 @@
                         <li>tristeza</li>
                     </ul>
                 </div>
-                <div class="col-6">
-                    <p>Simples: Tenta categorizar a frase nas seguintes polaridades:</p>
+                <div class="col-12 col-md-6">
+                    <p>Simples: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
                     <ul>
                         <li>positivo</li>
                         <li>neutro</li>
@@ -88,4 +86,5 @@
         </em>
     </div>
 </div>
+
 {% endblock %}

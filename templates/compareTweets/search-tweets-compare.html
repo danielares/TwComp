@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load static %}
 {% load bootstrap4 %}
 
@@ -8,117 +9,113 @@
 
 {% block content %}
 
-<div class="container">
-
-    <h1 class="row justify-content-center pt-2 mb-4">Comparar tweets</h1>
-    <form action="{% url 'view-tweets-compare' %}" method="post" class="form" autocomplete="off">
-        {% csrf_token %}
-        {% bootstrap_messages %}
-        <!-- CAMPO PARA PESQUISAR TWEET 1 -->
-        <div class="row">
-            <div class="col-6">
+<div class="container min-vh-100">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center font-weight-bold">Comparar tweets</h1>
+        </div>
+        <div class="col-12">
+            <form action="{% url 'view-tweets-compare' %}" method="post" class="form" autocomplete="off">
+                {% csrf_token %}
+                {% bootstrap_messages %}
+                <!-- CAMPO PARA PESQUISAR TWEET -->
                 <div class="form-group">
                     <label for="pesquisaTweet1">Primeiro termo</label>
-                    <input type="text" class="form-control" id="pesquisaTweet1" name="searched1"
+                    <input type="text" class="form-control" id="pesquisaTweet" name="searched1"
                         placeholder="Digite o termo">
-                    <small id="emailHelp" class="form-text text-muted">Primeiro termo para comprar tweets</small>
+                    <small id="emailHelp" class="form-text text-muted">Digite aqui o primeiro termo que você deseja
+                        analisar
+                        tweets</small>
                 </div>
-            </div>
-            <!-- CAMPO PARA PESQUISAR TWEET 1 -->
+                <!-- CAMPO PARA PESQUISAR TWEET -->
 
-            <!-- CAMPO PARA PESQUISAR TWEET 2 -->
-            <div class="col-6">
+                <!-- CAMPO PARA PESQUISAR TWEET -->
                 <div class="form-group">
                     <label for="pesquisaTweet2">Segundo Termo</label>
-                    <input type="text" class="form-control" id="pesquisaTweet2" name="searched2"
+                    <input type="text" class="form-control" id="pesquisaTweet" name="searched2"
                         placeholder="Digite o termo">
-                    <small id="emailHelp" class="form-text text-muted">Segundo termo para comprar tweets</small>
+                    <small id="emailHelp" class="form-text text-muted">Digite aqui o segundo termo que você deseja
+                        analisar
+                        tweets</small>
                 </div>
+                <!-- CAMPO PARA PESQUISAR TWEET -->
+        </div>
+
+        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+        <div class="col-12">
+            <div class="form-group">
+                <label for="numeroTweets">Numero de tweets</label>
+                <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
+                    placeholder="Numero de tweets" min="10" max="100" value="10">
+                <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
             </div>
         </div>
-        <!-- CAMPO PARA PESQUISAR TWEET 2 -->
-
-
-        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS -->
-        <div class="form-group">
-            <label for="numeroTweets">Numero de tweets</label>
-            <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
-                placeholder="Numero de tweets" min="10" max="100" value="10">
-            <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
-        </div>
-        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS -->
+        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
 
         <!-- TIPO DE PESQUISA A SER FEITA -->
+        <div class="col-12">
+            <h6>Tipo de análise: </h6>
 
-        <h6>Tipo de análise: </h6>
-        <div class="row">
-            <div class="col-4">
-                <!-- OPÇÃO PESQUISA SIMPLES -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchSimple"
-                        value="simple" checked />
-                    <label class="form-check-label" for="searchSimple">Simples</label>
-                </div>
-                <!-- OPÇÃO PESQUISA SIMPLES -->
-
-                <!-- OPÇÃO PESQUISA TREINAMENTO -->
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
-                        value="advanced" />
-                    <label class="form-check-label" for="searchAdvanced">Avançado</label>
-                </div>
-                <!-- OPÇÃO PESQUISA TREINAMENTO -->
-
-                <!-- TIPO DE PESQUISA A SER FEITA -->
-
-                <!-- OPÇÃO PARA FILTRAR RETWEETS -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="True" name="filterRetweets"
-                        id="filterRetweets">
-                    <label class="form-check-label" for="filterRetweets">
-                        Filtrar retweets
-                    </label>
-                </div>
-                <!-- OPÇÃO PARA FILTRAR RETWEETS -->
-
-                <!-- OPÇÃO PARA FILTRAR REPLYS -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="True" name="filterReply" id="filterReply">
-                    <label class="form-check-label" for="filterReply">
-                        Filtrar respostas
-                    </label>
-                </div>
-                <!-- OPÇÃO PARA FILTRAR REPLYS -->
-
-                <!-- OPÇÃO PARA INCLUIR MAPAS -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="True" name="includeMaps" id="includeMaps">
-                    <label class="form-check-label" for="includeMaps">
-                        Incluir mapas (BETA)
-                    </label>
-                </div>
-                <!-- OPÇÃO PARA INCLUIR MAPAS -->
+            <!-- OPÇÃO PESQUISA SIMPLES -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchSimple" value="simple"
+                    checked />
+                <label class="form-check-label" for="searchSimple">Simples</label>
             </div>
+            <!-- OPÇÃO PESQUISA SIMPLES -->
 
-
-
-            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-            <div class="col-4">
-                <div class="row justify-content-center">
-                    <div>
-                        <input class="btn btn-primary btn-lg" style="width: 120px;" type="submit" value="Pesquisar" />
-                    </div>
-                </div>
+            <!-- OPÇÃO PESQUISA TREINAMENTO -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
+                    value="advanced" />
+                <label class="form-check-label" for="searchAdvanced">Avançado</label>
             </div>
-            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+            <!-- OPÇÃO PESQUISA TREINAMENTO -->
+
+
+            <!-- OPÇÃO PARA FILTRAR RETWEETS -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="True" name="filterRetweets" id="filterRetweets">
+                <label class="form-check-label" for="filterRetweets">
+                    Filtrar retweets
+                </label>
+            </div>
+            <!-- OPÇÃO PARA FILTRAR RETWEETS -->
+
+            <!-- OPÇÃO PARA FILTRAR REPLYS -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="True" name="filterReply" id="filterReply">
+                <label class="form-check-label" for="filterReply">
+                    Filtrar respostas
+                </label>
+            </div>
+            <!-- OPÇÃO PARA FILTRAR REPLYS -->
+
+            <!-- OPÇÃO PARA INCLUIR MAPAS -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="True" name="includeMaps" id="includeMaps">
+                <label class="form-check-label" for="includeMaps">
+                    Incluir mapas (BETA)
+                </label>
+            </div>
+            <!-- OPÇÃO PARA INCLUIR MAPAS -->
+
         </div>
+        <div class="col-12 text-center mt-4">
+            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+            <input class="btn btn-outline-primary btn-lg" style="width: 100%;" type="submit" value="Pesquisar" />
+        </div>
+        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
+    </div>
     </form>
 
-    <div class="text-white">
+    <div>
         <em>
-            <p class="mt-4">Tipos de análise:</p>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12 mt-4">
+                    <p>Tipos de análise:</p>
+                </div>
+                <div class="col-12 col-md-6">
                     <p>Avançado: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
                     <ul>
                         <li>alegria</li>
@@ -129,7 +126,7 @@
                         <li>tristeza</li>
                     </ul>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <p>Simples: Tenta categorizar os tweets coletados nas seguintes polaridades:</p>
                     <ul>
                         <li>positivo</li>
@@ -141,4 +138,5 @@
         </em>
     </div>
 </div>
+
 {% endblock %}

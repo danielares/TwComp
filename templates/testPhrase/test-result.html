@@ -6,9 +6,9 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
+<div class="container min-vh-100">
+    <div class="row mt-5">
+        <div class="col-12 text-center">
             <!-- SIMPLES -->
             {% if sentiment.0 == 'negativo' %}
             <h1>👎👎👎</h1>
@@ -53,7 +53,7 @@
             <p>Sentimento: {{sentiment.0}}</p>
             <p>Probabilidade: {{sentiment.1}}</p>
             <a href="{% url 'test-phrase' %}">
-                <input class="btn btn-primary btn-lg" type="submit" value="Nova análise" />
+                <input class="btn btn-outline-primary btn-lg mt-2" type="submit" value="Nova análise" />
             </a>
         </div>
     </div>

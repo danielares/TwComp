@@ -36,7 +36,6 @@ class UsuarioManager(BaseUserManager):
 class CustomUsuario(AbstractUser):
     email = models.EmailField('E-mail', unique=True)
     fone = models.CharField('Telefone', max_length=15)
-    
     consumerKey = models.CharField('Consumer Key', max_length=50, default="DEFAULT")
     consumerSecret = models.CharField('Consumer Secret', max_length=50, default="DEFAULT")
     accessToken = models.CharField('Access Token', max_length=50, default="DEFAULT")
