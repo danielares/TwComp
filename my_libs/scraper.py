@@ -4,6 +4,11 @@ from my_libs.data_processing import clean_tweet
 from my_libs.training_analysis import analyze_tweet, inicialize
 
 
+'''
+Coleta tweets utilizando Web Scraping. Não é necessario cadastro.
+'''
+
+
 def search_tweets_scraper(options):
     tweets = []
     

@@ -2,7 +2,6 @@
 * {
     text-decoration: none;
     color: #FFF;
-    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -177,6 +176,14 @@ p {
     background-color: rgb(29, 30, 30);
 }
 
-/* INDEX */
-
 /* FOOTER */
+footer i {
+    color: rgb(192, 215, 215);
+    transition: .3s;
+}
+
+footer a.btn:hover {
+    color: black;
+    border-color: black;
+}
+

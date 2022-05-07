@@ -5,6 +5,7 @@ Função para limpar os tweets
 Remove coisas que não são interessantes para a analise
 Ou que atrapalham a analise
 '''
+
 def clean_tweet(tweet):
         tweet_clean = re.sub(r"\n", " ", tweet) # troca quebra de linha por um espaço em branco
         tweet_clean = re.sub("[^0-9A-Za-z ñÑÀàÁáÉéÍíÓóÚúÂâÊêÎîÔôÛûÃãÕõÇç@]", "", tweet_clean).lower()  # deixa somente os caracteres aceitos
