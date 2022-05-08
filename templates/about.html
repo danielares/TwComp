@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 <title>Sobre nós</title>
@@ -9,7 +10,15 @@
 <section class="vh-100">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <h1>ABOUT</h1>
+            <h1 class="font-weight-bold">TwComp</h1>
+            <div class="col-12">
+                <img class="img-fluid" src="{% static 'images/twcomp.gif' %}">
+            </div>
+            <p class="text-center">Utiliza técnicas de Processamento de Linguagem Natural (PLN) e machine learning em dados coletados do
+                twitter (tweets) para analisar emoções sobre determinada busca escolhida pelo usuário. A ferramenta é
+                capaz de gerar gráficos dos resultados, Word Cloud com as palavras que mais apareceram nos tweets e
+                mapas com as posições geográficas dos autores dos tweets. Induzindo insights sobre determinada busca
+                feita pelo usuário.</p>
         </div>
     </div>
 </section>

@@ -13,13 +13,18 @@
     <div class="row align-items-center">
         <div class="col-12">
             <h2 class="text-center font-weight-bold">Informe seus dados para cadastro</h2>
+        </div>
+        <div class="col-12 col-md-6">
             <form method="post">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <input class="btn btn-lg btn-outline-primary" type="submit" style="width: 100%;">
             </form>
         </div>
-        <div class="col-12 mt-3">
+        <div class="col-12 col-md-6 mt-3">
+            <div class="col-12">
+                <img class="img-fluid" src="{% static '/images/registration/hello.svg' %}" alt="Sign-up Image">
+            </div>
             <div class="col-12">
                 <p class="text-center mt-3">Você já tem uma conta <a href="{% url 'login' %}">Login aqui.</a></p>
             </div>
