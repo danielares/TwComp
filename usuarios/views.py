@@ -46,7 +46,6 @@ class ModifyUserView(UpdateView):
             messages.success(request, 'Seu perfil foi atualizado com sucesso!')
         else:
             messages.warning(request, 'Você não tem autorização para isso.')
-        
         return render(request, 'index.html')
 
  
