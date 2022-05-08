@@ -51,6 +51,7 @@ class UploadBaseView(TemplateView):
             csv.reader(csv_file)
             #USADO PARA DEPLOY - FIM
             
+            # PARA USAR LOCALMENTE TROCAR NOME 'csv_file' para somente 'file' 
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'Você deve enviar um arquivo csv')
                 return render(request, self.template_name)
