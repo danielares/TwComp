@@ -68,7 +68,7 @@ def search_tweets(api_access_tokens, options):
                                          tweet_fields=tweet_fields_options, 
                                          user_fields=tweets_user_fields)
 
-    # loop para salvar os tweets coletados em um dicionario python
+    # loop para salvar os tweets coletados em uma lista de dicionario
     results = []
     for tweet in tweets.data:
         try:

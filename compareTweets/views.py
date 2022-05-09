@@ -38,13 +38,10 @@ class CompareTweetsView(TemplateView):
             
             options1['search'] = request.POST['searched1']
             options2['search'] = request.POST['searched2']
-            
             options1['number_of_tweets'] = request.POST['amoutTweets']
             options2['number_of_tweets'] = request.POST['amoutTweets']
-            
             options1['type_of_analysis'] = request.POST['inlineRadioOptions']
             options2['type_of_analysis'] = request.POST['inlineRadioOptions']
-            
             # Opção para incluir mapas
             try: 
                 options1['option_maps'] = request.POST['includeMaps']
@@ -52,7 +49,6 @@ class CompareTweetsView(TemplateView):
             except: 
                  options1['option_maps'] = False
                  options2['option_maps'] = False
-            
             # Opção para filtrar retweets
             try: 
                 options1['filter_retweets'] = bool(request.POST['filterRetweets'])
@@ -60,7 +56,6 @@ class CompareTweetsView(TemplateView):
             except MultiValueDictKeyError: 
                 options1['filter_retweets'] = False
                 options2['filter_retweets'] = False
-            
             # Opção para filtrar respostas
             try: 
                 options1['filter_reply'] = bool(request.POST['filterReply'])

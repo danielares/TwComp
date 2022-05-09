@@ -52,7 +52,7 @@ class ViewTweetsView(TemplateView):
                 
             api_access_tokens = self.request.user.bearerToken
             charts_info, context_infos = get_tweets(api_access_tokens, options) 
-            word_cloud_image = wordCloud(context_infos['tweets'], options['search'])  
+            word_cloud_image = wordCloud(context_infos['tweets'], options['search']) 
                       
             request.session['search'] = options['search']
             request.session['options'] = json.dumps(options, indent=4, sort_keys=True, default=str)

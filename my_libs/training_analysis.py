@@ -110,19 +110,6 @@ def inicialize(option):
         training_base_list2.append(dict.values())
         
     frases_com_Stem_treinamento = apply_stmmer(training_base_list2)
-     
-    # Usado para utilizar dados do training_base.py no lugar do banco de dados
-    # Este bloco comentado substitui o acima, caso usar comentar o de cima e descomentar este.
-    ''' 
-    if option == 'simple':
-        training_base_df = pd.DataFrame(training_base_simple)
-        training_base_df.columns = ['Phrase', 'Sentiment']
-        frases_com_Stem_treinamento = apply_stmmer(training_base_simple)
-    else: 
-        training_base_df = pd.DataFrame(training_base_advanced)
-        training_base_df.columns = ['Phrase', 'Sentiment']
-        frases_com_Stem_treinamento = apply_stmmer(training_base_advanced)
-    '''  
     
     palavras_treinamento = search_words(frases_com_Stem_treinamento)    
     frequencia_treinamento = frequency_words(palavras_treinamento)

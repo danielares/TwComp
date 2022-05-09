@@ -24,13 +24,8 @@ def search_tweets_scraper(options):
             tweet_dict['username'] = tweet.user.username
             tweet_dict['tweet_lang'] = tweet.lang
             tweet_dict['tweet_id'] = tweet.id
-            
-            tweet_clean = clean_tweet(tweet_dict['tweet_text'])
-            sentiment = analyze_tweet(tweet_clean, classificador)
-
-            tweet_dict['tweet_clean'] = tweet_clean
-            tweet_dict['tweet_analise'] = sentiment
-            
+            tweet_dict['tweet_clean'] = clean_tweet(tweet_dict['tweet_text'])
+            tweet_dict['tweet_analise'] = analyze_tweet(tweet_dict['tweet_clean'], classificador)
             tweets.append(tweet_dict)
     
     return tweets
