@@ -30,9 +30,7 @@ class CompareTweetsView(TemplateView):
             context = super().get_context_data(**kwargs)
             return context
                 
-        def post(self, request, **kwargs):
-            global api         
-            
+        def post(self, request, **kwargs):    
             options1 = {}
             options2 = {}
             
@@ -102,13 +100,8 @@ class CompareTweetsView(TemplateView):
             context['locations2'] = context_infos2['geo_location']
         
             return render(request, self.template_name, context)
-                
-        @staticmethod
-        def return_api_data():
-            global api
-            return api
-        
-        
+
+          
 class ScraperTweetsCompareView(TemplateView):
         template_name = 'webscraper/search-tweets-compare-scraper.html'
         

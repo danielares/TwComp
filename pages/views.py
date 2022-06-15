@@ -6,6 +6,14 @@ from .forms import ContatoForm
 from my_libs.training_analysis import analyze_test_phrase
 
 
+class IndexView(TemplateView):
+    template_name = 'index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
 class AboutView(TemplateView):
     template_name = 'about.html'
     
@@ -54,7 +62,6 @@ class TestResultView(TemplateView):
         return render(request, self.template_name, context)
 
 
-
 def ContactView(request):
     form = ContatoForm(request.POST or None)
     if str(request.method) == 'POST':
@@ -68,6 +75,3 @@ def ContactView(request):
         'form': form
     }
     return render(request, 'contact.html', context)
-
-
-

@@ -1,37 +1,24 @@
 import io
 import urllib, base64
 
+import pandas as pd
 from wordcloud import WordCloud
 import nltk
 nltk.download('stopwords')
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 
-
+#https://towardsdatascience.com/how-to-make-word-clouds-in-python-that-dont-suck-86518cdcb61f
 # Função para criar a imagem word cloud
-def wordCloud(tweets, searched_term):
-    word_cloud = WordCloud(stopwords=list_stopwords_portuguese, mode = "RGBA", 
-                           background_color=None, width = 1200, height=700, 
-                           margin=1, max_words=200)
-    
-    # Adiciona todos os tweets em uma unica string que é usada para gerar a wordcloud
-    all_tweets = ""
-    for tweet in tweets:
-        text = str(tweet['tweet_clean'])
-        all_tweets += "".join(" "+text)
-    
-    # Adicionar o termo pesquisado a lista de stopwords e outras palavras, que não são mostradas na wordcloud
-    my_list_stopwords = [searched_term, 'pra']
-    list_stopwords_portuguese.extend(my_list_stopwords)
-    
-    '''
-    Essa parte do código gera a imagem utilizando matplotlib e salva ela em um buffer
-    para ser enviada como contexto para o front.
-    '''
-    word_cloud.generate(all_tweets)
+def wordCloud(tweets, searched_term):    
+    tweets_tfidf = tfidf(tweets, searched_term)
+    word_cloud = WordCloud(background_color=None, width = 1200, height=700, max_words=200).generate_from_frequencies(tweets_tfidf.T.sum(axis=1))
+    #word_cloud.recolor(color_func = black_color_func)    
     plt.figure(figsize=(12,7))
     plt.imshow(word_cloud, interpolation="bilinear", aspect='auto')
     plt.axis('off')
@@ -43,5 +30,24 @@ def wordCloud(tweets, searched_term):
     buffer.close()
     plt.close()
     word_cloud_image = 'data:image/png;base64,' + urllib.parse.quote(string)
-    
     return word_cloud_image
+
+def tfidf(tweets, searched_term):
+    df = pd.DataFrame(tweets)
+    df = df['tweet_clean']
+    lista = df.values.tolist()
+    my_list_stopwords = [searched_term.lower(), 'pra', 'tá', 'acho', 'da', 'chegue', 'to', 'ter', 'tá']
+    list_stopwords_portuguese.extend(my_list_stopwords)
+    vectorizer = TfidfVectorizer(stop_words=list_stopwords_portuguese, ngram_range = (1,1), min_df = .01)
+    vecs = vectorizer.fit_transform(lista)
+    feature_names = vectorizer.get_feature_names()
+    dense = vecs.todense()
+    lst1 = dense.tolist()
+    df = pd.DataFrame(lst1, columns=feature_names)
+    return df
+
+
+'''
+def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
+    return("hsl(0,100%, 1%)")
+'''
