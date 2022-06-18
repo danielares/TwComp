@@ -10,12 +10,10 @@
 {% block content %}
 
 <div class="container min-vh-100">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center font-weight-bold">Comparar tweets</h1>
-        </div>
-        <div class="col-12">
-            <form action="{% url 'view-tweets-compare' %}" method="post" class="form" autocomplete="off">
+    <h1 class="text-center font-weight-bold">Comparar tweets</h1>
+    <form action="{% url 'view-tweets-compare' %}" method="post" class="form" autocomplete="off">
+        <div class="row">
+            <div class="col-12">
                 {% csrf_token %}
                 {% bootstrap_messages %}
                 <!-- CAMPO PARA PESQUISAR TWEET -->
@@ -39,75 +37,77 @@
                         tweets</small>
                 </div>
                 <!-- CAMPO PARA PESQUISAR TWEET -->
-        </div>
-
-        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
-        <div class="col-12">
-            <div class="form-group">
-                <label for="numeroTweets">Numero de tweets</label>
-                <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
-                    placeholder="Numero de tweets" min="10" max="100" value="10">
-                <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
             </div>
-        </div>
-        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
 
-        <!-- TIPO DE PESQUISA A SER FEITA -->
-        <div class="col-12">
-            <h6>Tipo de análise: </h6>
-
-            <!-- OPÇÃO PESQUISA SIMPLES -->
-            <div class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchSimple" value="simple"
-                    checked />
-                <label class="custom-control-label" for="searchSimple">Simples</label>
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="numeroTweets">Numero de tweets</label>
+                    <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
+                        placeholder="Numero de tweets" min="10" max="100" value="10">
+                    <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
+                </div>
             </div>
-            <!-- OPÇÃO PESQUISA SIMPLES -->
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
 
-            <!-- OPÇÃO PESQUISA TREINAMENTO -->
-            <div class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
-                    value="advanced" />
-                <label class="custom-control-label" for="searchAdvanced">Avançado</label>
+            <!-- TIPO DE PESQUISA A SER FEITA -->
+            <div class="col-12">
+                <h6>Tipo de análise: </h6>
+
+                <!-- OPÇÃO PESQUISA SIMPLES -->
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchSimple"
+                        value="simple" checked />
+                    <label class="custom-control-label" for="searchSimple">Simples</label>
+                </div>
+                <!-- OPÇÃO PESQUISA SIMPLES -->
+
+                <!-- OPÇÃO PESQUISA TREINAMENTO -->
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
+                        value="advanced" />
+                    <label class="custom-control-label" for="searchAdvanced">Avançado</label>
+                </div>
+                <!-- OPÇÃO PESQUISA TREINAMENTO -->
+
+
+                <!-- OPÇÃO PARA FILTRAR RETWEETS -->
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" value="True" name="filterRetweets"
+                        id="filterRetweets">
+                    <label class="custom-control-label" for="filterRetweets">
+                        Filtrar retweets
+                    </label>
+                </div>
+                <!-- OPÇÃO PARA FILTRAR RETWEETS -->
+
+                <!-- OPÇÃO PARA FILTRAR REPLYS -->
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" value="True" name="filterReply"
+                        id="filterReply">
+                    <label class="custom-control-label" for="filterReply">
+                        Filtrar respostas
+                    </label>
+                </div>
+                <!-- OPÇÃO PARA FILTRAR REPLYS -->
+
+                <!-- OPÇÃO PARA INCLUIR MAPAS -->
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" value="True" name="includeMaps"
+                        id="includeMaps">
+                    <label class="custom-control-label" for="includeMaps">
+                        Incluir mapas (BETA)
+                    </label>
+                </div>
+                <!-- OPÇÃO PARA INCLUIR MAPAS -->
+
             </div>
-            <!-- OPÇÃO PESQUISA TREINAMENTO -->
-
-
-            <!-- OPÇÃO PARA FILTRAR RETWEETS -->
-            <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" value="True" name="filterRetweets" id="filterRetweets">
-                <label class="custom-control-label" for="filterRetweets">
-                    Filtrar retweets
-                </label>
-            </div>
-            <!-- OPÇÃO PARA FILTRAR RETWEETS -->
-
-            <!-- OPÇÃO PARA FILTRAR REPLYS -->
-            <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" value="True" name="filterReply" id="filterReply">
-                <label class="custom-control-label" for="filterReply">
-                    Filtrar respostas
-                </label>
-            </div>
-            <!-- OPÇÃO PARA FILTRAR REPLYS -->
-
-            <!-- OPÇÃO PARA INCLUIR MAPAS -->
-            <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" value="True" name="includeMaps" id="includeMaps">
-                <label class="custom-control-label" for="includeMaps">
-                    Incluir mapas (BETA)
-                </label>
-            </div>
-            <!-- OPÇÃO PARA INCLUIR MAPAS -->
-
-        </div>
-        <div class="col-12 text-center mt-4">
             <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-            <input class="btn btn-outline-primary btn-lg" style="width: 100%;" type="submit" value="Pesquisar" />
+            <input id="progress-bar-trigger" class="btn btn-outline-primary btn-lg mt-4" style="width: 100%;" type="submit" value="Pesquisar" />
         </div>
-        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-    </div>
     </form>
+
+    {% include 'tools/progress-bar-api-compare.html' %}
 
     <div>
         <em>

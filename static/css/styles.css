@@ -197,3 +197,7 @@ footer a.btn:hover {
     border-color: black;
 }
 
+/* Progress Bar */
+#progress-bar {
+    margin-top: 1em;
+}

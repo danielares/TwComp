@@ -10,12 +10,10 @@
 {% block content %}
 
 <div class="container min-vh-100">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center font-weight-bold">Comparar tweets com Web Scraping</h1>
-        </div>
-        <div class="col-12">
-            <form action="{% url 'view-tweets-compare-scraper' %}" method="post" class="form" autocomplete="off">
+    <h1 class="text-center font-weight-bold">Comparar tweets com Web Scraping</h1>
+    <form action="{% url 'view-tweets-compare-scraper' %}" method="post" class="form" autocomplete="off">
+        <div class="row">
+            <div class="col-12">
                 {% csrf_token %}
                 {% bootstrap_messages %}
                 <!-- CAMPO PARA PESQUISAR TWEET -->
@@ -23,7 +21,8 @@
                     <label for="pesquisaTweet1">Primeiro termo</label>
                     <input type="text" class="form-control" id="pesquisaTweet" name="searched1"
                         placeholder="Digite o termo">
-                    <small id="emailHelp" class="form-text text-muted">Digite aqui o primeiro termo que você deseja analisar
+                    <small id="emailHelp" class="form-text text-muted">Digite aqui o primeiro termo que você deseja
+                        analisar
                         tweets</small>
                 </div>
                 <!-- CAMPO PARA PESQUISAR TWEET -->
@@ -31,53 +30,56 @@
                 <!-- CAMPO PARA PESQUISAR TWEET -->
                 <div class="form-group">
                     <label for="pesquisaTweet2">Segundo Termo</label>
-                    <input type="text" class="form-control" id="pesquisaTweet" name="searched2"
+                    <input type="text" class="form-control" id="pesquisaTweet2" name="searched2"
                         placeholder="Digite o termo">
-                    <small id="emailHelp" class="form-text text-muted">Digite aqui o segundo termo que você deseja analisar
+                    <small id="emailHelp" class="form-text text-muted">Digite aqui o segundo termo que você deseja
+                        analisar
                         tweets</small>
                 </div>
                 <!-- CAMPO PARA PESQUISAR TWEET -->
-        </div>
-
-        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
-        <div class="col-12">
-            <div class="form-group">
-                <label for="numeroTweets">Numero de tweets</label>
-                <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
-                    placeholder="Numero de tweets" min="10" max="100" value="10">
-                <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
             </div>
-        </div>
-        <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
 
-        <!-- TIPO DE PESQUISA A SER FEITA -->
-        <div class="col-12">
-            <h6>Tipo de análise: </h6>
-
-            <!-- OPÇÃO PESQUISA SIMPLES -->
-            <div class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchSimple" value="simple"
-                    checked />
-                <label class="custom-control-label" for="searchSimple">Simples</label>
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="numeroTweets">Numero de tweets</label>
+                    <input type="number" class="form-control" id="numeroTweets" name="amoutTweets"
+                        placeholder="Numero de tweets" min="10" max="100" value="10">
+                    <small id="emailHelp" class="form-text text-muted">Deve ser entre 10 e 100</small>
+                </div>
             </div>
-            <!-- OPÇÃO PESQUISA SIMPLES -->
+            <!-- CAMPO PARA ESCOLHER NUMERO DE TWEETS ENTRE 10 E 100 -->
 
-            <!-- OPÇÃO PESQUISA TREINAMENTO -->
-            <div class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
-                    value="advanced" />
-                <label class="custom-control-label" for="searchAdvanced">Avançado</label>
+            <!-- TIPO DE PESQUISA A SER FEITA -->
+            <div class="col-12">
+                <h6>Tipo de análise: </h6>
+
+                <!-- OPÇÃO PESQUISA SIMPLES -->
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchSimple"
+                        value="simple" checked />
+                    <label class="custom-control-label" for="searchSimple">Simples</label>
+                </div>
+                <!-- OPÇÃO PESQUISA SIMPLES -->
+
+                <!-- OPÇÃO PESQUISA TREINAMENTO -->
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="searchAdvanced"
+                        value="advanced" />
+                    <label class="custom-control-label" for="searchAdvanced">Avançado</label>
+                </div>
+                <!-- OPÇÃO PESQUISA TREINAMENTO -->
+
             </div>
-            <!-- OPÇÃO PESQUISA TREINAMENTO -->
 
-        </div>
-        <div class="col-12 text-center mt-4">
             <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-            <input class="btn btn-outline-primary btn-lg" style="width: 100%;" type="submit" value="Pesquisar" />
+            <input id="progress-bar-trigger" class="btn btn-outline-primary btn-lg mt-4" style="width: 100%;" type="submit" value="Pesquisar" />
+
+            <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
         </div>
-        <!-- BOTÃO PARA ENVIAR INFORMAÇÕES -->
-    </div>
     </form>
+
+    {% include 'tools/progress-bar-scraping-compare.html' %}
 
     <div>
         <em>

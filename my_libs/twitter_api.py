@@ -100,5 +100,5 @@ def search_tweets(api_access_tokens, options):
             location_dict = {}
             location_dict['user'] = user.username
             location_dict['location'] = user.location
-            locations.append(location_dict)     
+            locations.append(location_dict)
     return results, locations

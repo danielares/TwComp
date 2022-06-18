@@ -18,7 +18,6 @@ list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
 def wordCloud(tweets, searched_term):    
     tweets_tfidf = tfidf(tweets, searched_term)
     word_cloud = WordCloud(background_color=None, width = 1200, height=700, max_words=200).generate_from_frequencies(tweets_tfidf.T.sum(axis=1))
-    #word_cloud.recolor(color_func = black_color_func)    
     plt.figure(figsize=(12,7))
     plt.imshow(word_cloud, interpolation="bilinear", aspect='auto')
     plt.axis('off')
@@ -45,9 +44,3 @@ def tfidf(tweets, searched_term):
     lst1 = dense.tolist()
     df = pd.DataFrame(lst1, columns=feature_names)
     return df
-
-
-'''
-def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
-    return("hsl(0,100%, 1%)")
-'''
