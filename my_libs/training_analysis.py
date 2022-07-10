@@ -128,7 +128,7 @@ def create_dict_training(api_access_tokens, options):
     if int(options['number_of_tweets']) <= 100:
         all_tweets, locations = search_tweets(api_access_tokens, options)
     else:
-        all_tweets = search_more_than_100_tweet(api_access_tokens, options)
+        all_tweets, locations = search_more_than_100_tweet(api_access_tokens, options)
         
     # Adiciona tweet_clean e tweet_analise ao dicionario feito na coleta de tweets.
     for tweet in all_tweets:

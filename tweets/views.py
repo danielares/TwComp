@@ -67,7 +67,6 @@ class ViewTweetsView(TemplateView):
             context['chartsInfo'] = charts_info
             context['wordcloud'] = word_cloud_image
             context['locations'] = context_infos['geo_location']
-            context['chartWordFrequency'] = word_importance_image
             context['html_chart_word_importance'] = html_chart
             
             return render(request, self.template_name, context)

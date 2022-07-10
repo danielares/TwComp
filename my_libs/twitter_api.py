@@ -7,7 +7,7 @@ def get_client(api_access_tokens):
     return client
 
 
-def search_more_than_100_tweet(search_term, number_of_tweets, filter_retweets, filter_reply, api_access_tokens):
+def search_more_than_100_tweet(api_access_tokens, options):
 
     client = get_client(api_access_tokens)
 
@@ -17,11 +17,22 @@ def search_more_than_100_tweet(search_term, number_of_tweets, filter_retweets, f
     tweets_user_fields = ['username', 'location']
 
 
-    if filter_retweets: search_term = search_term + ' -is:retweet'
-    if filter_reply: search_term = search_term + ' -is:reply'
+    # Busca os tweets mais recentes
+    # -is:retweet -> filtro para não pegar retweets
+    # lang:pt -> para pegar somente tweets em portugues
+    query_search = options['search']
+    if options['filter_retweets']: 
+        query_search += "".join(" -is:retweet")
+    if options['filter_reply']: 
+        query_search += "".join(" -is:reply")
+    
     tweets = []
-    for tweet in tweepy.Paginator(client.search_recent_tweets, query=search_term+' lang:pt', tweet_fields=tweet_fields_options,
-                                  expansions=expansions_options, user_fields=tweets_user_fields, max_results=100).flatten(limit=int(number_of_tweets)):
+    for tweet in tweepy.Paginator(client.search_recent_tweets, 
+                                  query=query_search+' lang:pt', 
+                                  tweet_fields=tweet_fields_options,
+                                  expansions=expansions_options, 
+                                  user_fields=tweets_user_fields, 
+                                  max_results=100).flatten(limit=int(options['number_of_tweets'])):
         tweets.append(tweet)
 
     results = []
@@ -40,8 +51,11 @@ def search_more_than_100_tweet(search_term, number_of_tweets, filter_retweets, f
             results.append(tweet_dict)
         except:
             print('deu erro na coleta')
+            
+    #locations = get_locations(tweets)
+    locations = []
 
-    return results
+    return results, locations
 
 
 # Procura os tweets com base no termo pesquisado
@@ -94,6 +108,12 @@ def search_tweets(api_access_tokens, options):
         except:
             print('deu erro na coleta')
 
+    locations = get_locations(tweets)
+    
+    return results, locations
+
+
+def get_locations(tweets):
     locations = []
     for user in tweets.includes['users']:
         if user.location != None:
@@ -101,4 +121,4 @@ def search_tweets(api_access_tokens, options):
             location_dict['user'] = user.username
             location_dict['location'] = user.location
             locations.append(location_dict)
-    return results, locations
+    return locations

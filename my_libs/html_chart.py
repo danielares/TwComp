@@ -13,7 +13,8 @@ def create_html_chart(df):
         'plot_bgcolor': 'rgba(0, 0, 0, 0)',
         'paper_bgcolor': 'rgba(0, 0, 0, 0)',
     })
-
-    chart_html = pyo.plot(fig, output_type='div')
+    
+    config={'responsive': True}
+    chart_html = pyo.plot(fig, config=config, output_type='div')
     
     return chart_html

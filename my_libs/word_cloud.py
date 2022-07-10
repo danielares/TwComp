@@ -1,7 +1,5 @@
 import io
 import urllib, base64
-import re
-import heapq
 
 import pandas as pd
 from wordcloud import WordCloud
@@ -14,11 +12,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from my_libs.create_charts_png import create_bar_chart_frequency_words
 from my_libs.html_chart import create_html_chart
+from my_libs.stop_words import stop_words
 
-list_stopwords_portuguese = nltk.corpus.stopwords.words('portuguese')
+list_stopwords_portuguese = list(nltk.corpus.stopwords.words('portuguese'))
 
-#https://towardsdatascience.com/how-to-make-word-clouds-in-python-that-dont-suck-86518cdcb61f
-# Função para criar a imagem word cloud
 
 def start_wc_tfidf(tweets, searched_term):
     tweets_tfidf = tfidf(tweets, searched_term)
@@ -45,17 +42,13 @@ def wordCloud(tweets_tfidf):
     return word_cloud_image
 
 def tfidf(tweets, searched_term):
+    stop_words_list = []
+    stop_words_list = list_stopwords_portuguese + stop_words + [searched_term.lower(),]
     df = pd.DataFrame(tweets)
     df = df['tweet_clean']
     lista = df.values.tolist()
-    my_list_stopwords = [searched_term.lower(), 'pra', 'tá', 'acho', 'da', 'chegue', 'to', 'ter', 'tá']
-    list_stopwords_portuguese.extend(my_list_stopwords)
-    vectorizer = TfidfVectorizer(stop_words=list_stopwords_portuguese, ngram_range = (1,1), min_df = .01)
+    vectorizer = TfidfVectorizer(stop_words=stop_words_list, ngram_range = (1,1), min_df = .01)
     vecs = vectorizer.fit_transform(lista)
-    #print(vectorizer.vocabulary_)
-    #print(vecs)
-    #pd_vecs = pd.DataFrame.sparse.from_spmatrix(vecs)
-    #print(pd_vecs)
     feature_names = vectorizer.get_feature_names()
     dense = vecs.todense()
     lst1 = dense.tolist()
