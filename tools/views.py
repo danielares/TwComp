@@ -8,7 +8,7 @@ import json
 from weasyprint import HTML
 
 from my_libs.create_charts_png import create_pie_chart, create_bar_chart, create_bar_chart_compare
-from my_libs.word_cloud import wordCloud
+from my_libs.word_cloud import wordCloud, start_wc_tfidf
 
 
 class GeneratePdfView(TemplateView):
@@ -25,7 +25,7 @@ class GeneratePdfView(TemplateView):
         
         search = options['search']
         
-        wordcloud = wordCloud(tweets, search)
+        wordcloud, word_importance_image, html_chart = start_wc_tfidf(tweets, search) 
         pie = create_pie_chart(qtd_tweets, labels, colors, search)
         bar = create_bar_chart(labels, qtd_tweets, search, colors)
         
@@ -33,13 +33,13 @@ class GeneratePdfView(TemplateView):
         html_string = render_to_string('tools/generate-pdf.html', {'term': search, 'amoutTweets': amoutTweets,
                                                                    'chartsInfo': chartsInfo, 'pieChart': pie,
                                                                    'barChart': bar, 'wordcloud': wordcloud,
-                                                                   'type_of_analysis': options['type_of_analysis']})
+                                                                   'type_of_analysis': options['type_of_analysis'],
+                                                                   'word_importance_image': word_importance_image})
              
         html = HTML(string=html_string, base_url=request.build_absolute_uri())
         
         #Para usar localmente
         #html.write_pdf(target='C:/Users/danie/Documents/projetos django/twitter 3 - DOCKER/tmp/relatorio_tweets.pdf')
-        
         
         #PARA DEPLOY
         html.write_pdf(target='/tmp/relatorio_tweets.pdf')
@@ -87,11 +87,13 @@ class GenerateComparePdfView(TemplateView):
         
         pie1 = create_pie_chart(qtd_tweets1, labels1, colors1, term1)
         pie2 = create_pie_chart(qtd_tweets2, labels2, colors2, term2)
-        wordcloud1 = wordCloud(tweets1, term1)
-        wordcloud2 = wordCloud(tweets2, term2)
+        wordcloud1, word_importance_image1, html_chart1 = start_wc_tfidf(tweets1, term1)
+        wordcloud2, word_importance_image2, html_chart2 = start_wc_tfidf(tweets2, term2)
 
         html_string = render_to_string('tools/generate-compare-pdf.html', {'term1': term1, 
                                                                             'term2': term2,
+                                                                            'word_importance_image1': word_importance_image1,
+                                                                            'word_importance_image2': word_importance_image2,
                                                                             'amoutTweets': amoutTweets,
                                                                             'chartsInfo1': chartsInfo1,
                                                                             'chartsInfo2': chartsInfo2,

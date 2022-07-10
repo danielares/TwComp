@@ -8,7 +8,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from datetime import datetime
 import json
 
-from my_libs.word_cloud import wordCloud
+from my_libs.word_cloud import start_wc_tfidf
 from my_libs.return_data_view import get_tweets
 from my_libs.scraper import search_tweets_scraper
 from my_libs.return_data_view import generate_data, probability_average, get_tweets_to_show
@@ -52,8 +52,8 @@ class ViewTweetsView(TemplateView):
                 
             api_access_tokens = self.request.user.bearerToken
             charts_info, context_infos = get_tweets(api_access_tokens, options) 
-            word_cloud_image = wordCloud(context_infos['tweets'], options['search']) 
-                      
+            word_cloud_image, word_importance_image, html_chart = start_wc_tfidf(context_infos['tweets'], options['search']) 
+
             request.session['search'] = options['search']
             request.session['options'] = json.dumps(options, indent=4, sort_keys=True, default=str)
             request.session['number_of_tweets'] = options['number_of_tweets']
@@ -67,6 +67,8 @@ class ViewTweetsView(TemplateView):
             context['chartsInfo'] = charts_info
             context['wordcloud'] = word_cloud_image
             context['locations'] = context_infos['geo_location']
+            context['chartWordFrequency'] = word_importance_image
+            context['html_chart_word_importance'] = html_chart
             
             return render(request, self.template_name, context)
 
@@ -99,7 +101,7 @@ class ViewScraperTweetsView(TemplateView):
             tweets = search_tweets_scraper(options)
             charts_info = generate_data(tweets, options['type_of_analysis'])
             probability = probability_average(tweets)
-            word_cloud_image = wordCloud(tweets, options['search'])
+            word_cloud_image, word_importance_image, html_chart = start_wc_tfidf(tweets, options['search'])
             tweets_to_show = get_tweets_to_show(tweets)
             
             request.session['search'] = options['search']
@@ -125,5 +127,6 @@ class ViewScraperTweetsView(TemplateView):
             context['context_infos'] = context_infos
             context['chartsInfo'] = charts_info
             context['wordcloud'] = word_cloud_image
+            context['html_chart_word_importance'] = html_chart
 
             return render(request, self.template_name, context)

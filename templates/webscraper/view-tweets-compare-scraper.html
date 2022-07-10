@@ -61,6 +61,24 @@
         </div>
     </div>
 
+    <div class="col-12 my-3">
+        <div class="columnStyle">
+            <h3 class="text-center py-3">20 palavras mais importantes ({{context_infos1.options.search}})</h3>
+            <div class="d-flex justify-content-center text-center ">
+                {{html_chart_word_importance1|safe}}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 my-3">
+        <div class="columnStyle">
+            <h3 class="text-center py-3">20 palavras mais importantes ({{context_infos2.options.search}})</h3>
+            <div class="d-flex justify-content-center text-center ">
+                {{html_chart_word_importance2|safe}}
+            </div>
+        </div>
+    </div>
+
     {% include 'charts/charts-compare.html' %}
     {% include 'other/include-tweets-compare.html' %}
 </div>

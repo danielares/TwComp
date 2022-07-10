@@ -8,7 +8,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from datetime import datetime
 import json
 
-from my_libs.word_cloud import wordCloud
+from my_libs.word_cloud import start_wc_tfidf
 from my_libs.return_data_view import get_tweets
 #from my_libs.training_analysis import search_tweets_scraper
 from my_libs.scraper import search_tweets_scraper
@@ -72,8 +72,8 @@ class CompareTweetsView(TemplateView):
             chartsInfo1, context_infos1 = get_tweets(api_access_tokens, options1)
             chartsInfo2, context_infos2 = get_tweets(api_access_tokens, options2)
 
-            wordcloud_image_1 = wordCloud(context_infos1['tweets'], options1['search'])
-            wordcloud_image_2 = wordCloud(context_infos2['tweets'], options2['search'])
+            wordcloud_image_1, word_importance_image1, html_chart_word_importance1 = start_wc_tfidf(context_infos1['tweets'], options1['search'])
+            wordcloud_image_2, word_importance_image2, html_chart_word_importance2 = start_wc_tfidf(context_infos2['tweets'], options2['search'])
             
             request.session['options'] = json.dumps(options1, indent=4, sort_keys=True, default=str)
             
@@ -81,7 +81,6 @@ class CompareTweetsView(TemplateView):
             request.session['number_of_tweets1'] = options1['number_of_tweets']
             request.session['charts_info1'] = chartsInfo1
             request.session['tweets1'] = json.dumps(context_infos1['tweets'], indent=4, sort_keys=True, default=str)
-            
             request.session['search2'] = options2['search']
             request.session['number_of_tweets2'] = options2['number_of_tweets']
             request.session['charts_info2'] = chartsInfo2
@@ -98,6 +97,8 @@ class CompareTweetsView(TemplateView):
             context['wordcloud2'] = wordcloud_image_2
             context['locations1'] = context_infos1['geo_location']
             context['locations2'] = context_infos2['geo_location']
+            context['html_chart_word_importance1'] = html_chart_word_importance1
+            context['html_chart_word_importance2'] = html_chart_word_importance2
         
             return render(request, self.template_name, context)
 
@@ -136,15 +137,16 @@ class ViewScraperTweetsCompareView(TemplateView):
         tweets1 = search_tweets_scraper(options1)
         charts_info1 = generate_data(tweets1, options1['type_of_analysis'])
         probability1 = probability_average(tweets1)
-        word_cloud_image1 = wordCloud(tweets1, options1['search'])
         tweets_to_show1 = get_tweets_to_show(tweets1)
+        wordcloud_image_1, word_importance_image1, html_chart_word_importance1 = start_wc_tfidf(tweets1, options1['search'])
+            
         
         #TERMO 2
         tweets2 = search_tweets_scraper(options2)
         charts_info2 = generate_data(tweets2, options2['type_of_analysis'])
         probability2 = probability_average(tweets2)
-        word_cloud_image2 = wordCloud(tweets2, options2['search'])
         tweets_to_show2 = get_tweets_to_show(tweets2)
+        wordcloud_image_2, word_importance_image2, html_chart_word_importance2 = start_wc_tfidf(tweets2, options2['search'])
         
         probability = round((probability1 + probability2)/2, 2)
         
@@ -193,10 +195,12 @@ class ViewScraperTweetsCompareView(TemplateView):
         # TERMO 1:
         context['context_infos1'] = context_infos1
         context['chartsInfo1'] = charts_info1
-        context['wordcloud1'] = word_cloud_image1
+        context['wordcloud1'] = wordcloud_image_1
+        context['html_chart_word_importance1'] = html_chart_word_importance1
         # TERMO 2:
         context['context_infos2'] = context_infos2
         context['chartsInfo2'] = charts_info2
-        context['wordcloud2'] = word_cloud_image2
+        context['wordcloud2'] = wordcloud_image_2
+        context['html_chart_word_importance2'] = html_chart_word_importance2
 
         return render(request, self.template_name, context)

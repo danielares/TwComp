@@ -63,3 +63,26 @@ def create_bar_chart_compare(labels1, number_of_tweets_per_label_1, term1,
     buffer.close()
     bar_chart = 'data:image/png;base64,' + urllib.parse.quote(string)               
     return bar_chart
+
+
+def create_bar_chart_frequency_words(words_frequency_df):
+    buffer = io.BytesIO()
+    
+    colors = ['yellow', 'violet', 'green', 'red', 'blue', 'gray']
+    y_axis = words_frequency_df.index.values.tolist()
+    x_axis = words_frequency_df[0].values.tolist()
+    
+    plt.figure(figsize=(10,5))
+    plt.barh(y_axis,x_axis, color=colors)
+    plt.ylabel('Frequencia')
+    plt.xlabel('Palavra')
+    plt.savefig(buffer, format='png', transparent=True, pad_inches = 0)
+    
+    buffer.seek(0)
+    string = base64.b64encode(buffer.read())
+    buffer.close()
+    plt.close()
+    bar_chart = 'data:image/png;base64,' + urllib.parse.quote(string)  
+    return bar_chart
+
+
