@@ -67,10 +67,10 @@ class CompareTweetsView(TemplateView):
                 messages.error(request, 'Você deve digitar dois termos para pesquisar')
                 return redirect('search-tweets-compare')
                     
-            api_access_tokens = self.request.user.bearerToken 
+            user = self.request.user
             
-            chartsInfo1, context_infos1 = get_tweets(api_access_tokens, options1)
-            chartsInfo2, context_infos2 = get_tweets(api_access_tokens, options2)
+            chartsInfo1, context_infos1 = get_tweets(user, options1)
+            chartsInfo2, context_infos2 = get_tweets(user, options2)
 
             wordcloud_image_1, word_importance_image1, html_chart_word_importance1 = start_wc_tfidf(context_infos1['tweets'], options1['search'])
             wordcloud_image_2, word_importance_image2, html_chart_word_importance2 = start_wc_tfidf(context_infos2['tweets'], options2['search'])

@@ -7,9 +7,9 @@ def get_client(api_access_tokens):
     return client
 
 
-def search_more_than_100_tweet(api_access_tokens, options):
+def search_more_than_100_tweet(user, options):
 
-    client = get_client(api_access_tokens)
+    client = get_client(user.bearerToken)
 
     # Campos de extensão opcionais buscados durante uma requisição na API do twitter
     expansions_options = ['author_id','referenced_tweets.id']
@@ -59,9 +59,9 @@ def search_more_than_100_tweet(api_access_tokens, options):
 
 
 # Procura os tweets com base no termo pesquisado
-def search_tweets(api_access_tokens, options):
+def search_tweets(user, options):
     # chama a função que cria o cliente com o qual fazemos as requisições a API do twitter
-    client = get_client(api_access_tokens)
+    client = get_client(user.bearerToken)
     # Campos de extensão opcionais buscados durante uma requisição na API do twitter
     expansions_options = ['author_id','referenced_tweets.id']
     tweet_fields_options = ['created_at','lang', 'text', 'referenced_tweets']

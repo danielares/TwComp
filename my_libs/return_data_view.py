@@ -8,9 +8,9 @@ from opencage.geocoder import OpenCageGeocode
 from my_libs.training_analysis import create_dict_training
 
 
-def get_tweets(api_access_tokens, options):
+def get_tweets(user, options):
     
-    tweets, locations = create_dict_training(api_access_tokens, options)
+    tweets, locations = create_dict_training(user, options)
     charts_info = generate_data(tweets, options['type_of_analysis'])
     probability = probability_average(tweets)
     tweets_to_show = get_tweets_to_show(tweets)

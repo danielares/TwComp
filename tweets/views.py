@@ -50,8 +50,8 @@ class ViewTweetsView(TemplateView):
                 messages.error(request, 'Você deve pesquisar algo')
                 return redirect('search-tweets')
                 
-            api_access_tokens = self.request.user.bearerToken
-            charts_info, context_infos = get_tweets(api_access_tokens, options) 
+            user = self.request.user
+            charts_info, context_infos = get_tweets(user, options) 
             word_cloud_image, word_importance_image, html_chart = start_wc_tfidf(context_infos['tweets'], options['search']) 
 
             request.session['search'] = options['search']

@@ -106,13 +106,13 @@ class ViewTweetsTrainingView(TemplateView):
         options['type_of_analysis'] = request.POST['inlineRadioOptions']
         options['filter_retweets'] = True
         options['filter_reply'] = True
-        api_access_tokens = self.request.user.bearerToken
+        user = self.request
         
         if not options['search']:
             messages.error(request, 'Você deve pesquisar algo')
             return redirect('search-tweets-training')
         
-        tweets, locations = create_dict_training(api_access_tokens, options)
+        tweets, locations = create_dict_training(user, options)
         
         request.session['type_of_analysis'] = options['number_of_tweets']
         request.session['tweets'] = json.dumps(tweets, indent=4, sort_keys=True, default=str)
