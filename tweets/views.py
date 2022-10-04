@@ -65,6 +65,7 @@ class ViewTweetsView(TemplateView):
             context = super().get_context_data(**kwargs)
             context['context_infos'] = context_infos
             context['chartsInfo'] = charts_info
+            print(charts_info)
             context['wordcloud'] = word_cloud_image
             context['locations'] = context_infos['geo_location']
             context['html_chart_word_importance'] = html_chart

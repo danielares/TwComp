@@ -115,10 +115,12 @@ def search_tweets(api_access_tokens, options):
 
 def get_locations(tweets):
     locations = []
-    for user in tweets.includes['users']:
+    for user, tweet in zip(tweets.includes['users'], tweets.data):
         if user.location != None:
             location_dict = {}
             location_dict['user'] = user.username
             location_dict['location'] = user.location
+            location_dict['tweet_id'] = tweet.id
+            location_dict['tweet_text'] = tweet.text
             locations.append(location_dict)
     return locations

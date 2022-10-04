@@ -14,14 +14,16 @@
     }).addTo(map);  
 
     for (var i = 0; i < locations1.length; i++){
-        var popup ="<strong>Usuário:</strong> " + locations1[i]['user'] +"<br>"+ "<strong>Localização:</strong> " + locations1[i]['location']
+        var popup ="Usuário: " + locations1[i]['user'] +"<br>"+ "Localização: " + locations1[i]['location'] + 
+        + "<br>" + "Tweet ID: " + locations1[i]['tweet_id'] + "<br>" + "Tweet Text: " + locations1[i]['tweet_text'] 
         L.marker([locations1[i]['latitude'], locations1[i]['longitude']]).addTo(map)
             .bindPopup(popup)
             .openPopup();
     }
 
     for (var i = 0; i < locations2.length; i++){
-        var popup ="<strong>Usuário:</strong> " + locations2[i]['user'] +"<br>"+ "<strong>Localização:</strong> " + locations2[i]['location']
+        var popup ="Usuário: " + locations2[i]['user'] +"<br>"+ "Localização: " + locations2[i]['location'] + 
+        + "<br>" + "Tweet ID: " + locations2[i]['tweet_id'] + "<br>" + "Tweet Text: " + locations2[i]['tweet_text'] 
         L.marker([locations2[i]['latitude'], locations2[i]['longitude']]).addTo(map)
             .bindPopup(popup)
             .openPopup();

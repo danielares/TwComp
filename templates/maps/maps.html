@@ -13,7 +13,8 @@
     }).addTo(map);  
 
     for (var i = 0; i < locations.length; i++){
-        var popup ="<strong>Usuário:</strong> " + locations[i]['user'] +"<br>"+ "<strong>Localização:</strong> " + locations[i]['location']
+        var popup ="Usuário: " + locations[i]['user'] +"<br>"+ "Localização: " + locations[i]['location'] 
+        + "<br>" + "Tweet ID: " + locations[i]['tweet_id'] + "<br>" + "Tweet Text: " + locations[i]['tweet_text'] 
         L.marker([locations[i]['latitude'], locations[i]['longitude']]).addTo(map)
             .bindPopup(popup)
             .openPopup();

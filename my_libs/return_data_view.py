@@ -3,6 +3,8 @@ import pandas as pd
 from geopy.geocoders import Nominatim
 from datetime import datetime
 
+from opencage.geocoder import OpenCageGeocode
+
 from my_libs.training_analysis import create_dict_training
 
 
@@ -24,7 +26,7 @@ def get_tweets(api_access_tokens, options):
         'tweets_to_show': tweets_to_show,
         'data_time': datetime.today()
     }
-
+    print(geo_location)
     return charts_info, context_infos
 
 
@@ -94,6 +96,19 @@ def get_geo_location(locations):
             location['longitude'] = geo_location.longitude
         except:
             print('Endereço não encontrado')
+    
+    '''key = "e1aa1c586c5241c0a61ae3984c3929a1"
+    geocoder = OpenCageGeocode(key)
+    for location in locations:
+        try:
+            address = location['location']
+            results = geocoder.geocode(address)
+            location['address'] = address
+            location['latitude'] = results[0]['geometry']['lat']
+            location['longitude'] = results[0]['geometry']['lng']
+            print(results[0])
+        except:
+            print('Endereço não encontrado')'''
     return locations
 
 

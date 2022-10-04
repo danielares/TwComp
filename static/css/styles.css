@@ -201,3 +201,8 @@ footer a.btn:hover {
 #progress-bar {
     margin-top: 1em;
 }
+
+/* Map Pop - up */
+.leaflet-popup-content{
+    color: black;
+}
