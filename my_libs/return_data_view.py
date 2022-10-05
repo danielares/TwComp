@@ -1,3 +1,7 @@
+import requests
+import json
+import urllib
+
 from numpy import average
 import pandas as pd
 from geopy.geocoders import Nominatim
@@ -14,7 +18,7 @@ def get_tweets(user, options):
     charts_info = generate_data(tweets, options['type_of_analysis'])
     probability = probability_average(tweets)
     tweets_to_show = get_tweets_to_show(tweets)
-    if options['option_maps']: geo_location = get_geo_location(locations)
+    if options['option_maps']: geo_location = get_geo_location(locations, user)
     else: geo_location = False
     
     context_infos = {
@@ -26,7 +30,6 @@ def get_tweets(user, options):
         'tweets_to_show': tweets_to_show,
         'data_time': datetime.today()
     }
-    print(geo_location)
     return charts_info, context_infos
 
 
@@ -85,30 +88,31 @@ def probability_average(tweets):
     return round((average/quantity) * 100, 2)
 
 
-def get_geo_location(locations):
-    for location in locations:
-        try:
-            address = location['location']
-            geolocator = Nominatim(user_agent="TwComp")
-            geo_location = geolocator.geocode(address)
-            location['address'] = geo_location.address
-            location['latitude'] = geo_location.latitude
-            location['longitude'] = geo_location.longitude
-        except:
-            print('Endereço não encontrado')
-    
-    '''key = "e1aa1c586c5241c0a61ae3984c3929a1"
-    geocoder = OpenCageGeocode(key)
-    for location in locations:
-        try:
-            address = location['location']
-            results = geocoder.geocode(address)
-            location['address'] = address
-            location['latitude'] = results[0]['geometry']['lat']
-            location['longitude'] = results[0]['geometry']['lng']
-            print(results[0])
-        except:
-            print('Endereço não encontrado')'''
+def get_geo_location(locations, user):
+    if user.googleGeocodingApi:
+        base_url= "https://maps.googleapis.com/maps/api/geocode/json?"
+        AUTH_KEY = user.googleGeocodingApi
+        for location in locations:
+            try:
+                parameters = {"address": location['location'], "key": AUTH_KEY}
+                r = requests.get(f"{base_url}{urllib.parse.urlencode(parameters)}")
+                data = json.loads(r.content)
+                location['address'] = location['location']
+                location['latitude'] = data['results'][0]['geometry']['location']['lat']
+                location['longitude'] = data['results'][0]['geometry']['location']['lng']
+            except:
+                print('Endereço não encontrado')
+    else: 
+        for location in locations:
+            try:
+                address = location['location']
+                geolocator = Nominatim(user_agent="TwComp")
+                geo_location = geolocator.geocode(address)
+                location['address'] = geo_location.address
+                location['latitude'] = geo_location.latitude
+                location['longitude'] = geo_location.longitude
+            except:
+                print('Endereço não encontrado')
     return locations
 
 

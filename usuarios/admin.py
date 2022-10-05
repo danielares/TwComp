@@ -14,7 +14,7 @@ class CustomUsuarioAdmin(UserAdmin):
     list_display = ('username', 'is_staff')
     fieldsets = (
         (None, {'fields': ('password',)}),
-        ('Informações Pessoais', {'fields': ('username', 'first_name', 'last_name', 'bearerToken')}),
+        ('Informações Pessoais', {'fields': ('username', 'first_name', 'last_name', 'bearerToken', 'googleGeocodingApi')}),
         ('Permissões', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Datas Importantes', {'fields': ('last_login', 'date_joined')}),
     )

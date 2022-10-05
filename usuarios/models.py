@@ -34,6 +34,7 @@ class UsuarioManager(BaseUserManager):
 
 class CustomUsuario(AbstractUser):
     bearerToken = models.CharField('Bearer Token', max_length=150)
+    googleGeocodingApi = models.CharField('Google Geocoding API', max_length=150, blank=True, null=True)
     is_staff = models.BooleanField('Membro da equipe', default=False)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name']
