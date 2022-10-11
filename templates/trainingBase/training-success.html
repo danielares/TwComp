@@ -6,10 +6,15 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-        <h1>Tweets adicionados a base de dados</h1>
-        <h2>{{tweet}}</h2>
+<div class="container min-vh-100 px-3">
+    <h1 class="text-center">Tweets adicionados a base de dados</h1>
+    <div class="pt-5">
+        {% for tw in tweet %}
+        <p class="pt-3">
+            Tweet adicionado: {{tw.tweet}}<br>
+            Sentimento: {{tw.sentimento}}
+        </p>
+        {% endfor %}
     </div>
 </div>
 

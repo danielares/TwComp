@@ -20,7 +20,7 @@ class CreateUserView(CreateView):
 class ModifyUserView(UpdateView):
     model = CustomUsuario
     template_name = 'registration/modificar.html'
-    fields = ['first_name', 'last_name', 'username', 'bearerToken']
+    fields = ['first_name', 'last_name', 'username', 'bearerToken', 'googleGeocodingApi']
     success_url = reverse_lazy('index')
     
     def get(self, request, *args, **kwargs):

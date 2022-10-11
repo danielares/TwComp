@@ -8,12 +8,12 @@ class CustomUsuarioCreateForm(UserCreationForm):
     class Meta:
         model = CustomUsuario
         fields = ('first_name', 'last_name', 'username',
-                  'bearerToken', 'password1', 'password2')
+                  'bearerToken', 'googleGeocodingApi', 'password1', 'password2')
 
 
 class CustomUsuarioChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUsuario
-        fields = ('first_name', 'last_name', 'bearerToken')
+        fields = ('first_name', 'last_name', 'bearerToken', 'googleGeocodingApi')
 

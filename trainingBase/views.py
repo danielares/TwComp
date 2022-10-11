@@ -106,17 +106,16 @@ class ViewTweetsTrainingView(TemplateView):
         options['type_of_analysis'] = request.POST['inlineRadioOptions']
         options['filter_retweets'] = True
         options['filter_reply'] = True
-        user = self.request
+        user = self.request.user
         
         if not options['search']:
             messages.error(request, 'Você deve pesquisar algo')
             return redirect('search-tweets-training')
-        
         tweets, locations = create_dict_training(user, options)
         
-        request.session['type_of_analysis'] = options['number_of_tweets']
+        request.session['type_of_analysis'] = options['type_of_analysis']
         request.session['tweets'] = json.dumps(tweets, indent=4, sort_keys=True, default=str)
-
+        print('TWEETS',tweets)
         context = super().get_context_data(**kwargs)
         context['tweets'] = tweets
         context['option'] = options['type_of_analysis']
@@ -128,10 +127,9 @@ class TrainingBaseSuccessView(TemplateView):
     template_name = 'trainingBase/training-success.html'
     
     def post(self, request, **kwargs):
-        
         type_of_analysis = request.session['type_of_analysis']
         tweets = json.loads(request.session['tweets'])
-        
+        all_add_tweets = []
         context = super().get_context_data(**kwargs)
         
         for tweet in tweets:
@@ -141,7 +139,6 @@ class TrainingBaseSuccessView(TemplateView):
             
             try: addTweetDB = request.POST[addTweetDB]
             except: addTweetDB = False
-            
             if addTweetDB:
                 try: 
                     value_label = request.POST[label]
@@ -151,12 +148,11 @@ class TrainingBaseSuccessView(TemplateView):
                     else: training_base = TrainingBaseAdvanced
                     training_base.objects.create(texto=text_tweetDB, sentimento=value_label)
                     
-                    context['tweet'] = text_tweetDB
-
+                    all_add_tweets.append({'tweet': text_tweetDB, 'sentimento': value_label})
+                    
                 except: 
                     print('ERRO AO ADICIONAR A BASE DE DADOS')
-
-            
+        context['tweet'] = all_add_tweets
         return render(request, self.template_name, context)
     
 
